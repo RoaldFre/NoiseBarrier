@@ -31,7 +31,7 @@ ai1.SamplesPerTrigger = samples;
 received = zeros(samples,1);
 sent = zeros(samples,1);
 for i = 1:n
-	putdata(ao,swp);
+	putdata(ao,signal);
 	start([ai0,ai1,ao]);
 	% Just running wait([ai1,ai2,ao]) or any other combination seemed 
 	% to crash(?) -- So quick hack: just pause with a margin of one 
