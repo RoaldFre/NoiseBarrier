@@ -4,3 +4,10 @@ sweep = logsweep(50,10000,2,96000);
 
 s2
 sweep = logsweep(50,10000,3,96000);
+
+Voor de opnames met 30 sweeps
+signal = [zeros(10000,1); logsweep(50,10000,3,96000); zeros(5000,1)];
+
+Creative luidspreker
+h=70
+r=116

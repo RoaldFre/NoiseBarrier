@@ -1,4 +1,4 @@
-function [received, sent] = recordAveraged(signal, rate, depth, n)
+function [mic, loop, main] = recordAveraged(signal, rate, depth, n)
 % [received, sent] = recordAveraged(signal, rate, depth, n)
 %
 % Record the given signal at given rate and bitdepth by averaging n 
@@ -10,23 +10,31 @@ function [received, sent] = recordAveraged(signal, rate, depth, n)
 
 samples = length(signal);
 
-received = zeros(samples,1);
-sent = zeros(samples,1);
+mic = zeros(samples,1);
+loop = zeros(samples,1);
+main = zeros(samples,1);
+
 for i = 1:n
-	
+    fprintf('%d..',i);
+	[recvdata, sentdata] = record8(signal,rate,depth);
+    thismic = recvdata(:,1);
+    thisloop = recvdata(:,2);
+    thismain = sentdata;
+
     if i ~= 1
         % Sync to the accumulated signal, or just the first? We'll use the 
         % accumulated for now...
-        data0 = sync(received/i, data0);
-        data1 = sync(sent/i, data1);
+        thismic = sync(mic/i, thismic);
+        thisloop = sync(loop/i, thisloop);
+        thismain = sync(main/i, thismain);
     end
     
-	received = received + data0;
-	sent = sent + data1;
+	mic = mic + thismic;
+	loop = loop + thisloop;
+    main = main + thismain;
 end
-delete(ai0);
-delete(ai1);
-delete(ao);
+fprintf('\n');
 
-received = received / n;
-sent = sent / n;
+mic = mic/n;
+loop = loop/n;
+main = main/n;

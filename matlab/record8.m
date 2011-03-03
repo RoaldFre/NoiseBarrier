@@ -51,7 +51,6 @@ ai3.SamplesPerTrigger = samples;
 %verify this).
 main = analoginput('winsound',5);
 addchannel(main,1);
-addchannel(main,2);
 main.SampleRate = rate;
 main.BitsPerSample = depth;
 main.SamplesPerTrigger = samples;
@@ -64,7 +63,8 @@ start([ai0,ai1,ai2,ai3,main,ao]);
 % Just running wait([ai1,ai2,ao]) or any other combination seemed 
 % to crash(?) -- So quick hack: just pause with a margin of one 
 % second
-pause(samples/rate + 1);
+%pause(samples/rate + 1);
+wait([ai0,ai1,ai2,ai3,ao],5*samples/rate);
 stop([ai0,ai1,ai2,ai3,ao]);
 
 data0 = getdata(ai0);
@@ -81,5 +81,5 @@ delete(ai3);
 delete(main);
 
 
-sent = main;
-received = [data0; data1; data2; data3];
+sent = datamain;
+received = [data0, data1, data2, data3];
