@@ -49,8 +49,8 @@ ylabel('amplitude');
 title('Spectrum speaker + vloer zonder correctie');
 
 % Spectra van de gedeelde signalen met correctie voor delen door 0.
-[spspec,spafkap] = cleanSpec(sp,sploop,0.05);
-[vlspec,vlafkap] = cleanSpec(vl,vlloop,0.05);
+[spspec,spafkap] = cleanSpec(sp,sploop,0.00);
+[vlspec,vlafkap] = cleanSpec(vl,vlloop,0.00);
 figure;
 subplot(2,1,1);
 plot(spfreq,fftshift(abs(spspec)),spfreq,fftshift(spafkap));
@@ -80,7 +80,7 @@ ylabel('Amplitude');
 title('Impulsrespons van de vloer + speaker');
 
 % Gedeconvolueerd signaal (hierbij worden de oorspronkelijke signalen gebruikt).
-[deconvspec, afkapimp] = cleanSpec(vl,sp,0.05);
+[deconvspec, afkapimp] = cleanSpec(vl,sp,0.00);
 deconvimp = ifft(deconvspec);
 figure;
 plot(spfreq, fftshift(abs(deconvspec)),spfreq, fftshift(afkapimp));
