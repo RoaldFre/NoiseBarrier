@@ -5,8 +5,6 @@ function [shifted] = sync2(master, slave)
 % crosscorrelation and shifting accordingly. The signal gets padded with 
 % zeros.
 %
-% Using built-in Matlab function.
-%
 % Authors: Roald Frederickx, Elise Wursten.
 
 kcorr = xcorr(master,slave);

@@ -1,4 +1,4 @@
-function [received, sent] = record(signal, rate, depth)
+function [received, sent] = record8(signal, rate, depth)
 % [received, sent] = record(signal, rate, depth)
 %
 % Record the given signal at given rate and bitdepth 

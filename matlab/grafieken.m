@@ -1,12 +1,12 @@
 % Bestanden inlezen
-[speaker, sf,  bits] = wavread('../02-24-matlab/s1-h100-r100-mat1.wav');
-[vloer, vsf, vbits] = wavread('../02-24-matlab/s1-h100-r100-vloer1.wav');
+[speaker, sf,  bits] = wavread('s2-h102-r100-mat1.wav');
+[vloer, vsf, vbits] = wavread('s2-h102-r100-vloer1.wav');
 
 % data inlezen
-sploop = speaker(:,1);
-sp = speaker(:,2);
-vlloop = vloer(:,1);
-vl = vloer(:,2);
+sp = speaker(:,1);
+sploop = speaker(:,2);
+vl = vloer(:,1);
+vlloop = vloer(:,2);
 spdt = 1/sf;
 spT = length(sp) * spdt;
 spts = linspace(0, spT, length(sp));
@@ -49,8 +49,8 @@ ylabel('amplitude');
 title('Spectrum speaker + vloer zonder correctie');
 
 % Spectra van de gedeelde signalen met correctie voor delen door 0.
-[spspec,spafkap] = cleanSpec(sp,sploop,0.00);
-[vlspec,vlafkap] = cleanSpec(vl,vlloop,0.00);
+[spspec,spafkap] = cleanSpec(sp,sploop,0.05);
+[vlspec,vlafkap] = cleanSpec(vl,vlloop,0.05);
 figure;
 subplot(2,1,1);
 plot(spfreq,fftshift(abs(spspec)),spfreq,fftshift(spafkap));
@@ -80,7 +80,7 @@ ylabel('Amplitude');
 title('Impulsrespons van de vloer + speaker');
 
 % Gedeconvolueerd signaal (hierbij worden de oorspronkelijke signalen gebruikt).
-[deconvspec, afkapimp] = cleanSpec(vl,sp,0.00);
+[deconvspec, afkapimp] = cleanSpec(vl,sp,0.05);
 deconvimp = ifft(deconvspec);
 figure;
 plot(spfreq, fftshift(abs(deconvspec)),spfreq, fftshift(afkapimp));
@@ -100,4 +100,20 @@ vloerspectrum = fft(vloerrespons);
 figure;
 fftplot(spts(5300:end),vloerrespons);
 
+figure;
+subplot(3,1,1);
+semilogy(vlfreq,fftshift(abs(fft(vl))));
+xlabel('Frequentie (Hz)');
+ylabel('Amplitude');
+title('Spectrum van de vloer+speaker');
+subplot(3,1,2);
+semilogy(spfreq,fftshift(abs(fft(sp))));
+xlabel('Frequentie (Hz)');
+ylabel('Amplitude');
+title('Spectrum van de speaker');
+subplot(3,1,3);
+semilogy(spfreq,fftshift(abs(fft(vl) ./ fft(sp))));
+xlabel('Frequentie (Hz)');
+ylabel('Amplitude');
+title('Gedeeld spectrum van de vloer');
 

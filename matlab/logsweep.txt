@@ -2,4 +2,5 @@ s1
 sweep = logsweep(50,10000,2,96000);
 
 
-
+s2
+sweep = logsweep(50,10000,3,96000);
