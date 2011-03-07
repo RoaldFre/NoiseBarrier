@@ -6,6 +6,6 @@ function [shifted] = shiftInterpolation(data, samples)
 
 n = length(data);
 freqs = linspace(-pi, pi, n)';
-phaseDiff = fftshift(exp(i * samples * freqs));
+phaseDiff = fftshift(exp(-i * samples * freqs));
 shifted = ifft(fft(data) .* phaseDiff);
 

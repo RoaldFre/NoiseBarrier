@@ -36,15 +36,16 @@ end
 % minimizing the error:
 
 
-bestRms = -inf;
+bestRms = inf;
 bestShifted = shifted;
 
-deltaSamples = linspace(-1,1,20);
+deltaSamples = linspace(-1,1,7); %choose uneven number to preserve zero shift
 for delta = deltaSamples
 	thisShifted = shiftInterpolation(shifted, delta);
 	thisRms = norm(master - thisShifted);
 	if thisRms < bestRms
-		bestShifted = shifted;
+		bestShifted = thisShifted;
+		bestRms = thisRms;
 	end
 end
 
