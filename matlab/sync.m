@@ -7,9 +7,11 @@ function [shifted] = sync(master, slave)
 %
 % Authors: Roald Frederickx, Elise Wursten.
 
+%rolling our own crosscorrelation to keep Octave compatibilty
 xcorr = ifft(fft(master) .* (fft(slave(length(slave):-1:1))));
 %plot(xcorr);
 n = length(xcorr);
+
 
 shiftInd = find(abs(xcorr) == max(abs(xcorr)));
 %amount of positions to shift the slave. Can be "negative"!
@@ -20,5 +22,27 @@ else
 	shifted = [slave(shiftInd+1 : n); zeros(shiftInd,1)];
 end
 
-%diff = master-shifted;
-%rms = diff'*diff
+
+% The above should have synced the signals to the nearest time sample 
+% "bin". We can shift the signal in between these bins by tweaking the 
+% phase.
+% This is effectively doing fourier interpolation.
+%
+% Could not do a linear regression on the difference of the phase spectra 
+% reliably to get the difference immediately, so brute forcing and 
+% minimizing the error:
+
+bestRms = -inf;
+bestShifted = shifted;
+
+deltaSamples = linspace(-1,1,20);
+for delta = deltaSamples
+	thisShifted = shiftInterpolation(shifted, delta);
+	thisRms = length(master - thisShifted);
+	if thisRms < bestRms
+		bestShifted = shifted;
+	end
+end
+
+shifted = bestShifted;
+
