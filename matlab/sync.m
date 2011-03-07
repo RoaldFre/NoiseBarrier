@@ -5,6 +5,9 @@ function [shifted] = sync(master, slave)
 % crosscorrelation and shifting accordingly. The signal gets padded with 
 % zeros.
 %
+% This only works well if the signals are padded in leading and trailing 
+% silence!
+%
 % Authors: Roald Frederickx, Elise Wursten.
 
 %rolling our own crosscorrelation to keep Octave compatibilty
@@ -32,13 +35,14 @@ end
 % reliably to get the difference immediately, so brute forcing and 
 % minimizing the error:
 
+
 bestRms = -inf;
 bestShifted = shifted;
 
 deltaSamples = linspace(-1,1,20);
 for delta = deltaSamples
 	thisShifted = shiftInterpolation(shifted, delta);
-	thisRms = length(master - thisShifted);
+	thisRms = norm(master - thisShifted);
 	if thisRms < bestRms
 		bestShifted = shifted;
 	end

@@ -5,7 +5,7 @@ function [shifted] = shiftInterpolation(data, samples)
 % Authors: Roald Frederickx, Elise Wursten.
 
 n = length(data);
-freqs = linspace(-pi, pi, n);
-phaseDiff = fftshift(exp(-i * samples * freqs));
+freqs = linspace(-pi, pi, n)';
+phaseDiff = fftshift(exp(i * samples * freqs));
 shifted = ifft(fft(data) .* phaseDiff);
 
