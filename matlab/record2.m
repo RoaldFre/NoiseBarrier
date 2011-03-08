@@ -37,7 +37,7 @@ main.SamplesPerTrigger = samples;
 
 
 putdata(ao,signal);
-start([ai0,ai1,ai2,ai3,main,ao]);
+start([ai0,main,ao]);
 %start([ai0,ai1,ai3,ao]);
 % Just running wait([ai1,ai2,ao]) or any other combination seemed 
 % to crash(?) -- So quick hack: just pause with a margin of one 
@@ -55,4 +55,4 @@ delete(main);
 
 
 sent = datamain;
-received = [data0, data3];
+received = data0;
