@@ -1,4 +1,4 @@
-function [mic, loop, main] = recordAveraged(signal, rate, depth, n)
+function [mic, loop, main] = record2Averaged(signal, rate, depth, n)
 % [received, sent] = recordAveraged(signal, rate, depth, n)
 %
 % Record the given signal at given rate and bitdepth by averaging n 
@@ -16,7 +16,7 @@ main = zeros(samples,1);
 
 for i = 1:n
     fprintf('%d..',i);
-	[recvdata, sentdata] = record8(signal,rate,depth);
+	[recvdata, sentdata] = record2(signal,rate,depth);
     thismic = recvdata(:,1);
     thisloop = recvdata(:,2);
     thismain = sentdata;
