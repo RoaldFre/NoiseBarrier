@@ -5,5 +5,6 @@ function [window] = rectWindow(spectrum,samplerate,leftcutoff,rightcutoff)
 fnyq = samplerate/2;
 f = linspace(-fnyq,fnyq,length(spectrum))';
 f = fftshift(f);
-window = ( leftcutoff < abs(f) < rightcutoff );
+
+window = (leftcutoff < abs(f)) .* (abs(f) < rightcutoff);
 
