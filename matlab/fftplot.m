@@ -1,9 +1,10 @@
-function fftplot(t, y, title)
+function fftplot(t, y, plottitle)
 
 samplerate = length(y)/(t(end)-t(1));
 fnyq = samplerate/2;
 f = linspace(-fnyq,fnyq,length(y));
 spec = fftshift(fft(y));
-plot(f,abs(spec));
+semilogy(f,abs(spec));
 xlabel('Frequentie (Hz)');
-ylabel('amplitude');
+ylabel('Amplitude');
+title(plottitle);
