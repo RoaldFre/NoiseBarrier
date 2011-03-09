@@ -1,17 +1,12 @@
-function window = tanhWindow(A,p1,p2,a)
-% A is the signal on which the window has to be placed
-% p1,p2: procentual cutoff points
-% a: procentual width of decays
+function window = tanhWindow(f1, f2, transitionWidth, samplerate, n)
+% Tanh window.
+% f1, f2:          Lower and upper frequency bounds.
+% transitionWidth: Width of the transition, measured in frequency. Controls 
+%                  the steepness of the window.
+% samplerate:      Samplerate of signal.
+% n:               Vumber of samples (should be even for the moment).
 
-[rows,k] = size(A);
-r = rows/2;
-
-i1 = ((round(p1*r/100)));
-i2 = ((round(p2*r/100)));
-i3 = ((round(a*r/100)));
-rij = (1:r)';
-
-ww = (0.5*(1+tanh((rij-i1)/i3))) -(0.5*(1+tanh((rij-i2)/i3)));
-
-specwindow = [ww; ww(length(ww):-1:1)];
-window = specwindow*ones(1,k);
+freqs = linspace(samplerate/n, samplerate/2, n/2)';
+win = (0.5 + 0.5*tanh((freqs - f1)/transitionWidth)) ...
+	- (0.5 + 0.5*tanh((freqs - f2)/transitionWidth));
+window = [win; win(length(win):-1:1)];
