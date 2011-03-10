@@ -24,9 +24,9 @@ for i = 1:n
     if i ~= 1
         % Sync to the accumulated signal, or just the first? We'll use the 
         % accumulated for now...
-        thismic = sync(mic/i, thismic);
-        thisloop = sync(loop/i, thisloop);
-        thismain = sync(main/i, thismain);
+        thismic = sync(mic/i, thismic,5);
+        thisloop = sync(loop/i, thisloop,5);
+        thismain = sync(main/i, thismain,5);
     end
     
 	mic = mic + thismic;
