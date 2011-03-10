@@ -11,3 +11,10 @@ signal = [zeros(10000,1); logsweep(50,10000,3,96000); zeros(5000,1)];
 Creative luidspreker
 h=70
 r=116
+
+
+B&J
+h=101
+r=200
+s3
+signal = [zeros(10000,1); logsweep(50,10000,3,96000); zeros(24000,1)];
