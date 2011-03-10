@@ -1,12 +1,22 @@
-function [shifted] = sync(master, slave)
-% shifted = sync(master, slave)
+function [shifted, rms] = sync(master, slave, interpolationSteps)
+% [shifted, rms] = sync(master, slave, interpolationSteps)
 %
 % Syncronise the slave to the master by finding the peak in the 
 % crosscorrelation and shifting accordingly. The signal gets padded with 
 % zeros.
+% An additional step will be carried out to synchronize on a sub-sample 
+% timescale by using fourier interpolation. We will check for 
+% 'interpolationSteps' steps in the range of one sample to the left and 
+% right of the ideal shift found by the crosscorrelation.
+% Zero means no interpolation, one means: check halve a sample to the left 
+% and halve a sample to the right.
 %
-% This only works well if the signals are padded in leading and trailing 
-% silence!
+% This method only works well if the signals are padded in leading and 
+% trailing silence!
+%
+% Returns:
+%  shifted: the shifted signal
+%  rms:     the error between the master and the shifted signal
 %
 % Authors: Roald Frederickx, Elise Wursten.
 
@@ -35,19 +45,24 @@ end
 % reliably to get the difference immediately, so brute forcing and 
 % minimizing the error:
 
-
 bestRms = inf;
 bestShifted = shifted;
 
-deltaSamples = linspace(-1,1,7); %choose uneven number to preserve zero shift
+totalnum = 2*interpolationSteps + 1; %total number of interpolations
+deltaSamples = linspace(-1+1/totalnum, 1-1/totalnum, totalnum);
+		%no need to check one full sample to the left and right, as 
+		%the xcorr would have selected those if they were better 
+		%then the current shift.
+
 for delta = deltaSamples
 	thisShifted = shiftInterpolation(shifted, delta);
 	thisRms = norm(master - thisShifted);
 	if thisRms < bestRms
 		bestShifted = thisShifted;
 		bestRms = thisRms;
+		delta
 	end
 end
 
 shifted = bestShifted;
-
+rms = bestRms;
