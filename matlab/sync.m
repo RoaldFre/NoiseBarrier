@@ -60,7 +60,6 @@ for delta = deltaSamples
 	if thisRms < bestRms
 		bestShifted = thisShifted;
 		bestRms = thisRms;
-		delta
 	end
 end
 
