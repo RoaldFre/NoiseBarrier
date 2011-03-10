@@ -13,8 +13,26 @@ h=70
 r=116
 
 
-B&J
+
+Loodrechte luidspreker
+B&K
 h=101
 r=200
 s3
 signal = [zeros(10000,1); logsweep(50,10000,3,96000); zeros(24000,1)];
+
+
+Loodrechte luidspreker
+B&K
+Luchtveer (plank is omgekeerde Helmholtz resonator)
+h=101
+r=200
+onderkant plaat 18,7à8
+bovenkant plaat 21,2
+signal = [zeros(10000,1); logsweep(50,10000,3,96000); zeros(24000,1)];
+
+onderkant plaat 39,1
+bovenkant plaat 41,5
+
+bij s3-h101-r200-lv391-3-n20.mat de plaat een klein beetje verschoven
+
