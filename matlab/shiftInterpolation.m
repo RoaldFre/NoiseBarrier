@@ -1,4 +1,5 @@
 function [shifted] = shiftInterpolation(data, samples)
+% [shifted] = shiftInterpolation(data, samples)
 % Shift the given signal by the given amount of samples. "Samples" 
 % can be fractional, the result will be fourier interpolated in that case.
 %
