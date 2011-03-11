@@ -10,8 +10,10 @@ function shifted = syncdirect(master, slave, timePeriod, leadingSilence, sampler
 % Returns the shifted slave. The signal gets padded 
 % with zeroes when shifting.
 %
-% This method only works well if the signals are padded in leading and 
-% trailing silence!
+% Warning: This method only works well if:
+%  - the signals are padded in leading and trailing silence
+%  - the signals are recorded at the same sensitivity
+%
 %
 % Parameters:
 %
@@ -78,13 +80,13 @@ for shift = -samplesInTimePeriod : samplesInTimePeriod
 	end
 end
 
-
 shiftToNearestSample = triggerSlave - triggerMaster + bestShift;
+
 
 % Set up a window twice as large and shift this through on fractional 
 % samples. The extra size is to avoid edge effects from the fourier 
-% interpolation.
-
+% interpolation, and from the fact that this actualy does a *rotate* 
+% instead of a *shift*.
 masterWindow = master(triggerMaster - 2*preWindowSamples
 		: triggerMaster + 2*samplesInTimePeriod);
 slaveWindow = slave(triggerSlave - 2*preWindowSamples + bestShift
@@ -95,8 +97,10 @@ deltaSamples = linspace(-1+1/totalnum, 1-1/totalnum, totalnum);
 rms = inf;
 bestDelta = 0;
 for delta = deltaSamples
-	shifted = real(shiftInterpolation(slaveWindow, delta));
-	rms = norm(masterWindow - shifted);
+	shifted = shiftInterpolation(slaveWindow, delta);
+	% calculate the rms, but throw away the extra windowsize:
+	rms = norm(masterWindow(preWindowSamples : end - samplesInTimePeriod)
+		- shifted(preWindowSamples : end - samplesInTimePeriod));
 	
 	if rms < bestRms
 		bestDelta = delta;
@@ -104,18 +108,13 @@ for delta = deltaSamples
 	end
 end
 
-
 shifted = shiftInterpolation(shiftWithZeros(slave, -shiftToNearestSample), bestDelta);
 
 
-clf;
-hold on;
-plot(master,'ko');
-plot(shifted,'gx');
-axis([triggerMaster - 2*preWindowSamples, triggerMaster + 2*samplesInTimePeriod, -0.1,0.1]);
-hold off;
-
-
-
-
+%clf;
+%hold on;
+%plot(master,'ko');
+%plot(shifted,'rx');
+%axis([triggerMaster - preWindowSamples, triggerMaster + samplesInTimePeriod, -0.1,0.1]);
+%hold off;
 

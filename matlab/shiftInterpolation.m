@@ -8,16 +8,21 @@ function [shifted] = shiftInterpolation(data, samples)
 %
 % Authors: Roald Frederickx, Elise Wursten.
 
-if (samples == fix(samples))
+% Rotate to nearest sample
+data = circshift(data, round(samples));
+if (samples == round(samples))
 	%no need to do fourier interpolation
 	%can shift exactly and avoid artefacts
-	shifted = circshift(data, samples);
+	shifted = data;
 	return;
 end
 	
 %fractional shift, need to interpolate
+samples = samples - round(samples);
 n = length(data);
 freqs = linspace(-pi, pi, n)';
 phaseDiff = fftshift(exp(-i * samples * freqs));
-shifted = ifft(fft(data) .* phaseDiff);
-
+plot(angle(phaseDiff));
+shifted = real(ifft(fft(data) .* phaseDiff));
+%TODO: is there an error here? This does not seem to work without without 
+%the 'real' -- hovewer, there should not be any imaginary components!
