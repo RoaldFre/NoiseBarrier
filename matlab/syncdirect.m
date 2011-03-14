@@ -6,6 +6,7 @@ function shifted = syncdirect(master, slave, timePeriod, leadingSilence, sampler
 % seconds of non-silence. This is used to syncronised free field 
 % measurements with measurements that also have echoes, based on the first 
 % few miliseconds of direct sound only.
+% Any DC offsets will be ignored.
 %
 % Returns the shifted slave. The signal gets padded 
 % with zeroes when shifting.
@@ -67,61 +68,21 @@ triggerSlave  = trigger(slave,  silenceSamples, thresholdFactor, numAboveThresho
 
 
 if normalizeAmplitude
-	% Try to normalize the signals as best as we can
-	% Set up a preliminary window with only direct sound and normalize the 
-	% maxima. Note that this can fail if the maximum is at the edge of the 
-	% window!.
+	% Try guess the amplitude of the signals as best as we can
+	% Set up a preliminary window with only direct sound
 	masterWindow = master(triggerMaster - preWindowSamples...
 				: triggerMaster + samplesInTimePeriod);
 	slaveWindow = slave(triggerSlave - preWindowSamples...
 				: triggerSlave + samplesInTimePeriod);
-	slave = slave * max(abs(masterWindow)) / max(abs(slaveWindow));
-	%still need to refine!
-	%TODO: check if at edge of window
+	guessedFactor = max(abs(masterWindow)) / max(abs(slaveWindow))
+	amplitudeFactors = guessedFactor * linspace(0.8, 1.2, 200);
+				%TODO: tweak here or ask as argument
+else
+	amplitudeFactors = [1];
 end
 
 
 
-%set up a window and shift it through to optimize the time difference
-%TODO: this could be optimized (cross correlation?)
-bestRms = inf;
-bestShift = 0;
-masterWindow = master(triggerMaster - preWindowSamples...
-			: triggerMaster + samplesInTimePeriod);
-
-for shift = -samplesInTimePeriod : samplesInTimePeriod
-	slaveWindow = slave(triggerSlave - preWindowSamples + shift...
-				: triggerSlave + samplesInTimePeriod + shift);
-	rms = norm(masterWindow - slaveWindow);
-	if rms < bestRms
-		bestShift = shift;
-		bestRms = rms;
-	end
-end
-
-shiftToNearestSample = triggerSlave - triggerMaster + bestShift;
-
-
-
-if normalizeAmplitude
-	% Refine the amplitudes further now that we are at the nearest sample
-	bestRms = inf;
-	bestFactor = 1;
-	masterWindow = master(triggerMaster - 2*preWindowSamples...
-			: triggerMaster + 2*samplesInTimePeriod);
-	slaveWindow = slave(triggerSlave - 2*preWindowSamples + bestShift...
-			: triggerSlave + 2*samplesInTimePeriod + bestShift);
-	for factor = linspace(0.7, 1.3, 600)
-		scaledSlaveWindow = slaveWindow * factor;
-		rms = norm(masterWindow - scaledSlaveWindow);
-		if rms < bestRms
-			bestFactor = factor;
-			bestRms = rms;
-		end
-	end
-
-	slave = slave * bestFactor;
-end
 
 
 
@@ -129,36 +90,45 @@ end
 % samples. The extra size is to avoid edge effects from the fourier 
 % interpolation, and from the fact that this actualy does a *rotate* 
 % instead of a *shift*.
-% We shift width (=two) samples wide, as the renormalisation above may have 
-% changed the ideal shift somewhat
-width = 2;
 masterWindow = master(triggerMaster - 2*preWindowSamples...
 		: triggerMaster + 2*samplesInTimePeriod);
-slaveWindow = slave(triggerSlave - 2*preWindowSamples + bestShift...
-		: triggerSlave + 2*samplesInTimePeriod + bestShift);
+slaveWindow = slave(triggerSlave - 2*preWindowSamples...
+		: triggerSlave + 2*samplesInTimePeriod);
 
+width = samplesInTimePeriod / 10 + 5; %amount of samples to shift to left and 
+                                      %right in search space
+				      %TODO tweak this, or ask as argument
 totalnum = width * 2 * interpolationSteps + 1; %total number of interpolations
-%deltaSamples = linspace(-1 + 1/totalnum, 1 - 1/totalnum, totalnum);
-deltaSamples = linspace(-width, width, totalnum);
-rms = inf;
-bestDelta = 0;
-for delta = deltaSamples
-	shifted = shiftInterpolation(slaveWindow, delta);
-	% calculate the rms, but throw away the extra windowsize:
-	rms = norm(masterWindow(preWindowSamples : end - samplesInTimePeriod)...
-		- shifted(preWindowSamples : end - samplesInTimePeriod));
-	
-	if rms < bestRms
-		bestDelta = delta;
-		bestRms = rms;
+shifts = linspace(-width, width, totalnum);
+
+bestRms = inf;
+bestShift = 0;
+bestFactor = 1;
+for shift = shifts
+	shifted = shiftInterpolation(slaveWindow, shift);
+	for factor = amplitudeFactors
+		scaled = shifted * factor;
+		% calculate the rms, but throw away the extra windowsize:
+		diff = masterWindow(preWindowSamples : end - samplesInTimePeriod)...
+			- scaled(preWindowSamples : end - samplesInTimePeriod);
+		diff = diff - mean(diff); %We don't care about DC offsets!
+		rms = norm(diff);
+		
+		if rms < bestRms
+			bestShift = shift;
+			bestFactor = factor;
+			bestRms = rms;
+		end
 	end
 end
 
-shifted = shiftInterpolation(shiftWithZeros(slave, -shiftToNearestSample), bestDelta);
+bestRms
+bestShift
+bestFactor
 
-
-
-
+shiftedToNearest = shiftWithZeros(slave, triggerMaster - triggerSlave + round(bestShift));
+shifted = shiftInterpolation(shiftedToNearest, bestShift - round(bestShift));
+shifted = shifted * bestFactor;
 
 
 
