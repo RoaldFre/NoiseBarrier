@@ -62,6 +62,18 @@ triggerSlave  = trigger(slave,  silenceSamples, thresholdFactor, numAboveThresho
 
 
 
+% Try to normalize the signals as best as we can
+% Set up a preliminary window with only direct sound and normalize the 
+% maxima. Note that this can fail if the maximum is at the edge of the 
+% window!.
+masterWindow = master(triggerMaster - preWindowSamples...
+			: triggerMaster + samplesInTimePeriod);
+slaveWindow = slave(triggerSlave - preWindowSamples...
+			: triggerSlave + samplesInTimePeriod);
+slave = slave * max(masterWindow) / max(slaveWindow); %still need to refine!
+
+
+
 %set up a window and shift it through
 %TODO: this could be optimized (cross correlation?)
 bestRms = inf;
@@ -82,17 +94,25 @@ end
 shiftToNearestSample = triggerSlave - triggerMaster + bestShift;
 
 
+
+
+
+
 % Set up a window twice as large and shift this through on fractional 
 % samples. The extra size is to avoid edge effects from the fourier 
 % interpolation, and from the fact that this actualy does a *rotate* 
 % instead of a *shift*.
+% We shift width (=two) samples wide, as the renormalisation above may have 
+% changed the ideal shift somewhat
+width = 2;
 masterWindow = master(triggerMaster - 2*preWindowSamples...
 		: triggerMaster + 2*samplesInTimePeriod);
 slaveWindow = slave(triggerSlave - 2*preWindowSamples + bestShift...
 		: triggerSlave + 2*samplesInTimePeriod + bestShift);
 
-totalnum = 2 * interpolationSteps + 1; %total number of interpolations
-deltaSamples = linspace(-1+1/totalnum, 1-1/totalnum, totalnum);
+totalnum = width * 2 * interpolationSteps + 1; %total number of interpolations
+%deltaSamples = linspace(-1 + 1/totalnum, 1 - 1/totalnum, totalnum);
+deltaSamples = linspace(-width, width, totalnum);
 rms = inf;
 bestDelta = 0;
 for delta = deltaSamples
