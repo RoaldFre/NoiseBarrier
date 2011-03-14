@@ -37,8 +37,8 @@ function shifted = syncdirect(master, slave, timePeriod, leadingSilence, sampler
 %   you don't want to do fourier interpolation (it may add artefacts)
 %
 % normalizeAmplitude
-%   Set to 1 if you want to try and normalize the amplutide of the slave to 
-%   the master. 0 to leave amplutide unchanged.
+%   Set to true if you want to try and normalize the amplitude of the slave to 
+%   the master. Set to false to leave amplitude unchanged.
 %
 %
 % Authors: Roald Frederickx, Elise Wursten.
@@ -82,7 +82,7 @@ end
 
 
 
-%set up a window and shift it through
+%set up a window and shift it through to optimize the time difference
 %TODO: this could be optimized (cross correlation?)
 bestRms = inf;
 bestShift = 0;
@@ -104,15 +104,24 @@ shiftToNearestSample = triggerSlave - triggerMaster + bestShift;
 
 
 if normalizeAmplitude
-	% Refine the amplitudes
+	% Refine the amplitudes further now that we are at the nearest sample
+	bestRms = inf;
+	bestFactor = 1;
 	masterWindow = master(triggerMaster - 2*preWindowSamples...
 			: triggerMaster + 2*samplesInTimePeriod);
 	slaveWindow = slave(triggerSlave - 2*preWindowSamples + bestShift...
 			: triggerSlave + 2*samplesInTimePeriod + bestShift);
+	for factor = linspace(0.7, 1.3, 600)
+		scaledSlaveWindow = slaveWindow * factor;
+		rms = norm(masterWindow - scaledSlaveWindow);
+		if rms < bestRms
+			bestFactor = factor;
+			bestRms = rms;
+		end
+	end
 
-	%TODO do stuff
+	slave = slave * bestFactor;
 end
-
 
 
 
@@ -146,6 +155,11 @@ for delta = deltaSamples
 end
 
 shifted = shiftInterpolation(shiftWithZeros(slave, -shiftToNearestSample), bestDelta);
+
+
+
+
+
 
 
 %clf;
