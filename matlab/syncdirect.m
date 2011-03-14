@@ -1,4 +1,4 @@
-function shifted = syncdirect(master, slave, timePeriod, leadingSilence, samplerate, interpolationSteps)
+function shifted = syncdirect(master, slave, timePeriod, leadingSilence, samplerate, interpolationSteps, normalizeAmplitude)
 % shifted = syncdirect(master, slave, timePeriod, leadingSilence, 
 %                      samplerate, interpolationSteps)
 %
@@ -36,6 +36,10 @@ function shifted = syncdirect(master, slave, timePeriod, leadingSilence, sampler
 %   (2 * interpolationSteps + 1) actual interpolations. Set this to 0 if 
 %   you don't want to do fourier interpolation (it may add artefacts)
 %
+% normalizeAmplitude
+%   Set to 1 if you want to try and normalize the amplutide of the slave to 
+%   the master. 0 to leave amplutide unchanged.
+%
 %
 % Authors: Roald Frederickx, Elise Wursten.
 
@@ -62,15 +66,19 @@ triggerSlave  = trigger(slave,  silenceSamples, thresholdFactor, numAboveThresho
 
 
 
-% Try to normalize the signals as best as we can
-% Set up a preliminary window with only direct sound and normalize the 
-% maxima. Note that this can fail if the maximum is at the edge of the 
-% window!.
-masterWindow = master(triggerMaster - preWindowSamples...
-			: triggerMaster + samplesInTimePeriod);
-slaveWindow = slave(triggerSlave - preWindowSamples...
-			: triggerSlave + samplesInTimePeriod);
-slave = slave * max(masterWindow) / max(slaveWindow); %still need to refine!
+if normalizeAmplitude
+	% Try to normalize the signals as best as we can
+	% Set up a preliminary window with only direct sound and normalize the 
+	% maxima. Note that this can fail if the maximum is at the edge of the 
+	% window!.
+	masterWindow = master(triggerMaster - preWindowSamples...
+				: triggerMaster + samplesInTimePeriod);
+	slaveWindow = slave(triggerSlave - preWindowSamples...
+				: triggerSlave + samplesInTimePeriod);
+	slave = slave * max(abs(masterWindow)) / max(abs(slaveWindow));
+	%still need to refine!
+	%TODO: check if at edge of window
+end
 
 
 
@@ -94,6 +102,16 @@ end
 shiftToNearestSample = triggerSlave - triggerMaster + bestShift;
 
 
+
+if normalizeAmplitude
+	% Refine the amplitudes
+	masterWindow = master(triggerMaster - 2*preWindowSamples...
+			: triggerMaster + 2*samplesInTimePeriod);
+	slaveWindow = slave(triggerSlave - 2*preWindowSamples + bestShift...
+			: triggerSlave + 2*samplesInTimePeriod + bestShift);
+
+	%TODO do stuff
+end
 
 
 
