@@ -66,12 +66,11 @@ triggerSlave  = trigger(slave,  silenceSamples, thresholdFactor, numAboveThresho
 %TODO: this could be optimized (cross correlation?)
 bestRms = inf;
 bestShift = 0;
-masterWindow = master(triggerMaster - preWindowSamples
+masterWindow = master(triggerMaster - preWindowSamples...
 			: triggerMaster + samplesInTimePeriod);
 
 for shift = -samplesInTimePeriod : samplesInTimePeriod
-	shift = shift * 1;
-	slaveWindow = slave(triggerSlave - preWindowSamples + shift
+	slaveWindow = slave(triggerSlave - preWindowSamples + shift...
 				: triggerSlave + samplesInTimePeriod + shift);
 	rms = norm(masterWindow - slaveWindow);
 	if rms < bestRms
@@ -87,9 +86,9 @@ shiftToNearestSample = triggerSlave - triggerMaster + bestShift;
 % samples. The extra size is to avoid edge effects from the fourier 
 % interpolation, and from the fact that this actualy does a *rotate* 
 % instead of a *shift*.
-masterWindow = master(triggerMaster - 2*preWindowSamples
+masterWindow = master(triggerMaster - 2*preWindowSamples...
 		: triggerMaster + 2*samplesInTimePeriod);
-slaveWindow = slave(triggerSlave - 2*preWindowSamples + bestShift
+slaveWindow = slave(triggerSlave - 2*preWindowSamples + bestShift...
 		: triggerSlave + 2*samplesInTimePeriod + bestShift);
 
 totalnum = 2 * interpolationSteps + 1; %total number of interpolations
@@ -99,7 +98,7 @@ bestDelta = 0;
 for delta = deltaSamples
 	shifted = shiftInterpolation(slaveWindow, delta);
 	% calculate the rms, but throw away the extra windowsize:
-	rms = norm(masterWindow(preWindowSamples : end - samplesInTimePeriod)
+	rms = norm(masterWindow(preWindowSamples : end - samplesInTimePeriod)...
 		- shifted(preWindowSamples : end - samplesInTimePeriod));
 	
 	if rms < bestRms
