@@ -75,7 +75,7 @@ if normalizeAmplitude
 	slaveWindow = slave(triggerSlave - preWindowSamples...
 				: triggerSlave + samplesInTimePeriod);
 	guessedFactor = max(abs(masterWindow)) / max(abs(slaveWindow))
-	amplitudeFactors = guessedFactor * linspace(0.8, 1.2, 200);
+	amplitudeFactors = guessedFactor * linspace(0.82, 1.18, 300);
 				%TODO: tweak here or ask as argument
 else
 	amplitudeFactors = [1];
@@ -95,7 +95,7 @@ masterWindow = master(triggerMaster - 2*preWindowSamples...
 slaveWindow = slave(triggerSlave - 2*preWindowSamples...
 		: triggerSlave + 2*samplesInTimePeriod);
 
-width = samplesInTimePeriod / 10 + 5; %amount of samples to shift to left and 
+width = samplesInTimePeriod / 10 + 2; %amount of samples to shift to left and 
                                       %right in search space
 				      %TODO tweak this, or ask as argument
 totalnum = width * 2 * interpolationSteps + 1; %total number of interpolations
@@ -132,10 +132,11 @@ shifted = shifted * bestFactor;
 
 
 
-%clf;
-%hold on;
-%plot(master,'ko');
-%plot(shifted,'rx');
-%axis([triggerMaster - preWindowSamples, triggerMaster + samplesInTimePeriod, -0.1,0.1]);
-%hold off;
+clf;
+hold on;
+plot(master,'ko');
+plot(shifted,'rx');
+plot(master - shifted,'g-');
+axis([triggerMaster - preWindowSamples, triggerMaster + samplesInTimePeriod, -0.1,0.1]);
+hold off;
 
