@@ -139,8 +139,8 @@ shifted = shifted * bestFactor;
 figure;
 hold on;
 plot(master,'ko');
-plot(shifted - bestOffset,'rx');
-plot(master - shifted + bestOffset,'g-');
+plot(shifted + bestOffset,'rx');
+plot(master - shifted - bestOffset,'g-');
 axis([triggerMaster - preWindowSamples, triggerMaster + samplesInTimePeriod, -0.1,0.1]);
 hold off;
 
