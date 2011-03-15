@@ -112,7 +112,7 @@ for shift = shifts
 		% calculate the rms, but throw away the extra windowsize:
 		diff = masterWindow(preWindowSamples : end - samplesInTimePeriod)...
 			- scaled(preWindowSamples : end - samplesInTimePeriod);
-		offsets = mean(diff);
+		offset = mean(diff);
 		diff = diff - offset; %We don't care about DC offsets!
 		rms = norm(diff);
 		
