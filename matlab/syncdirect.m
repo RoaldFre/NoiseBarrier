@@ -104,6 +104,7 @@ shifts = linspace(-width, width, totalnum);
 bestRms = inf;
 bestShift = 0;
 bestFactor = 1;
+bestOffset = 0;
 for shift = shifts
 	shifted = shiftInterpolation(slaveWindow, shift);
 	for factor = amplitudeFactors
@@ -111,13 +112,15 @@ for shift = shifts
 		% calculate the rms, but throw away the extra windowsize:
 		diff = masterWindow(preWindowSamples : end - samplesInTimePeriod)...
 			- scaled(preWindowSamples : end - samplesInTimePeriod);
-		diff = diff - mean(diff); %We don't care about DC offsets!
+		offsets = mean(diff);
+		diff = diff - offset; %We don't care about DC offsets!
 		rms = norm(diff);
 		
 		if rms < bestRms
 			bestShift = shift;
 			bestFactor = factor;
 			bestRms = rms;
+			bestOffset = offset;
 		end
 	end
 end
@@ -125,6 +128,7 @@ end
 bestRms
 bestShift
 bestFactor
+bestOffset
 
 shiftedToNearest = shiftWithZeros(slave, triggerMaster - triggerSlave + round(bestShift));
 shifted = shiftInterpolation(shiftedToNearest, bestShift - round(bestShift));
@@ -132,11 +136,11 @@ shifted = shifted * bestFactor;
 
 
 
-clf;
+figure;
 hold on;
 plot(master,'ko');
-plot(shifted,'rx');
-plot(master - shifted,'g-');
+plot(shifted - bestOffset,'rx');
+plot(master - shifted + bestOffset,'g-');
 axis([triggerMaster - preWindowSamples, triggerMaster + samplesInTimePeriod, -0.1,0.1]);
 hold off;
 
