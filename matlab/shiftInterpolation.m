@@ -22,7 +22,7 @@ samples = samples - round(samples);
 n = length(data);
 freqs = linspace(-pi, pi, n)';
 phaseDiff = fftshift(exp(-i * samples * freqs));
-plot(angle(phaseDiff));
+%plot(angle(phaseDiff));
 shifted = real(ifft(fft(data) .* phaseDiff));
 %TODO: is there an error here? This does not seem to work without without 
 %the 'real' -- hovewer, there should not be any imaginary components!
