@@ -1,4 +1,5 @@
-function [mic, loop, main] = record2Averaged(signal, rate, depth, n)
+%function [mic, loop, main] = record2Averaged(signal, rate, depth, n)
+function [mic, main] = record2Averaged(signal, rate, depth, n)
 % [received, sent] = recordAveraged(signal, rate, depth, n)
 %
 % Record the given signal at given rate and bitdepth by averaging n 
@@ -11,30 +12,38 @@ function [mic, loop, main] = record2Averaged(signal, rate, depth, n)
 samples = length(signal);
 
 mic = zeros(samples,1);
-loop = zeros(samples,1);
+%loop = zeros(samples,1);
 main = zeros(samples,1);
 
 for i = 1:n
     fprintf('%d..',i);
 	[recvdata, sentdata] = record2(signal,rate,depth);
     thismic = recvdata(:,1);
-    thisloop = recvdata(:,2);
-    thismain = sentdata;
+    %thisloop = recvdata(:,2);
+    %thismain = sentdata;
+    
+    %only use first main, saves time from syncinc:
+    if i = 1
+        main = sentdata;
+    end
 
     if i ~= 1
         % Sync to the accumulated signal, or just the first? We'll use the 
         % accumulated for now...
         thismic = sync(mic/i, thismic,5);
-        thisloop = sync(loop/i, thisloop,5);
-        thismain = sync(main/i, thismain,5);
+        %thisloop = sync(loop/i, thisloop,5);
+        %%%%%% thismain = sync(main/i, thismain,5);
+	%Don't waste time syncing main.
     end
     
 	mic = mic + thismic;
-	loop = loop + thisloop;
-    main = main + thismain;
+    %loop = loop + thisloop;
+	%main = main + thismain;
 end
 fprintf('\n');
 
 mic = mic/n;
-loop = loop/n;
-main = main/n;
+%loop = loop/n;
+%main = main/n;
+
+% vim: ts=4:sw=4:expandtab
