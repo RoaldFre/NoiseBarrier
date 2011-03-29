@@ -46,6 +46,7 @@ while 1
 	p_laplacian = (p_grid(shift_10{:}) + p_grid(shift10{:})) / dr2...
 			+ (p_grid(shift0_1{:}) + p_grid(shift01{:})) / dc2...
 			- 2 * (dr2 + dc2) / (dr2 * dc2) * p_grid;
+				%last line: combined the -2*p_grid / dx^2 terms
 	
 	p_grid_old = p_grid;
 	p_grid = c2 * p_laplacian * dt2   +   2 * p_grid   -   p_grid_old;
@@ -54,6 +55,7 @@ while 1
 	if iteration <= excitation_length
 		%point source:
 		p_grid(sourcer, sourcec) = excitation(iteration);
+		%big point source:
 		p_grid(sourcer, sourcec+1) = excitation(iteration);
 		p_grid(sourcer, sourcec-1) = excitation(iteration);
 
@@ -69,9 +71,9 @@ while 1
 	endif
 
 	%barrier
-	%p_grid(round(nr/2):end, round(nc/3)-1) = -p_grid(round(nr/2):end, round(nc/3));
-	%p_grid(round(nr/2):end, round(nc/3)+1) = -p_grid(round(nr/2):end, round(nc/3));
-	%p_grid(round(nr/2):end, round(nc/3)) = 0;
+	p_grid(round(nr/2):end, round(nc/3)-1) = -p_grid(round(nr/2):end, round(nc/3));
+	p_grid(round(nr/2):end, round(nc/3)+1) = -p_grid(round(nr/2):end, round(nc/3));
+	p_grid(round(nr/2):end, round(nc/3)) = 0;
 	%floor
 	p_grid(end, 1:end) = -p_grid(end-1, 1:end);
 
@@ -83,6 +85,7 @@ while 1
 	endif
 
 %	if iteration * dt * c >= lc/2
+%		%we should have reached the other side already now!
 %		return
 %	endif
 endwhile
