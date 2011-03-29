@@ -1,10 +1,10 @@
-nr = 150; %number of rows
-nc = 300; %number of columns
+nr = 50; %number of rows
+nc = 50; %number of columns
 
 lr = 0.1; %length in the "rows direction" -> height (in meter)
 lc = 0.1; %length in the "columns direction" -> width (in meter)
 c = 340; %speed of sound, m/s
-dt = 0.0000005; %timestep length (in seconds)
+dt = 0.0000001; %timestep length (in seconds)
 
 dr = lr / nr;
 dc = lc / nc;
@@ -12,16 +12,16 @@ dc = lc / nc;
 sourcer = round(nr *3/4);
 sourcec = round(nc *1/4);;
 
-%excitation = sin(linspace(0,4*pi,1000));
-
-%delta, forced zero afterwards
-%excitation = [1, zeros(1,100000)];
+%excitation = sin(linspace(0,4*pi,10000));
 
 %"free" delta
-excitation = [1];
+%excitation = [1];
+
+%delta, forced zero afterwards
+excitation = [1, zeros(1,10000000)];
 
 %hanning
-excitation = hanning(20);
+%excitation = hanning(20);
 
 
 excitation_length = length(excitation);
@@ -36,6 +36,8 @@ p_grid = zeros(nr, nc);
 p_grid_old = p_grid;
 
 [shift10 shift_10 shift01 shift0_1]=circleshift_fast(p_grid);
+
+imagesc(p_grid);
 
 iteration = 0;
 while 1
@@ -52,18 +54,35 @@ while 1
 	if iteration <= excitation_length
 		%point source:
 		p_grid(sourcer, sourcec) = excitation(iteration);
+		p_grid(sourcer, sourcec+1) = excitation(iteration);
+		p_grid(sourcer, sourcec-1) = excitation(iteration);
+
+		p_grid(sourcer+1, sourcec) = excitation(iteration);
+		p_grid(sourcer+1, sourcec+1) = excitation(iteration);
+		p_grid(sourcer+1, sourcec-1) = excitation(iteration);
+
+		p_grid(sourcer-1, sourcec+1) = excitation(iteration);
+		p_grid(sourcer-1, sourcec-1) = excitation(iteration);
+		p_grid(sourcer-1, sourcec) = excitation(iteration);
 		%plane wave:
 		%p_grid(1:end, sourcec) = excitation(iteration);
 	endif
 
 	%barrier
-	p_grid(round(nr/2):end, round(nc/3)) = 0;
+	%p_grid(round(nr/2):end, round(nc/3)-1) = -p_grid(round(nr/2):end, round(nc/3));
+	%p_grid(round(nr/2):end, round(nc/3)+1) = -p_grid(round(nr/2):end, round(nc/3));
+	%p_grid(round(nr/2):end, round(nc/3)) = 0;
 	%floor
-	p_grid(end, 1:end) = 0;
+	p_grid(end, 1:end) = -p_grid(end-1, 1:end);
 
 
-	if ~mod(iteration,200)
+	if ~mod(iteration,300)
 		imagesc(p_grid);
+		%drawnow();
 		pause(0.001);
 	endif
+
+%	if iteration * dt * c >= lc/2
+%		return
+%	endif
 endwhile
