@@ -60,7 +60,7 @@ numAboveThreshold = 10;
 
 samplesInTimePeriod = round(timePeriod * samplerate);
 preWindowSamples = round(preWindow * samplesInTimePeriod) + 1;
-silenceSamples = leadingSilence * length(master);
+silenceSamples = ceil(leadingSilence * length(master));
 
 triggerMaster = trigger(master, silenceSamples, thresholdFactor, numAboveThreshold);
 triggerSlave  = trigger(slave,  silenceSamples, thresholdFactor, numAboveThreshold);
