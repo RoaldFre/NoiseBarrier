@@ -10,8 +10,8 @@ rho=1.3;
 c=340;
 %% grid parameters
 fac=10;
-D=0.4;  %in m
-L=0.8;  %in m !!!x-y coordinate system
+D=0.6;  %in m
+L=1.0;  %in m !!!x-y coordinate system
 
 dx=1e-4*fac;
 dz=dx;
@@ -19,7 +19,8 @@ dz=dx;
 ndx=round(L/dx);
 ndz=round(D/dz);
 
-dt=1/real(c)/sqrt(1/dx^2+1/dz^2);
+%dt=1/real(c)/sqrt(1/dx^2+1/dz^2);
+dt=1/real(c)/sqrt(1/dx^2+1/dz^2)  *  0.5;
 
 xvec=linspace(0,L,ndx);
 zvec=linspace(0,D,ndz);
@@ -32,25 +33,32 @@ tvec=linspace(0,simt,ndt);
 %% excitation parameters
 Texc=simt/100;
 fexc=1/Texc;
-nT=4;
-next=round(nT*Texc/dt);
+next=round(Texc/dt);
 ext=hanning(next);
-nexpx=1;
-nexpz=1;
-exx=hanning(nexpx);
-exz=hanning(nexpz);
-exxz=(exx*ones(1,nexpz)).*(ones(nexpx,1)*exz.');
+%ext = [ext; zeros(1000,1)];
+nexpx=21;
+nexpz=21;
+
+sigma = 4;
+xdists = ones(nexpz,1) * linspace(-sigma, sigma, nexpx);
+zdists = linspace(-sigma, sigma, nexpz)' * ones(1,nexpx);
+dists_sq = xdists.^2 + zdists.^2;
+exxz = exp(-dists_sq/2);
+
+%exx=hanning(nexpx);
+%exz=hanning(nexpz);
+%exxz=(exx*ones(1,nexpz)).*(ones(nexpx,1)*exz.');
 
 expointx=round(ndx/4);
 expointz=round(ndz/4);
 
-hh=figure;
-texc=linspace(0,nT*Texc,next);
-plot(texc,sin(2*pi*fexc*texc).*ext.')
+%%%hh=figure;
+%%%texc=linspace(0,nT*Texc,next);
+%%%plot(texc,sin(2*pi*fexc*texc).*ext.')
 %% defect parameters
 % %defect boundaries
-lengthD=10*dx;
-heigthD=3*D/4;
+lengthD=0.06;
+heigthD=0.21;
 Dleft=L/2-lengthD/2;
 Dright=L/2+lengthD/2;
 Dtop=D-heigthD;
@@ -101,14 +109,15 @@ counterM=1;
 counterrec=1;
 if vis
     h=figure;
-    maximize(gcf)
+    %maximize(gcf)
 end
 for t=1:ndt
     if t<=next
-        P(expointx:expointx+nexpx-1,expointz:expointz+nexpz-1)=exxz*sin(2*pi*fexc*t*dt)*ext(t);
-        figure(hh);
+        %P(expointx:expointx+nexpx-1,expointz:expointz+nexpz-1)=exxz*sin(2*pi*fexc*t*dt)*ext(t);
+        P(expointx:expointx+nexpx-1,expointz:expointz+nexpz-1) = exxz * ext(t);
+        %%%figure(hh);
         hold on
-        plot(t*dt,sin(2*pi*fexc*t*dt)*ext(t),'*k');
+        %%%plot(t*dt,sin(2*pi*fexc*t*dt)*ext(t),'*k');
     end   
 
     %calculate differences
@@ -174,15 +183,16 @@ for t=1:ndt
     counter=counter+1;
     
     %visualize during calculation
-    if vis
+    if vis && ~mod(counter, 50)
         fig=real(P);
-        fig(left:right,bottom:top)=zeros;
+        %fig(left:right,bottom:top)=zeros;
+        fig(left:right,bottom:top)=-Inf;
         figure(h)
         imagesc(xvec,zvec,fig.')
         axis xy
         axis tight
         title(['t = ',num2str(t*dt),' of ',num2str(ndt*dt)])
-        pause(0.01)
+        pause(0.0001)
     end
     
     %visualize progress
@@ -198,7 +208,7 @@ end
 %% visualize
 visM=M2;
 h=figure;
-maximize(h)
+%maximize(h)
 cmax=max(max(max(visM(2:end-1,2:end-1,:))));
 cmin=min(min(min(visM(2:end-1,2:end-1,:))));
 for ii=1:size(visM,3);
