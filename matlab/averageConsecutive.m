@@ -13,9 +13,11 @@ start = max(0, triggerMax(signal, triggerThreshold, numAboveThreshold) - numPreT
 
 averaged = zeros(singleLength, 1);
 
-for i = 0 : n-1
+%for i = 0 : n-1
+for i = 2 : n-2
 	averaged = averaged + signal(start + i*singleLength : start + (i+1)*singleLength - 1);
 end
 
-averaged = averaged / n;
+%averaged = averaged / n;
+averaged = averaged / (n - 2);
 
