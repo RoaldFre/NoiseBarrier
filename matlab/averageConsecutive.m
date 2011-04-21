@@ -19,7 +19,7 @@ else
 	steps = 0 : n-1;
 end
 
-numberOfAverages = length(steps):
+numberOfAverages = length(steps);
 
 for i = steps
 	averaged = averaged + signal(start + i*singleLength : start + (i+1)*singleLength - 1);
