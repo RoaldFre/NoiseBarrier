@@ -6,13 +6,15 @@ function window = tanhWindow(f1, f2, width1, width2, samplerate, n)
 % samplerate:     Samplerate of signal.
 % n:              Number of samples (should be even for the moment).
 
-freqs = linspace(samplerate/n, samplerate/2, n/2)';
-win = (0.5 + 0.5*tanh((freqs - f1)/width1)) ...
-	- (0.5 + 0.5*tanh((freqs - f2)/width2));
-if mod(n, 2)
-	%window = [win; 0; win(length(win):-1:1)];
-	error 'uneven lengths make tanhwindow sad!'
-	window = [];
+if mod(n,2)
+	freqs = -(n-1)/2 : (n-1)/2; % N odd
 else
-	window = [win; win(length(win):-1:1)];
+	freqs = -n/2 : n/2-1; % N even
 end
+freqs = ifftshift(freqs)';
+
+window = (0.5 + 0.5*tanh((abs(freqs) - f1)/width1)) ...
+	.* (0.5 + 0.5*tanh(-(abs(freqs) - f2)/width2));
+
+figure;
+plot(window)
