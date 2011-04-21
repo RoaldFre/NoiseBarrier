@@ -1,0 +1,30 @@
+function [windowed, window, unwindowed, indices] = adrienneWindow(signal, lengthInMilliseconds, samplerate)
+
+flatSamples = round(lengthInMilliseconds * samplerate / 1000);
+startSamples = round(0.0005 * samplerate);
+endSamples = round(flatSamples * 3 / 7);
+
+startWindow = blackmanHarrisHalf(-startSamples);
+flatWindow = ones(1, flatSamples);
+endWindow = blackmanHarrisHalf(endSamples);
+
+window = [startWindow, flatWindow, endWindow]';
+
+
+trigger = triggerMax(signal, 0.5, 3);
+pretrigger = round(0.0002 * samplerate);
+start = trigger-pretrigger - startSamples;
+
+unwindowed = signal(start : start + length(window) - 1);
+windowed = unwindowed .* window;
+
+indices = -startSamples : length(window) - startSamples - 1;
+
+
+
+clf; hold on;
+normalization = max(abs(unwindowed));
+plot(indices, windowed / normalization, 'b');
+plot(indices, window, 'r');
+plot(indices, unwindowed / normalization, 'k');
+hold off;
