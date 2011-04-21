@@ -48,7 +48,7 @@ function shifted = syncdirect(master, slave, timePeriod, leadingSilence, sampler
 %amount of timePeriods to look ahead of trigger in order to sync
 %TODO Make sure that this doesn't go too far "to the left" (in negative 
 %indices)
-preWindow = 0.2;
+preWindow = 0.1;
 
 %trigger when the signal gets higher than thresholdFactor times the rms of 
 %the leading noise
@@ -56,11 +56,11 @@ thresholdFactor = 4;
 
 %trigger when the signal has numAboveThreshold successive samples above the 
 %threshold
-numAboveThreshold = 10;
+numAboveThreshold = 3;
 
 samplesInTimePeriod = round(timePeriod * samplerate);
 preWindowSamples = round(preWindow * samplesInTimePeriod) + 1;
-silenceSamples = ceil(leadingSilence * length(master));
+silenceSamples = ceil(leadingSilence * samplerate);
 
 triggerMaster = trigger(master, silenceSamples, thresholdFactor, numAboveThreshold);
 triggerSlave  = trigger(slave,  silenceSamples, thresholdFactor, numAboveThreshold);
@@ -70,6 +70,8 @@ triggerSlave  = trigger(slave,  silenceSamples, thresholdFactor, numAboveThresho
 if normalizeAmplitude
 	% Try guess the amplitude of the signals as best as we can
 	% Set up a preliminary window with only direct sound
+	triggerMaster - preWindowSamples
+				triggerMaster + samplesInTimePeriod
 	masterWindow = master(triggerMaster - preWindowSamples...
 				: triggerMaster + samplesInTimePeriod);
 	slaveWindow = slave(triggerSlave - preWindowSamples...
@@ -136,11 +138,10 @@ shifted = shifted * bestFactor;
 
 
 
-figure;
-hold on;
+clf; hold on;
 plot(master,'ko');
 plot(shifted + bestOffset,'rx');
 plot(master - shifted - bestOffset,'g-');
 axis([triggerMaster - preWindowSamples, triggerMaster + samplesInTimePeriod, -0.1,0.1]);
 hold off;
-
+figure;

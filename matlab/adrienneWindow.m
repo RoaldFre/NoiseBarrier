@@ -4,9 +4,16 @@ flatSamples = round(lengthInMilliseconds * samplerate / 1000);
 startSamples = round(0.0005 * samplerate);
 endSamples = round(flatSamples * 3 / 7);
 
+%tanhwindow does not work with uneven lengths yet...
+if mod(startSamples + flatSamples + endSamples, 2)
+	flatSamples = flatSamples + 1;
+end
+
+
 startWindow = blackmanHarrisHalf(-startSamples);
 flatWindow = ones(1, flatSamples);
 endWindow = blackmanHarrisHalf(endSamples);
+
 
 window = [startWindow, flatWindow, endWindow]';
 

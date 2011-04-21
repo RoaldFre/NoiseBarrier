@@ -9,7 +9,7 @@ function averaged = averageConsecutive(signal, singleLength, n, triggerThreshold
 %
 % Authors: Roald Frederickx, Elise Wursten.
 
-start = max(0, triggerMax(signal, triggerThreshold, numAboveThreshold) - numPreTrigger);
+start = max(0, triggerMax(signal, triggerThreshold, numAboveThreshold) - numPreTrigger)
 
 averaged = zeros(singleLength, 1);
 
@@ -19,7 +19,7 @@ else
 	steps = 0 : n-1;
 end
 
-numberOfAverages = length(steps);
+numberOfAverages = length(steps):
 
 for i = steps
 	averaged = averaged + signal(start + i*singleLength : start + (i+1)*singleLength - 1);
