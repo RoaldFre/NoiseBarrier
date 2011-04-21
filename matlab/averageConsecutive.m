@@ -1,4 +1,4 @@
-function averaged = averageConsecutive(signal, singleLength, n, triggerThreshold, numAboveThreshold, numPreTrigger)
+function averaged = averageConsecutive(signal, singleLength, n, triggerThreshold, numAboveThreshold, numPreTrigger, ignoreFirstAndLast)
 % averaged = averageConsecutive(signal, singleLength, n)
 %
 % Average 'n' consecutive measurements of length 'singleLength' (number of 
@@ -13,11 +13,18 @@ start = max(0, triggerMax(signal, triggerThreshold, numAboveThreshold) - numPreT
 
 averaged = zeros(singleLength, 1);
 
-%for i = 0 : n-1
-for i = 2 : n-2
+if ignoreFirstAndLast
+	steps = 1 : n-2;
+else
+	steps = 0 : n-1;
+end
+
+numberOfAverages = length(steps);
+
+for i = steps
 	averaged = averaged + signal(start + i*singleLength : start + (i+1)*singleLength - 1);
 end
 
 %averaged = averaged / n;
-averaged = averaged / (n - 2);
+averaged = averaged / numberOfAverages;
 
