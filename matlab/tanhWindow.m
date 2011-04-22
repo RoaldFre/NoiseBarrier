@@ -7,9 +7,9 @@ function window = tanhWindow(f1, f2, width1, width2, samplerate, n)
 % n:              Number of samples (should be even for the moment).
 
 if mod(n,2)
-	freqs = -(n-1)/2 : (n-1)/2; % N odd
+	freqs = (-(n-1)/2 : (n-1)/2) / n * samplerate; % N odd
 else
-	freqs = -n/2 : n/2-1; % N even
+	freqs = (-n/2 : n/2-1) / n * samplerate; % N even
 end
 freqs = ifftshift(freqs)';
 
