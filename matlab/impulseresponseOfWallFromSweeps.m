@@ -11,6 +11,7 @@ flatLength = 8; %in ms
 sweeps = loadfile([dir,'/',signal,'-vrij-h315-rsm300-gras-2']);
 sweeps = sweeps(:,1);
 
+%TODO: add tanh window in impulseResponseFromSweeps
 IRfree = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger);
 [IRfreeWindowed, window, unwindowed] = adrienneWindow(IRfree, flatLength, 96000);
 
@@ -38,9 +39,9 @@ hold off;
 
 IRsubtracted = IRsynced - IRfreeWindowed;
 
-IRsubtractedWindowed = adrienneTillEnd(IRsynced, 0.0, 96000);
+IRsubtractedWindowed = adrienneTillEnd(IRsubtracted, 0.0, 96000);
 
-spectrum = abs(fft(IRsubtractedWindowed, length(IRwindowed)) ./ fft(IRwindowed));
+spectrum = abs(fft(IRsubtractedWindowed, length(IRwindowed)) ./ fft(IRfreeWindowed));
 f = linspace(0, 96000, length(spectrum));
 figure;
 plot(f, spectrum, '-x');
@@ -59,6 +60,6 @@ IRdeconvTanh = ifft(fft(IRwindowedPadded) ./ fft(IRfreeWindowedPadded) .* tanhWi
 
 
 figure;
-plot(IRdeconvTanh);
+plot(real(IRdeconvTanh));
 
 

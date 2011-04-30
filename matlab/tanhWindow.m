@@ -16,5 +16,7 @@ freqs = ifftshift(freqs)';
 window = (0.5 + 0.5*tanh((abs(freqs) - f1)/width1)) ...
 	.* (0.5 + 0.5*tanh(-(abs(freqs) - f2)/width2));
 
+return
+
 figure;
 plot(window)

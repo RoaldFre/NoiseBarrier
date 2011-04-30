@@ -1,7 +1,7 @@
-function [windowed, window, unwindowed, indices] = adrienneWindow(signal, lengthInMilliseconds, samplerate)
+function [windowed, window, unwindowed, indices] = adrienneWindowAdjustableStart(signal, startLengthInMilliseconds, lengthInMilliseconds, samplerate)
 
 flatSamples = round(lengthInMilliseconds * samplerate / 1000);
-startSamples = round(0.0005 * samplerate);
+startSamples = round(startLengthInMilliseconds * samplerate / 1000);
 endSamples = round(flatSamples * 3 / 7);
 
 %tanhwindow does not work with uneven lengths yet...

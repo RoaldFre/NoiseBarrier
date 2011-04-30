@@ -1,6 +1,12 @@
-data = load('../data/scalemodel.mat');
-data = normalize(data.meetresultaten); %clipping of scope == +/xInf in dataset
+data = load('../data/scalemodel/vrije-veld/480hoog-150ver-notzoomed-nor-clipped0.dat');
+t = data(:,1);
+mic = normalize(data(:,2));
 
-hold on;
-plot(data(:,1), data(:,100), 'r');
-plot(data(:,1), highpass(data(:,100),25e6, 4e3)); %cut off at 4kHz
+plot(t,mic);
+
+micWithoutTrigger = mic(2000:end);
+
+dt = t(2) - t(1);
+freqs = linspace(0, 1/dt, length(micWithoutTrigger));
+plot(freqs, abs(fft(micWithoutTrigger)));
+

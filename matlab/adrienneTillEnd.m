@@ -24,6 +24,7 @@ windowed = unwindowed .* window;
 
 indices = -startSamples : length(window) - startSamples - 1;
 
+return
 
 clf; hold on;
 normalization = max(abs(unwindowed));

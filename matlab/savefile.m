@@ -3,4 +3,4 @@ function savefile(data, filename)
 % directory, without having to dick around with unix vs windows slashes.
 
 %save ['../data/',filename] -V7 data;
-save(['..\data\',filename], 'data', '-V7');
+save(['../data/',filename], 'data', '-V7');
