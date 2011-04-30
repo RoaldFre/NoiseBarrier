@@ -9,12 +9,12 @@ sourceToRecord = sourceToWall + wallWidth + wallToRecord;
 recordHeight = 0.03;
 
 recordSideStep = 0.03;
-recondUpStep = 0.03;
+recordUpStep = 0.03;
 
 sideSteps = 12;
 upSteps = 8;
 
-load('../data/simulation/achterMuurGroffer/all');
+load('../data/simulation/achterMuur/all');
 measurements = Precord';
 len = length(measurements(:,1));
 time = linspace(0, len*dt, len);
@@ -32,7 +32,18 @@ freeField = Precord(1,:)';
 
 samplerate = 1/dt;
 
+%spark-to-mic distance free field measurement
+xrecDist = xrec(1)*L/ndx;
+zrecDist = zrec(1)*D/ndz;
+rFreeField = sqrt((xrecDist - extx)^2 + (zrecDist - extz)^2);
+%spark-to-mic distance for closest and highest measurement point
+rMeasurement = sqrt(sourceToRecord^2 + (recordHeight + upSteps * recordUpStep - sourceHeight)^2);
+%normalization
+freeField = freeField * rFreeField; 
+measurements = measurements * rMeasurement;
+
 c = 340;
+
 
 factor = 10;
 windowStartLength = 0.5 / factor; %in milliseconds

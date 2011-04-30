@@ -10,28 +10,36 @@ tMin = time(1);
 tMax = time(end);
 c = 340;
 
+%normalize
+factor = max(abs(deconvolved(:,8)));
+measurements = measurements / factor;
+deconvolved = deconvolved / factor;
+
+simFactor = max(abs(simDeconvolved(:,8)));
+simulated = simulated / simFactor;
+simDeconvolved = simDeconvolved / simFactor;
+
 for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;
-
-		subplot(4,1,1);
-		loglog(measurementFreqs, spectra(:,i));
+		
+		clf;
+		subplot(2,1,1);
+		hold on;
+		semilogx(measurementFreqs, 20*log10(spectra(:,i)), 'r');
+		semilogx(simFreqs, 20*log10(simSpectra(:,i)), 'k');
 		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
-		axis([5000, 50000, 0.0001, 0.5]);
-		subplot(4,1,2);
-		plot(time, deconvolved(:,i));
-		axis([tMin, tMax, -0.0003, 0.0008]);
-
-		subplot(4,1,3);
-		loglog(simFreqs, simSpectra(:,i));
-		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
-		axis([5000, 50000, 0.0001, 0.5]);
-		subplot(4,1,4);
-		plot(simTime, simDeconvolved(:,i));
-		axis([tMin, tMax, -0.004, 0.006]);
+		axis([1000, 50000, -60, 20]);
+		
+		subplot(2,1,2);
+		hold on;
+		plot(time, deconvolved(:,i), 'r');
+		plot(simTime, simDeconvolved(:,i), 'k');
+		axis([tMin, tMax, -0.004, 0.006],'autoy');
 
 		pause(2);
 	end
 	pause(3);
 end
+hold off;
 

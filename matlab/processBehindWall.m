@@ -9,7 +9,7 @@ sourceToRecord = sourceToWall + wallWidth + wallToRecord;
 recordHeight = 0.03;
 
 recordSideStep = 0.03;
-recondUpStep = 0.03;
+recordUpStep = 0.03;
 
 sideSteps = 12;
 upSteps = 8;
@@ -27,6 +27,14 @@ freeFieldTime = freeField(:,1);
 freeFieldSignal = freeField(:,2);
 dt = freeFieldTime(2) - freeFieldTime(1);
 samplerate = 1/dt;
+
+%spark-to-mic distance free field measurement
+rFreeField = 0.15;
+%spark-to-mic distance for closest and highest measurement point
+rMeasurement = sqrt(sourceToRecord^2 + (recordHeight + upSteps * recordUpStep - sourceHeight)^2);
+%normalization
+freeFieldSignal = freeFieldSignal * rFreeField; 
+measurements = measurements * rMeasurement;
 
 c = 340;
 
