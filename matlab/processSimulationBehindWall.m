@@ -14,10 +14,14 @@ recordUpStep = 0.03;
 sideSteps = 12;
 upSteps = 8;
 
-load('../data/simulation/achterMuur/all');
+load('../data/simulation/achterMuurGroffer/all');
 measurements = Precord';
 len = length(measurements(:,1));
-time = linspace(0, len*dt, len);
+time = linspace(0, len*dt, len)';
+
+for i=1:length(measurements(1,:))
+	measurements(:,i) = from2Dto3D(measurements(:,i), time);
+end
 
 %dir = '../data/simulation/vrijAchterMuurGroffer/';
 %filename = [dir,'freeFieldFloor_Texc',num2str(Texc),'_nexp',num2str(nexpx),'_exSize',num2str(exSize),'_dx',num2str(dx),'_all']
@@ -29,25 +33,26 @@ dir = '../data/simulation/freefield/';
 filename = [dir,'freeField_Texc',num2str(Texc),'_nexp',num2str(nexpx),'_exSize',num2str(exSize),'_dx',num2str(dx),'_all'];
 load(filename);
 freeField = Precord(1,:)';
+freeFieldTime = linspace(0, length(freeField)*dt, length(freeField))';
+freeField = from2Dto3D(freeField, freeFieldTime);
 
 samplerate = 1/dt;
 
 %spark-to-mic distance free field measurement
 xrecDist = xrec(1)*L/ndx;
 zrecDist = zrec(1)*D/ndz;
-rFreeField = sqrt((xrecDist - extx)^2 + (zrecDist - extz)^2);
+rFreeField = sqrt((xrecDist - extx)^2 + (zrecDist - extz)^2)
 %spark-to-mic distance for closest and highest measurement point
-rMeasurement = sqrt(sourceToRecord^2 + (recordHeight + upSteps * recordUpStep - sourceHeight)^2);
+rMeasurement = sqrt(sourceToRecord^2 + (recordHeight + upSteps * recordUpStep - sourceHeight)^2)
+
 %normalization
+%freeFieldRaw = freeField;
+%measurementsRaw = measurements;
 freeField = freeField * rFreeField; 
 measurements = measurements * rMeasurement;
 
 c = 340;
 
-
-factor = 10;
-windowStartLength = 0.5 / factor; %in milliseconds
-windowFlatLength = 20 / factor;
 
 freeFreqs = linspace(0, samplerate, length(freeField));
 measurementFreqs = linspace(0, samplerate, len);
@@ -59,6 +64,7 @@ deconvolved = zeros(size(measurements));
 freeFieldSpectrum = fft(freeField, len);
 %freeFieldFloorSpectrum = fft(freeFieldFloor, len);
 window = tanhWindow(5000, 40000, 100, 5000, samplerate, len);
+%window = tanhWindow(5000, 90000, 100, 5000, samplerate, len);
 for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;

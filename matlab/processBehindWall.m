@@ -1,4 +1,4 @@
-function [measurements, time, spectra, measurementFreqs, freeFieldWindowed, deconvolved, sideSteps, upSteps] = processBehindWall
+function [measurements, time, spectra, measurementFreqs, freeFieldWindowed, deconvolved, sideSteps, upSteps, measurementsCorrected, spectraCorrected, deconvolvedCorrected] = processBehindWall
 
 sourceHeight = 0.125;
 sourceToWall = 1.2;
@@ -29,12 +29,26 @@ dt = freeFieldTime(2) - freeFieldTime(1);
 samplerate = 1/dt;
 
 %spark-to-mic distance free field measurement
-rFreeField = 0.15;
+rFreeField = 0.15
 %spark-to-mic distance for closest and highest measurement point
-rMeasurement = sqrt(sourceToRecord^2 + (recordHeight + upSteps * recordUpStep - sourceHeight)^2);
+rMeasurement = sqrt(sourceToRecord^2 + (recordHeight + upSteps * recordUpStep - sourceHeight)^2)
 %normalization
+freeFieldSignalRaw = freeFieldSignal;
+measurementsRaw = measurements;
 freeFieldSignal = freeFieldSignal * rFreeField; 
 measurements = measurements * rMeasurement;
+
+%correct air absorption
+windowWidth = 400*dt; %length of hanning for correction of air absorption
+T = 22; %degrees C
+H = 60; %relative humidity
+maxFreq = 2e5;
+measurementsCorrected = zeros(size(measurements));
+for i = 1 : length(measurements(1,:))
+	measurementsCorrected(:,i) = correctAirAbsorption(measurements(:,i), time, windowWidth, T, H, maxFreq);
+end
+
+freeFieldSignalCorrected = correctAirAbsorption(freeFieldSignal, freeFieldTime, windowWidth, T, H, maxFreq);
 
 c = 340;
 
@@ -44,6 +58,7 @@ windowStartLength = 0.5 / factor; %in milliseconds
 windowFlatLength = 20 / factor;
 
 freeFieldWindowed = adrienneWindowAdjustableStart(freeFieldSignal(650:end), windowStartLength, windowFlatLength, samplerate);
+freeFieldWindowedCorrected = adrienneWindowAdjustableStart(freeFieldSignalCorrected(650:end), windowStartLength, windowFlatLength, samplerate);
 
 freeFreqs = linspace(0, samplerate, length(freeFieldWindowed));
 
@@ -51,9 +66,14 @@ measurementFreqs = linspace(0, samplerate, len);
 
 
 spectra = zeros(size(measurements));
-spectraWindowed = zeros(size(measurements));
+spectraCorrected = zeros(size(measurements));
+spectraWindowedCorrected = zeros(size(measurements));
 deconvolved = zeros(size(measurements));
+deconvolvedCorrected = zeros(size(measurements));
+
 freeFieldSpectrum = fft(freeFieldWindowed, len);
+freeFieldSpectrumCorrected = fft(freeFieldWindowedCorrected, len);
+%window = tanhWindow(5000, 90000, 100, 5000, samplerate, len);
 window = tanhWindow(5000, 40000, 100, 5000, samplerate, len);
 for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
@@ -62,7 +82,11 @@ for x = 0 : sideSteps - 1
 		spectraWindowed(:,i) = spectra(:,i) .* window;
 		deconvolved(:,i) = real(ifft(spectraWindowed(:,i)));
 		spectra(:,i) = abs(spectra(:,i));
-		spectraWindowed(:,i) = abs(spectraWindowed(:,i));
+
+		spectraCorrected(:,i) = fft(measurementsCorrected(:,i)) ./ freeFieldSpectrumCorrected;
+		spectraWindowedCorrected(:,i) = spectraCorrected(:,i) .* window;
+		deconvolvedCorrected(:,i) = real(ifft(spectraWindowedCorrected(:,i)));
+		spectraCorrected(:,i) = abs(spectraCorrected(:,i));
 	end
 end
 

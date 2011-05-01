@@ -1,4 +1,4 @@
-%function corrected = correctAirAbsorption(signal, time, windowWidth, temperatureC, humidity, maxFreq)
+function corrected = correctAirAbsorption(signal, time, windowWidth, temperatureC, humidity, maxFreq)
 
 samplerate = 1/(time(2) - time(1));
 
