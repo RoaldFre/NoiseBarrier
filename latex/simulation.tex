@@ -1,0 +1,97 @@
+\section{Numerical simulation}
+With the ever increasing strength of modern computers, it has become feasible to make accurate simulations of physical systems. This is often more practical than building an actual physical (scale)model.
+
+
+\subsection{Finite difference time domain method}
+In this section, we describe an implementation of a finite difference time domain method. This is a simple and intuitive way of simulating the progression of acoustic waves through a medium (in our case, air) that allows us to easily implement obstacles (eg. a hard floor, a wall). For simplicity, an infinitely long barrier on an infinitely large floor is assumed. The problem thus reduces to two dimensions.
+
+Our implementation is based on a two dimensional staggered grid [XXX citation] of velocities $\vecvij = (\vij, \wij)$ and pressures $\pij$, connected by the discretization of equation \ref{newt} and \ref{dpdt} [XXX FIX REF]. At each time step, the velocities are updated by the rule derived from \ref{newt}:
+$$
+\vij' = \vij - \frac{\Dt}{\rho} \frac{p_{i+1,j} - \pij}{\Dx}
+\qquad \textrm{and} \qquad
+\wij' = \wij - \frac{\Dt}{\rho} \frac{p_{i,j-1} - \pij}{\Dy}
+$$
+with $\vij'$ and $\wij'$ the new velocity components, $\Dt$ the time step and $\rho$ the density of the fluid. Similarly, the pressure gets updated according to the discretized version of equation \ref{dpdt} [XXX FIX REF]
+$$
+\pij' = \pij - c^2 \rho \Dt \left(\frac{\vij - v_{i-1,j}}{\Dx} + \frac{\wij - v_{i,j+1}}{\Dy}\right)
+$$
+where we used $c^2 = p_0 \gamma / \rho$. Here, $\Dx$ and $\Dy$ are the discretization steps in the spacial directions.
+
+For this method to be stable, a constraint is imposed on the temporal and spacial discretization. Stability ensues only if the Courant-Friedrichs-Lewy condition is satisfied\cite{courant-friedrichs-lewy}\cite{numerical-stability-and-numerical-dispersion-of-a-compact-2D...}:
+$$
+c\Dt \leq \left(\frac{1}{(\Dx)^2} + \frac{1}{(\Dy)^2}\right) ^ {-1/2}
+$$
+In our case, we fixed $\Dx = \Dy = h$ and chose $\Dt$ as the largest number to satisfy the above relation:
+$$
+\Dt = \frac{h}{\sqrt{2}}
+$$
+
+
+\subsection{Modelling the physical scale model}
+The scale model setup discussed earlier/below TODO will be represented in the general framework from the previous section.
+
+\subsubsection*{The grid}
+The setup of the grid is summarized in table \ref{gridSetup}.
+
+
+\begin{table}[htb]
+\begin{center}
+\caption{The setup of the grid for the finite difference time domain simulation of the scale model\label{gridSetup}}
+\begin{tabular}{c|c|c}
+Measurement&	In front of wall&	Behind wall\\\hline
+grid dimensions&
+	$3.3\,\mathrm{m} \times 1.4\,\mathrm{m}$&
+	$2.8\,\mathrm{m} \times 1.3\,\mathrm{m}$\\
+spacial discretization $h$&
+	$0.3\,\mathrm{mm}$&
+	$0.25\,\mathrm{mm}$\\
+temporal discretization $\Dt$&
+	$0.62\,\mu\mathrm{s}$&
+	$0.52\,\mu\mathrm{s}$\\
+grid size in points&
+	$11000 \times 4667$&
+	$11200 \times 5200$\\
+position of source from left boundary&
+	$0.75\,\mathrm{m}$&
+	$0.60\,\mathrm{m}$\\
+distance from source to wall&
+	$2.0\,\mathrm{m}$&
+	$1.2\,\mathrm{m}$\\
+\end{tabular}
+\end{center}
+\end{table}
+
+The height of the excitation source was 15\,cm in both setups, which is the height of the actual spark source used in the scale model measurements.
+
+TODO imagesc of grid
+
+\subsubsection*{The excitation}
+To keep the running time of the simulation short, an impulse excitation was chosen. This also mimics the excitation of the scale model with the spark source.
+
+The excitation signal consisted of a temporal impulse shaped like a hanning function with a duration of 25\,$\mu$s. This is sufficiently long to avoid temporal discretization artifacts, and sufficiently short to cover all the frequencies we are interested in.
+
+To avoid spatial discretization artifacts, the excitation was spread out over a two dimensional gaussian with a width $2\sigma$ of 3\,mm. This proved to be a good trade-off between a perfect point source and excessive discretization artifacts. Note that the spark gap of the spark source used in the experiment had a comparable size of 3\,mm.
+
+The excitation signal was applied as a soft source\cite{Comparison of FDTD hard source with FDTD soft source} by simply adding it to the pressure field. Because the excitation is merely added to the pressure field, and not forced (as for hard sources), the actual signal that will be radiated from the source point will not be equal to the excitation signal itself. It will be altered by the response of the system. A virtual free field measurement was performed to characterize the total resulting excitation signal.
+
+[TODO plots: timesignal hanning en freefield + spectrum; imagesc van gaussische]
+
+
+\subsubsection*{The boundaries}
+The entire space was modelled to have perfectly reflecting edges as boundaries. The wall itself was also modelled to be perfectly reflecting (ie. having an infinite impedance). This was accomplished by forcing the velocity parallel to the surface to be zero. For example, for the floor this means $v_{i,0} = 0$ and for the left wall this means $u_{0,j} = 0$.
+
+
+
+\subsubsection*{Matching 2D simulation with 3D scale model}
+Given the large amount of symmetry, the situation lent itself perfectly for simulation in two dimensions. However, this also means that there are some discrepancies when compared to the 3D scale model.
+
+The most profound difference is the fact that the pressure signal of a point source in 2D (or a line source in 3D) has a $1/\sqrt{r}$ geometrical attenuation, whereas a point source in 3D has a $1/r$ dependency, with $r$ the distance traveled. In order to be able to compare the simulation with the scale model, an extra correction of the pressure amplitudes was made to factor in the energy radiated away in the third dimension in a 3D setup.
+$$
+\pij^{\mathrm{3D}}(t) = \frac{\pij(t)}{\sqrt{ct}}
+$$
+Note that this correction was applied afterwards on the data of the finished the simulation, not while it was running. In every result that follows, we used the corrected pressure amplitudes $\pij^{\mathrm{3D}}$. [TODO even when we mention $\pij$?]
+
+
+
+
+% vim: spell spelllang=en_us
