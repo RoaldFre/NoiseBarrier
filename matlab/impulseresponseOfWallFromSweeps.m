@@ -11,8 +11,7 @@ flatLength = 8; %in ms
 sweeps = loadfile([dir,'/',signal,'-vrij-h315-rsm300-gras-2']);
 sweeps = sweeps(:,1);
 
-%TODO: add tanh window in impulseResponseFromSweeps
-IRfree = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger);
+IRfree = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
 [IRfreeWindowed, window, unwindowed] = adrienneWindow(IRfree, flatLength, 96000);
 
 IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
@@ -22,7 +21,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 sweeps = loadfile([dir,'/',signal,'-h315-rsm300-theta50-gras-1']);
 sweeps = sweeps(:,1);
 
-IR = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger);
+IR = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
 
 [IRwindowed, window, unwindowed] = adrienneWindow(IR, flatLength, 96000);
 
