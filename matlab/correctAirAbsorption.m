@@ -64,7 +64,7 @@ while (start <= n - windowSamples + 1)
 end
 %ending window
 segment = signal(start : end);
-t = time(start + floor(end - start)/2);
+t = time(start + floor((end - start)/2));
 correction = exp(x .* a(1 : n-start+1) .* c.*t);
 correction = min(correction, correction(round(maxFreq / samplerate * (n - start))));
 correctedSegment = ifft(fft(segment) .* correction);
