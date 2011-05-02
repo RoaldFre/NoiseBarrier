@@ -1,4 +1,4 @@
-function [measurements, time, spectra, measurementFreqs, freeFieldWindowed, deconvolved, sideSteps, upSteps, measurementsCorrected, spectraCorrected, deconvolvedCorrected] = processBehindWall
+%function [measurements, time, spectra, measurementFreqs, freeFieldWindowed, deconvolved, sideSteps, upSteps, measurementsCorrected, spectraCorrected, deconvolvedCorrected, bandsGrid] = processBehindWall
 
 sourceHeight = 0.125;
 sourceToWall = 1.2;
@@ -33,8 +33,6 @@ rFreeField = 0.15
 %spark-to-mic distance for closest and highest measurement point
 rMeasurement = sqrt(sourceToRecord^2 + (recordHeight + upSteps * recordUpStep - sourceHeight)^2)
 %normalization
-freeFieldSignalRaw = freeFieldSignal;
-measurementsRaw = measurements;
 freeFieldSignal = freeFieldSignal * rFreeField; 
 measurements = measurements * rMeasurement;
 
@@ -74,7 +72,14 @@ deconvolvedCorrected = zeros(size(measurements));
 freeFieldSpectrum = fft(freeFieldWindowed, len);
 freeFieldSpectrumCorrected = fft(freeFieldWindowedCorrected, len);
 %window = tanhWindow(5000, 90000, 100, 5000, samplerate, len);
-window = tanhWindow(5000, 40000, 100, 5000, samplerate, len);
+window = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
+
+bandBorders = [5e3, 10e3, 20e3, 40e3];
+nbBands = length(bandBorders) - 1;
+bandsGrid = zeros([sideSteps, upSteps, nbBands]);
+order = 1; %order of butterworth bandpass filter
+% TODO octave only accepts order one?
+
 for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;
@@ -87,9 +92,16 @@ for x = 0 : sideSteps - 1
 		spectraWindowedCorrected(:,i) = spectraCorrected(:,i) .* window;
 		deconvolvedCorrected(:,i) = real(ifft(spectraWindowedCorrected(:,i)));
 		spectraCorrected(:,i) = abs(spectraCorrected(:,i));
+
+		bandsGrid(x+1, y+1, :) = powerInBands(deconvolvedCorrected(:,i), bandBorders, samplerate, order);
 	end
 end
 
+
+for i=1:nbBands
+	imagesc(log(bandsGrid(:,:,i)))
+	pause(5);
+end
 
 
 return
