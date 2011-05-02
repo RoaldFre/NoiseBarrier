@@ -3,8 +3,14 @@
 \usepackage{a4wide}
 \usepackage[pdftex]{graphicx}
 \usepackage{subfigure}
+\usepackage{wrapfig}
+\usepackage{verbatim}
+\usepackage{epstopdf}
+\usepackage{amsfonts, amsmath, amsthm}
 \usepackage[format=hang,labelfont=bf]{caption}
 \usepackage{url}
+\setlength\parindent{0pt}
+\setlength\parskip{0.20in plus0.05in minus0.05in}
 
 \input{commands.tex}
 
@@ -16,6 +22,14 @@ scale model}
 \begin{document}
 \maketitle
 \input{abstract.tex}
+\input{theory.tex}
+\input{InSitu.tex}
 \input{simulation.tex}
+
+
+\clearpage
+\bibliographystyle{plain}
+\bibliography{references}
+\nocite{*}
 
 \end{document}
