@@ -1,9 +1,68 @@
-\section{Numerical simulation}
+% % % % % \section{Numerical simulation}
 With the ever increasing strength of modern computers, it has become feasible to make accurate simulations of physical systems. This is often more practical than building an actual physical (scale)model.
 
 
 \subsection{Finite difference time domain method}
-In this section, we describe an implementation of a finite difference time domain method. This is a simple and intuitive way of simulating the progression of acoustic waves through a medium (in our case, air) that allows us to easily implement obstacles (eg. a hard floor, a wall). For simplicity, an infinitely long barrier on an infinitely large floor is assumed. The problem thus reduces to two dimensions.
+In this section, we describe an implementation of a finite difference time domain (FDTD) method. This is a simple and intuitive way of simulating the progression of acoustic waves through a medium (in our case, air) that allows one to easily implement obstacles (eg. a hard floor, a wall). For simplicity, an infinitely long barrier on an infinitely large floor is assumed. The problem thus reduces to two dimensions.
+
+The FDTD method consists of simulating the pressure, $p$, and velocity, $\vec{v} = (v, w)$, fields on a discrete spacial grid. The basic equations that govern the evolution of these fields are equations \ref{newt} and \ref{dpdt}, which in two dimensions read
+$$
+\pderiv{v(x,y,t)}{t} = -\frac{1}{\rho} \pderiv{p(x,y,t)}{x}
+, \qquad
+\pderiv{w(x,y,t)}{t} = -\frac{1}{\rho} \pderiv{p(x,y,t)}{y}
+$$
+$$
+\pderiv{p(x,y,t)}{t} = -\rho c^2 \left(\pderiv{v(x,y,t)}{x} + \pderiv{w(x,y,t)}{y}\right)
+$$
+where we used $c^2 = p_0 \gamma / \rho$. These equations will be discretized in space and time. We use the shorthand notation $\pnij$ to denote $p(x_i, y_j, t_n)$. The velocities $\vnij$ and $\wnij$ are defined analogously. The above equations can now be discretized as a central difference
+$$
+\frac{\vij^{n+1} - \vij^{n-1}}{2\Dt} = -\frac{1}{\rho} \frac{\pn_{i+1,j} - \pn_{i-1,j}}{2\Dx}
+, \qquad
+\frac{\wij^{n+1} - \wij^{n-1}}{2\Dt} = -\frac{1}{\rho} \frac{\pn_{i,j+1} - \pn_{i,j-1}}{2\Dy}
+$$
+$$
+\frac{\pij^{n+1} - \pij^{n-1}}{2\Dt} = 
+	-\rho c^2 \left(
+		\frac{\vn_{i+1,j} - \vn_{i-1,j}}{2\Dx}
+		+ \frac{\wn_{i,j+1} - \wn_{i,j-1}}{2\Dy}
+	\right)
+$$
+
+An additional improvement can be made by shifting the pressure and velocity grids by half a step in each dimension (spacial and temporal). This is called a \emph{staggered grid}\cite{staggered-grid}, and is described by the transformation
+$$
+\vnij \to \vij^{n+\half}
+, \qquad
+\wnij \to \wij^{n+\half}
+, \qquad
+\pnij \to \pn_{i+\half, j+\half}
+$$
+This allows one to take the central derivatives over half the interval of before, as if the discretization length has halved
+$$
+\frac{\vij^{n+\half} - \vij^{n-\half}}{\Dt}
+	= -\frac{1}{\rho} \frac{\pn_{i+\half,j} - \pn_{i-\half,j}}{\Dx}
+, \qquad
+\frac{\wij^{n+\half} - \wij^{n-\half}}{\Dt}
+	= -\frac{1}{\rho} \frac{\pn_{i,j+\half} - \pn_{i,j-\half}}{\Dy}
+$$
+$$
+\frac{\pij^{n+\half} - \pij^{n-\half}}{\Dt} = 
+	-\rho c^2 \left(
+		\frac{\vn_{i+\half,j} - \vn_{i-\half,j}}{\Dx}
+		+ \frac{\wn_{i,j+\half} - \wn_{i,j-\half}}{\Dy}
+	\right)
+$$
+However, the points 
+	= -\frac{1}{\rho} \frac{\pn_{i+\half,j} - \pn_{i-\half,j}}{\Dx}
+These equations can easily be rewritten to find $\pij^{n+\half}$ in terms of $\vn_{i+\half,j}$, $\vn_{i-\half,j}$ and $\pij^{n-\half}$. Likewise for $\v
+
+
+
+this is all fucked up, yo
+
+
+
+
+
 
 Our implementation is based on a two dimensional staggered grid [XXX citation] of velocities $\vecvij = (\vij, \wij)$ and pressures $\pij$, connected by the discretization of equation \ref{newt} and \ref{dpdt} [XXX FIX REF]. At each time step, the velocities are updated by the rule derived from \ref{newt}:
 $$
@@ -13,13 +72,19 @@ $$
 $$
 with $\vij'$ and $\wij'$ the new velocity components, $\Dt$ the time step and $\rho$ the density of the fluid. Similarly, the pressure gets updated according to the discretized version of equation \ref{dpdt} [XXX FIX REF]
 $$
-\pij' = \pij - c^2 \rho \Dt \left(\frac{\vij - v_{i-1,j}}{\Dx} + \frac{\wij - v_{i,j+1}}{\Dy}\right)
+\pij' = \pij - c^2 \rho \Dt \left[\frac{\vij - v_{i-1,j}}{\Dx} + \frac{\wij - v_{i,j+1}}{\Dy}\right]
 $$
-where we used $c^2 = p_0 \gamma / \rho$. Here, $\Dx$ and $\Dy$ are the discretization steps in the spacial directions.
+where we used . Here, $\Dx$ and $\Dy$ are the discretization steps in the spacial directions.
 
-For this method to be stable, a constraint is imposed on the temporal and spacial discretization. Stability ensues only if the Courant-Friedrichs-Lewy condition is satisfied\cite{courant-friedrichs-lewy}\cite{numerical-stability-and-numerical-dispersion-of-a-compact-2D...}:
+
+
+
+For this method to be stable, a constraint is imposed on the temporal and 
+spacial discretization. Stability ensues only if the 
+Courant-Friedrichs-Lewy condition is 
+satisfied\cite{courant-friedrichs-lewy}\cite{numerical-stability-2D-FDTD}
 $$
-c\Dt \leq \left(\frac{1}{(\Dx)^2} + \frac{1}{(\Dy)^2}\right) ^ {-1/2}
+c\Dt \leq \left[\frac{1}{(\Dx)^2} + \frac{1}{(\Dy)^2}\right] ^ {-1/2}
 $$
 In our case, we fixed $\Dx = \Dy = h$ and chose $\Dt$ as the largest number to satisfy the above relation:
 $$
@@ -72,7 +137,14 @@ The excitation signal consisted of a temporal impulse shaped like a hanning func
 
 To avoid spatial discretization artifacts, the excitation was spread out over a two dimensional gaussian with a width $2\sigma$ of 3\,mm. This proved to be a good trade-off between a perfect point source and excessive discretization artifacts. Note that the spark gap of the spark source used in the experiment had a comparable size of 3\,mm.
 
-The excitation signal was applied as a soft source\cite{Comparison of FDTD hard source with FDTD soft source} by simply adding it to the pressure field. Because the excitation is merely added to the pressure field, and not forced (as for hard sources), the actual signal that will be radiated from the source point will not be equal to the excitation signal itself. It will be altered by the response of the system. A virtual free field measurement was performed to characterize the total resulting excitation signal.
+The excitation signal was applied as a soft 
+source\cite{soft-hard-source} by simply adding it to the 
+pressure field. Because the excitation is merely added to the pressure 
+field, and not forced (as for hard sources), the actual signal that will be 
+radiated from the source point will not be equal to the excitation signal 
+itself. It will be altered by the response of the system. A virtual free 
+field measurement was performed to characterize the total resulting 
+excitation signal.
 
 [TODO plots: timesignal hanning en freefield + spectrum; imagesc van gaussische]
 
@@ -82,7 +154,7 @@ The entire space was modelled to have perfectly reflecting edges as boundaries. 
 
 
 
-\subsubsection*{Matching 2D simulation with 3D scale model}
+\subsection{Matching 2D simulation with 3D scale model}
 Given the large amount of symmetry, the situation lent itself perfectly for simulation in two dimensions. However, this also means that there are some discrepancies when compared to the 3D scale model.
 
 The most profound difference is the fact that the pressure signal of a point source in 2D (or a line source in 3D) has a $1/\sqrt{r}$ geometrical attenuation, whereas a point source in 3D has a $1/r$ dependency, with $r$ the distance traveled. In order to be able to compare the simulation with the scale model, an extra correction of the pressure amplitudes was made to factor in the energy radiated away in the third dimension in a 3D setup.
@@ -90,7 +162,6 @@ $$
 \pij^{\mathrm{3D}}(t) = \frac{\pij(t)}{\sqrt{ct}}
 $$
 Note that this correction was applied afterwards on the data of the finished the simulation, not while it was running. In every result that follows, we used the corrected pressure amplitudes $\pij^{\mathrm{3D}}$. [TODO even when we mention $\pij$?]
-
 
 
 
