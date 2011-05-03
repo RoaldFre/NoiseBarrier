@@ -1,4 +1,4 @@
-% % % % % \section{Numerical simulation}
+\section{Numerical simulation}
 With the ever increasing strength of modern computers, it has become feasible to make accurate simulations of physical systems. This is often more practical than building an actual physical (scale)model.
 
 
@@ -27,62 +27,37 @@ $$
 		+ \frac{\wn_{i,j+1} - \wn_{i,j-1}}{2\Dy}
 	\right)
 $$
+Here, $\Dt$ is the temporal discretization, and $\Dx$ and $\Dy$ are the spatial discretizations.
 
-An additional improvement can be made by shifting the pressure and velocity grids by half a step in each dimension (spacial and temporal). This is called a \emph{staggered grid}\cite{staggered-grid}, and is described by the transformation
+An improvement on the accuracy can be made by shifting the pressure and velocity grids by half a step in the appropriate dimensions (spacial and temporal). This is called a \emph{staggered grid}\cite{staggered-grid}, and is described by the transformation
 $$
-\vnij \to \vij^{n+\half}
+\vnij \to v_{i,j+\half}^{n+\half}
 , \qquad
-\wnij \to \wij^{n+\half}
+\wnij \to w_{i+\half,j}^{n+\half}
 , \qquad
 \pnij \to \pn_{i+\half, j+\half}
 $$
 This allows one to take the central derivatives over half the interval of before, as if the discretization length has halved
 $$
-\frac{\vij^{n+\half} - \vij^{n-\half}}{\Dt}
-	= -\frac{1}{\rho} \frac{\pn_{i+\half,j} - \pn_{i-\half,j}}{\Dx}
-, \qquad
-\frac{\wij^{n+\half} - \wij^{n-\half}}{\Dt}
-	= -\frac{1}{\rho} \frac{\pn_{i,j+\half} - \pn_{i,j-\half}}{\Dy}
+\frac{v_{i,j+\half}^{n+\half} - v_{i,j+\half}^{n-\half}}{\Dt}
+	= -\frac{1}{\rho} \frac{\pn_{i+\half,j+\half} - \pn_{i-\half,j+\half}}{\Dx}
 $$
 $$
-\frac{\pij^{n+\half} - \pij^{n-\half}}{\Dt} = 
+\frac{w_{i+\half,j}^{n+\half} - w_{i+\half,j}^{n-\half}}{\Dt}
+	= -\frac{1}{\rho} \frac{\pn_{i+\half,j+\half} - \pn_{i+\half,j-\half}}{\Dy}
+$$
+$$
+\frac{p_{i+\half,j+\half}^{n+1} - p_{i+\half,j+\half}^{n}}{\Dt} = 
 	-\rho c^2 \left(
-		\frac{\vn_{i+\half,j} - \vn_{i-\half,j}}{\Dx}
-		+ \frac{\wn_{i,j+\half} - \wn_{i,j-\half}}{\Dy}
+		\frac{v_{i+1,j+\half}^{n+\half} 
+			- w_{i,j+\half}^{n+\half}}{\Dx}
+		- \frac{w_{i+\half,j+1}^{n+\half} 
+			- w_{i+\half,j}^{n+\half}}{\Dy}
 	\right)
 $$
-However, the points 
-	= -\frac{1}{\rho} \frac{\pn_{i+\half,j} - \pn_{i-\half,j}}{\Dx}
-These equations can easily be rewritten to find $\pij^{n+\half}$ in terms of $\vn_{i+\half,j}$, $\vn_{i-\half,j}$ and $\pij^{n-\half}$. Likewise for $\v
+These equations can now easily be solved for $p^{n+1}_{i+\half, j+\half}$, $v_{i,j+\half}^{n+\half}$ and $w_{i+\half,j}^{n+\half}$ to derive the update rules for the simulation.
 
-
-
-this is all fucked up, yo
-
-
-
-
-
-
-Our implementation is based on a two dimensional staggered grid [XXX citation] of velocities $\vecvij = (\vij, \wij)$ and pressures $\pij$, connected by the discretization of equation \ref{newt} and \ref{dpdt} [XXX FIX REF]. At each time step, the velocities are updated by the rule derived from \ref{newt}:
-$$
-\vij' = \vij - \frac{\Dt}{\rho} \frac{p_{i+1,j} - \pij}{\Dx}
-\qquad \textrm{and} \qquad
-\wij' = \wij - \frac{\Dt}{\rho} \frac{p_{i,j-1} - \pij}{\Dy}
-$$
-with $\vij'$ and $\wij'$ the new velocity components, $\Dt$ the time step and $\rho$ the density of the fluid. Similarly, the pressure gets updated according to the discretized version of equation \ref{dpdt} [XXX FIX REF]
-$$
-\pij' = \pij - c^2 \rho \Dt \left[\frac{\vij - v_{i-1,j}}{\Dx} + \frac{\wij - v_{i,j+1}}{\Dy}\right]
-$$
-where we used . Here, $\Dx$ and $\Dy$ are the discretization steps in the spacial directions.
-
-
-
-
-For this method to be stable, a constraint is imposed on the temporal and 
-spacial discretization. Stability ensues only if the 
-Courant-Friedrichs-Lewy condition is 
-satisfied\cite{courant-friedrichs-lewy}\cite{numerical-stability-2D-FDTD}
+Lastly, for this method to be stable, a constraint is imposed on the temporal and spacial discretization. Stability ensues only if the Courant-Friedrichs-Lewy condition is satisfied\cite{courant-friedrichs-lewy}\cite{numerical-stability-2D-FDTD}
 $$
 c\Dt \leq \left[\frac{1}{(\Dx)^2} + \frac{1}{(\Dy)^2}\right] ^ {-1/2}
 $$
@@ -131,9 +106,7 @@ The height of the excitation source was 15\,cm in both setups, which is the heig
 TODO imagesc of grid
 
 \subsubsection*{The excitation}
-To keep the running time of the simulation short, an impulse excitation was chosen. This also mimics the excitation of the scale model with the spark source.
-
-The excitation signal consisted of a temporal impulse shaped like a hanning function with a duration of 25\,$\mu$s. This is sufficiently long to avoid temporal discretization artifacts, and sufficiently short to cover all the frequencies we are interested in.
+The excitation signal consisted of a temporal impulse shaped like a hanning function with a duration of 25\,$\mu$s. This is sufficiently long to avoid temporal discretization artifacts, and sufficiently short to cover all the frequencies we are interested in. This time also approximates the duration of the actual spark used in the scale model measurements.
 
 To avoid spatial discretization artifacts, the excitation was spread out over a two dimensional gaussian with a width $2\sigma$ of 3\,mm. This proved to be a good trade-off between a perfect point source and excessive discretization artifacts. Note that the spark gap of the spark source used in the experiment had a comparable size of 3\,mm.
 
@@ -150,7 +123,7 @@ excitation signal.
 
 
 \subsubsection*{The boundaries}
-The entire space was modelled to have perfectly reflecting edges as boundaries. The wall itself was also modelled to be perfectly reflecting (ie. having an infinite impedance). This was accomplished by forcing the velocity parallel to the surface to be zero. For example, for the floor this means $v_{i,0} = 0$ and for the left wall this means $u_{0,j} = 0$.
+The entire space was modelled to have perfectly reflecting edges as boundaries. The wall acting as the noise barrier was also modelled to be perfectly reflecting (ie. having an infinite impedance). This was accomplished by forcing the velocity parallel to the surface to be zero. For example, for the floor this means $w_{i,0}^n = 0$ and for the left wall this means $v_{0,j}^n = 0$ (for all $n$, $i$ and $j$).
 
 
 
@@ -163,6 +136,6 @@ $$
 $$
 Note that this correction was applied afterwards on the data of the finished the simulation, not while it was running. In every result that follows, we used the corrected pressure amplitudes $\pij^{\mathrm{3D}}$. [TODO even when we mention $\pij$?]
 
-
+Additional discrepancies may occur if, for example, there are diffuse reflections on the wall in the 3D case. Those may still reach the observer and contribute to the signal, but they are not accounted for in the 2D case. However, in our case of a hard and flat wall, such effects are not expected to play a significant role.
 
 % vim: spell spelllang=en_us
