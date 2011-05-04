@@ -299,6 +299,8 @@ semilogx(foct, 10.^(paverage/10),'k-o','linewidth',1.5)
 semilogx(foct,ones(size(foct)),'k','linewidth',1.5);
 hold off;
 axis([200, 5000, 0, 2]);
+logAxis(200, 5000, 2);
+
 legend('$90\degr$','$100\degr$','$110\degr$','$120\degr$','average');
 
 	name=['wallmls'];
