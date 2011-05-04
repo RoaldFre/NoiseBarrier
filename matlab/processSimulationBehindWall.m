@@ -1,18 +1,6 @@
-function [measurements, time, spectra, measurementFreqs, freeField, deconvolved, sideSteps, upSteps] = processSimulationBehindWall
+function [measurements, time, spectra, measurementFreqs, freeField, deconvolved, bandsGrid] = processSimulationBehindWall
 
-sourceHeight = 0.125;
-sourceToWall = 1.2;
-wallWidth = 0.06;
-
-wallToRecord = 0.1;
-sourceToRecord = sourceToWall + wallWidth + wallToRecord;
-recordHeight = 0.03;
-
-recordSideStep = 0.03;
-recordUpStep = 0.03;
-
-sideSteps = 12;
-upSteps = 8;
+behindWallData;
 
 load('../data/simulation/achterMuurGroffer/all');
 measurements = Precord';
@@ -51,15 +39,13 @@ rMeasurement = sqrt(sourceToRecord^2 + (recordHeight + upSteps * recordUpStep - 
 freeField = freeField * rFreeField; 
 measurements = measurements * rMeasurement;
 
-c = 340;
-
-
 freeFreqs = linspace(0, samplerate, length(freeField));
 measurementFreqs = linspace(0, samplerate, len);
 
-
 spectra = zeros(size(measurements));
 deconvolved = zeros(size(measurements));
+
+
 %deconvolvedFloor = zeros(size(measurements));
 freeFieldSpectrum = fft(freeField, len);
 %freeFieldFloorSpectrum = fft(freeFieldFloor, len);
@@ -74,6 +60,8 @@ for x = 0 : sideSteps - 1
 		%deconvolvedFloor(:,i) = real(ifft(spectraFloor(:,i) .* window));
 		spectra(:,i) = abs(spectra(:,i));
 		%spectraFloor(:,i) = abs(spectraFloor(:,i));
+
+		bandsGrid(x+1, y+1, :) = powerInBands(deconvolved(:,i), bandBorders, samplerate, order);
 	end
 end
 
@@ -101,5 +89,6 @@ for x = 0 : sideSteps - 1
 	end
 	pause(2);
 end
+
 
 

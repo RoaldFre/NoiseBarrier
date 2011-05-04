@@ -1,7 +1,9 @@
 clear all;
 
 [simulated, simTime, simSpectra, simFreqs, simFreeField, simDeconvolved] = processSimulationBehindWall;
-[measurements, time, spectra, measurementFreqs, freeField, deconvolved, sideSteps, upSteps, measurementsCorrected, spectraCorrected, deconvolvedCorrected] = processBehindWall;
+[measurements, time, spectra, measurementFreqs, freeField, deconvolved, measurementsCorrected, spectraCorrected, deconvolvedCorrected] = processBehindWall;
+
+behindWallData;
 
 simLen = length(simulated(:,1));
 len = length(measurements(:,1));
@@ -39,9 +41,9 @@ for x = 0 : sideSteps - 1
 		plot(simTime, simDeconvolved(:,i), 'k');
 		axis([tMin, tMax, -0.004, 0.006],'autoy');
 
-		pause(2);
+		pause(1.5);
 	end
-	pause(3);
+	pause(1);
 end
 hold off;
 

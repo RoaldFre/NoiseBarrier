@@ -24,6 +24,8 @@ T = temperatureC + 273.15;
 pr = 101325; %referece pressure
 pa = 101325; %atmospheric pressure
 
+pInAtm = 1; %pressure in atm
+
 x = 1/(10 * log10((exp(1)^2)));
 To1 = 273.16; %triple-point isotherm temp
 psat = pr * 10^(-6.8346 * (To1/T)^1.261 + 4.6151);
@@ -33,6 +35,15 @@ frN = (pa/pr) / sqrt(T/To) * (9 + 280 * h * exp(-4.170 * ((T/To)^(-1/3) - 1)));
 z = 0.1068 * exp(-3352/T) ./ (frN + freqs.^2/frN);
 y = (T/To)^(-5/2) * (0.01275 * exp(-2239.1/T) ./ (frO + freqs.^2/frO) + z);
 a = 8.686 * freqs.^2 .* ((1.84e-11 * (pr / pa) * sqrt(T/To)) + y);
+
+
+
+
+
+a = atmAtten(temperatureC,pInAtm,humidity,freqs);
+
+
+
 
 corrected = zeros(size(signal));
 segment = zeros(size(window));
@@ -53,7 +64,12 @@ while (start <= n - windowSamples + 1)
 	segment = signal(start : start + windowSamples - 1);
 	t = time(start + windowSamples/2);
 	%correction = 10.^(t * dBdelta / 20);
-	correction = exp(x .* a .* c.*t);
+	
+
+
+	%correction = exp(x .* a .* c.*t);
+	dBloss = a .* c .* t;
+	correction = 10.^(dBloss/10);
 	correction = min(correction, correction(clipIndex));
 	%plot(freqs, correction);
 	%pause(0.05)
