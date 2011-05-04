@@ -1,5 +1,5 @@
-[simulated, simTime, simSpectra, simFreqs, simFreeField, simDeconvolved] = processSimulationBeforeWall;
-[measurements, time, spectra, measurementFreqs, freeField, deconvolved, measurementsCorrected, spectraCorrected, deconvolvedCorrected] = processBeforeWall;
+%[simulated, simTime, simSpectra, simFreqs, simFreeField, simDeconvolved] = processSimulationBeforeWall;
+%[measurements, time, spectra, measurementFreqs, freeField, deconvolved, measurementsCorrected, spectraCorrected, deconvolvedCorrected] = processBeforeWall;
 
 beforeWallData;
 
@@ -7,11 +7,12 @@ tMin = time(1);
 tMax = time(end);
 c = 340;
 
-for x = 0 : sideSteps - 1
+%for x = 0 : sideSteps - 1
+for x = 10 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;
-		iMeasurement = i;
-		iSimulation = i;
+		iMeasurement = i; 
+		iSimulation = i-upSteps;
 		
 		clf;
 		subplot(2,1,1);

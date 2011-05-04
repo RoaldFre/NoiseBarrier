@@ -4,29 +4,50 @@ A scale model of a simple noise barrier is investigated to characterize several 
 \subsubsection*{The noise barrier}
 The model under consideration is composed of five wooden blocks of dimensions $212\,\mathrm{mm} \times 212\,\mathrm{mm} \times 60\,\mathrm{mm}$. These are positioned side by side to form a barrier that is $1.06\,\mathrm{m}$ long.
 
-This could realistically be a 1:10 scale model of a noise barrier that is 2.12\,m high and 60\,cm thick. 
+This could realistically be a 1:10 scale model of a noise barrier that is 2.12\,m high and 60\,cm wide. 
 
 \subsubsection*{The excitation source}
 Working with a 1:10 scale model also means that the wavelengths to be considered should be reduced by a factor of 10.
 
 A suitable means of excitation was found in a small spark source. This produces a signal with sufficiently high frequencies and it is an excellent approximation for an ideal point source.
 
+\figOctaveTwo[htb]{sparkSourcePlots}{Characteristics of the spark source}
+	{sparkImpulseResponse}{impulse response}
+	{sparkSpectrum}{spectrum}
+
+
+
 [foto's, schets]
 
 \subsubsection*{Capturing the sound field}
-A programmable $x$-$y$-positioning system was used in order to scan a grid of measurement points in front of and behind the wall. The sound field at each measurement point was recorded with a high frequency microphone connected to an oscilloscope sampling at 5\.MHz.
+A programmable $x$-$y$-positioning system was used in order to scan a grid of measurement points in front of and behind the wall. The sound field at each measurement point was recorded with a high frequency microphone connected to an oscilloscope sampling at 5\.MHz. The triggering was based on the sudden spike caused by the electromagnetic pick up of the spark on the microphone wires, this accurately defined the moment when the spark was emitted.
 
 Because of the very low acoustic energy associated with a single spark, additional pre-amplification was required. Even then, the signal to noise ratio was extremely low. In fact, for the lowest measurement point right behind the wall, the signal to noise ratio was of the order of one in ten!
 
-In order to get a sufficiently clean signal at each point of the grid, each measurement was averaged over a thousand excitations.
+In order to get a sufficiently clean signal at each point of the grid, each measurement was averaged over a thousand excitations. Even then, significant noise remained, especially in the measurements right behind the wall.
 
-[TODO even then significant noise, every 50kHz ... Amplifier?]
+Figure \ref{rawSparkMeasurements} shows two averaged signals as they were received by the microphone during a measurement right behind the wall, at a distance of 10\,cm behind the wall, at both the lowest (and hence the most attenuated) and the highest (least attenuated) measurement point.
+
+Note that the $s/n$ ratio in the time domain plot (fig \ref{measurementsRightBehindWall}) of the red graph is abysmal. This noise, however, seems to have a fixed pattern. A glance at the spectrum in figure \ref{spectraMeasurementsRightBehindWall} shows that this noise occurs at specific frequencies that are harmonics of 52\,kHz. Due to the very high amplification of the weak signal and the low $s/n$ ratio of a single measurement, any present noise that was in sync with the triggering became very significant in the averaged signal. The origin of this noise is possibly to be found in electromagnetic pick up from the spark generator, which charges a capacitor by pulsing it with high voltage spikes at a fixed frequency.
 
 
+\figOctaveTwo[htb]{rawSparkMeasurements}{Resulting signal of an averaged 1000 measurements of the scale model. The measurement was obtained closest behind the wall (10\,cm distance) at the lowest (red, 3\,cm high) and highest point (blue, 24\,cm high, 3\,cm above the wall). Notice the persistent parasitic noise at the harmonics of 52\,kHz.}
+	{measurementsRightBehindWall}{time domain}
+	{spectraMeasurementsRightBehindWall}{frequency domain}
+
+Averaging even more than a thousand measurements could potentially improve the $s/n$ ratio further. However, the resulting measurement times would quickly become intractable and the noise spikes at the harmonics of 50kHz would remain nonetheless.
+
+Apart from this high frequency noise, there were also low frequency components present. The high magnification made the pick up noise at 50\,Hz (and harmonics thereof) prominent, as can be seen in figure \ref{measurementsLowFreqNoise}. Occasionally also was an additional low frequency attribution, often manifesting itself right after the trigger peak. This is possibly the response of the measurement chain on the high impulse spike created by the electromagnetic pick up of the spark by the microphone wires. This sudden spike was, in fact, order of magnitude larger than the actual signal.
+
+All the factors above mean that with our setup, we could only get reliable spectral data in the 5\,kHz to 40\,kHz area, corresponding to 500\,Hz to 4\,kHz life sized. In order to go beyond this frequency band, a stronger and better shielded spark source is advised.
+
+The results from the scale model will be discussed in depth in section \ref{sectComparison}, in tandem with the results from the simulation discussed below.
 
 
 XXX Deconvolving to get rid of floor (so pure point source/plane wave approaching) was unsuccessful
 
+
+TODO attenuationcorrection
 
 
 % vim: spell spelllang=en_us

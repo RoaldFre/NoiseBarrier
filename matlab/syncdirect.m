@@ -137,6 +137,8 @@ shifted = shiftInterpolation(shiftedToNearest, bestShift - round(bestShift));
 shifted = shifted * bestFactor;
 
 
+return
+
 
 clf; hold on;
 plot(master,'ko');

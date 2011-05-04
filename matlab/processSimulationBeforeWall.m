@@ -2,6 +2,7 @@ function [measurements, time, spectra, measurementFreqs, freeField, deconvolved,
 
 beforeWallData;
 
+%load('../data/simulation/voorMuurGroffer/all');
 load('../data/simulation/voorMuurGroffer/all');
 measurements = Precord';
 len = length(measurements(:,1));
@@ -48,8 +49,9 @@ deconvolved = zeros(size(measurements));
 %deconvolvedFloor = zeros(size(measurements));
 freeFieldSpectrum = fft(freeField, len);
 %freeFieldFloorSpectrum = fft(freeFieldFloor, len);
-window = tanhWindow(5000, 40000, 100, 5000, samplerate, len);
-%window = tanhWindow(5000, 90000, 100, 5000, samplerate, len);
+%window = tanhWindow(5000, 40000, 100, 5000, samplerate, len);
+window = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
+window = tanhWindow(4900, 40000, 100, 5000, samplerate, len);
 for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;
