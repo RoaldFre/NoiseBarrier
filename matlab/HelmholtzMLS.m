@@ -8,7 +8,7 @@ mls = loadfile('mls16.mat');
 flatLength = 10; %in ms
 
 %free field
-mlss = loadfile([dir,'\',signal,'-h140-r160-theta120-moussebox-1']);
+mlss = loadfile([dir,slash,signal,'-h140-r160-theta120-moussebox-1']);
 mlss = mlss(:,1);
 
 IRfree = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);
@@ -19,7 +19,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 
 
 
-mlss = loadfile([dir,'\',signal,'-h140-r160-theta120-helmholtz-1']);
+mlss = loadfile([dir,slash,signal,'-h140-r160-theta120-helmholtz-1']);
 mlss = mlss(:,1);
 
 IR = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);
@@ -38,18 +38,18 @@ plot(t,window,'b');
 plot(t,IRsynced/maxvalue,'r');
 plot(t,IRfreeWindowed/maxvalue, 'g');
 plot(t,(IRsynced - IRfreeWindowed)/maxvalue, 'k');
-axis([0 1 -0.6 1.2], 'autox')
+axis([0 14 -0.6 1.2])
 hold off;
 
-name=['helmsub'];
-	destdir = '../latex/images';
-	relImgDir = 'images';
-	ylabrule='0.9cm';
-	xlab='Time (ms)';
-	ylab='Amplitude';
-	width='500';
-	height='400';
-	makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
+name='helmsub';
+destdir = '../latex/images';
+relImgDir = 'images';
+ylabrule='0.9cm';
+xlab='Time (ms)';
+ylab='Amplitude (arb. units)';
+width='500';
+height='400';
+makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 IRsubtracted = IRsynced - IRfreeWindowed;
 %figure;
@@ -70,35 +70,39 @@ spectrumabs = smoothBins(abs(spectrum), 5);
 
 
 figure;
+tanhWind = tanhWindow(100, 6500, 20, 1000, 96000, length(spectrum));
 semilogx(f, 20*log10(spectrumabs), f, 20*log10(tanhWind));
 axis([100, 10000, -30, 20]);
 xlabel('Frequency (Hz)');
 ylabel('Amplitude (dB)');
 
-name=['helmspec'];
-	destdir = '../latex/images';
-	relImgDir = 'images';
-	ylabrule='0.9cm';
-	xlab='Frequency (Hz)';
-	ylab='Amplitude (dB)';
-	width='500';
-	height='400';
-	makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
+name='helmspec';
+destdir = '../latex/images';
+relImgDir = 'images';
+ylabrule='0.9cm';
+xlab='Frequency (Hz)';
+ylab='Amplitude (dB)';
+width='500';
+height='400';
+makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 figure;
 tanhWind = tanhWindow(100, 6500, 20, 1000, 96000, length(spectrum));
-plot(t,ifft(spectrum.*tanhWind));
+impulseresponse = real(ifft(spectrum.*tanhWind));
+impulseresponse = impulseresponse / max(abs(impulseresponse));
+plot(t,impulseresponse);
+axis([0 14 -0.6 1.2])
 
 
-name=['helmimp'];
-	destdir = '../latex/images';
-	relImgDir = 'images';
-	ylabrule='0.9cm';
-	xlab='Time (ms)';
-	ylab='Amplitude';
-	width='700';
-	height='400';
-	makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
+name='helmimp';
+destdir = '../latex/images';
+relImgDir = 'images';
+ylabrule='0.9cm';
+xlab='Time (ms)';
+ylab='Amplitude (arb. units)';
+width='700';
+height='400';
+makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 % figure;
 % semilogx(f, spectrumabs.^2);
