@@ -57,7 +57,7 @@ spectrum = abs(fft(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenua
 ptot = p - pfree;
 figure;
 hold on;
-semilogx(foct, 10.^(ptot/10),'r');
+semilogx(foct, 10.^(ptot/10),'r','linewidth',1.5);
 
 psom = zeros(size(p));
 psom = psom + p;
@@ -133,7 +133,7 @@ spectrum = abs(fft(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenua
 [pfree,ffree] = filtbank(IRfreeWindowed.*attenuationCorrection,96000);
 
 ptot = p - pfree;
-semilogx(foct, 10.^(ptot/10),'g');
+semilogx(foct, 10.^(ptot/10),'g','linewidth',1.5);
 
 psom = psom + p;
 
@@ -205,7 +205,7 @@ spectrum = abs(fft(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenua
 [pfree,ffree] = filtbank(IRfreeWindowed.*attenuationCorrection,96000);
 
 ptot = p - pfree;
-semilogx(foct, 10.^(ptot/10),'b');
+semilogx(foct, 10.^(ptot/10),'b','linewidth',1.5);
 
 psom = psom + p;
 
@@ -287,7 +287,7 @@ average = som/4;
 [pfree,ffree] = filtbank(IRfreeWindowed.*attenuationCorrection,96000);
 
 ptot = p - pfree;
-semilogx(foct, 10.^(ptot/10),'c');
+semilogx(foct, 10.^(ptot/10),'c','linewidth',1.5);
 
 
 psom = psom + p;
@@ -295,10 +295,11 @@ psom = psom + p;
 paverage = psom/4 - pfree;
 
 
-semilogx(foct, 10.^(paverage/10),'k-o',foct,ones(size(foct)),'y');
+semilogx(foct, 10.^(paverage/10),'k-o','linewidth',1.5)
+semilogx(foct,ones(size(foct)),'k','linewidth',1.5);
 hold off;
-axis([200, 5000, 0, 1.6]);
-legend('$90\deg$','$100\deg$','$110\deg$','$120\deg$','average');
+axis([200, 5000, 0, 2]);
+legend('$90\degr$','$100\degr$','$110\degr$','$120\degr$','average');
 
 	name=['wallmls'];
 	destdir = '../latex/images';
