@@ -58,7 +58,7 @@
         \end{center}
     \end{figure}}
 
-% \figuurOctaveTwo[htb]{global label}{global caption}
+% \figOctaveTwo[htb]{global label}{global caption}
 % 	{name1=label1}{caption1}
 % 	{name2=label2}{caption2}
 \newcommand{\figOctaveTwo}[7][htb]{
@@ -71,11 +71,11 @@
 		\input{\imgdir/#4.tex}
 		\errorstopmode
 		\label{#4}
-		\rule[-0.8cm]{0cm}{0cm} %don't overlap with sub-caption
+		\rule[-1.0cm]{0cm}{0cm} %don't overlap with sub-caption
 	}
 	}
 	%
-	\rule{0.6cm}{0cm} %don't overlap axis labels
+	\rule{0.5cm}{0cm} %don't overlap axis labels
 	%
 	\subfigure[#7]{
 	\scalebox{0.9}{
@@ -83,7 +83,7 @@
 		\input{\imgdir/#6.tex}
 		\errorstopmode
 		\label{#6}
-		\rule[-0.8cm]{0cm}{0cm}
+		\rule[-1.0cm]{0cm}{0cm}
 		}
 	}
 	\hspace{-4cm} %center hack
