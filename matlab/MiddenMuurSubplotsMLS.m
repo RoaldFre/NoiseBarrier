@@ -12,7 +12,7 @@ mls = loadfile('mls16.mat');
 flatLength = 8; %in ms
 
 %free field
-mlss = loadfile([dir,'\',signal,'-h315-rsm300-vrij-gras-1']);
+mlss = loadfile([dir,slash,signal,'-h315-rsm300-vrij-gras-1']);
 mlss = mlss(:,1);
 
 IRfree = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);
@@ -22,7 +22,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 
 
 
-mlss = loadfile([dir,'\',signal,'-h315-rsm300-theta90-gras-1']);
+mlss = loadfile([dir,slash,signal,'-h315-rsm300-theta90-gras-1']);
 mlss = mlss(:,1);
 
 IR = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);
@@ -51,7 +51,7 @@ attenuationCorrection = correctDistanceAttenuation(IRfreeWindowed,3,96000);
 spectrum = abs(fft(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenuationCorrection)...
     ./ fft(IRfreeWindowed.*attenuationCorrection));
 
-[p,f] = filtbank(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenuationCorrection,96000);
+[p,foct] = filtbank(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenuationCorrection,96000);
 [pfree,ffree] = filtbank(IRfreeWindowed.*attenuationCorrection,96000);
 
 ptot = p - pfree;
@@ -90,7 +90,7 @@ mls = loadfile('mls16.mat');
 flatLength = 8; %in ms
 
 %free field
-mlss = loadfile([dir,'\',signal,'-h315-rsm300-vrij-gras-1']);
+mlss = loadfile([dir,slash,signal,'-h315-rsm300-vrij-gras-1']);
 mlss = mlss(:,1);
 
 IRfree = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);
@@ -100,7 +100,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 
 
 
-mlss = loadfile([dir,'\',signal,'-h315-rsm300-theta100-gras-1']);
+mlss = loadfile([dir,slash,signal,'-h315-rsm300-theta100-gras-1']);
 mlss = mlss(:,1);
 
 IR = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);
@@ -162,7 +162,7 @@ mls = loadfile('mls16.mat');
 flatLength = 8; %in ms
 
 %free field
-mlss = loadfile([dir,'\',signal,'-h315-rsm300-vrij-gras-1']);
+mlss = loadfile([dir,slash,signal,'-h315-rsm300-vrij-gras-1']);
 mlss = mlss(:,1);
 
 IRfree = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);
@@ -172,7 +172,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 
 
 
-mlss = loadfile([dir,'\',signal,'-h315-rsm300-theta110-gras-1']);
+mlss = loadfile([dir,slash,signal,'-h315-rsm300-theta110-gras-1']);
 mlss = mlss(:,1);
 
 IR = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);
@@ -234,7 +234,7 @@ mls = loadfile('mls16.mat');
 flatLength = 8; %in ms
 
 %free field
-mlss = loadfile([dir,'\',signal,'-h315-rsm300-vrij-gras-1']);
+mlss = loadfile([dir,slash,signal,'-h315-rsm300-vrij-gras-1']);
 mlss = mlss(:,1);
 
 IRfree = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);
@@ -244,7 +244,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 
 
 
-mlss = loadfile([dir,'\',signal,'-h315-rsm300-theta120-gras-1']);
+mlss = loadfile([dir,slash,signal,'-h315-rsm300-theta120-gras-1']);
 mlss = mlss(:,1);
 
 IR = impulseResponseFromMLSs(mlss, mls, numberOfAverages, numPreTrigger);

@@ -1,3 +1,4 @@
+addpath octave;
 
 %figure;
 %subplot(4,1,1);
@@ -12,7 +13,7 @@ sweep = logsweep(50,10000,1,96000);
 flatLength = 8; %in ms
 
 %free field
-sweeps = loadfile([dir,'\',signal,'-h315-rsm300-vrij-gras-1']);
+sweeps = loadfile([dir,slash,signal,'-h315-rsm300-vrij-gras-1']);
 sweeps = sweeps(:,1);
 
 IRfree = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
@@ -22,7 +23,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 
 
 
-sweeps = loadfile([dir,'\',signal,'-h315-rsm300-theta90-gras-1']);
+sweeps = loadfile([dir,slash,signal,'-h315-rsm300-theta90-gras-1']);
 sweeps = sweeps(:,1);
 
 IR = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
@@ -51,7 +52,7 @@ attenuationCorrection = correctDistanceAttenuation(IRfreeWindowed,3,96000);
 spectrum = abs(fft(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenuationCorrection)...
     ./ fft(IRfreeWindowed.*attenuationCorrection));
 
-[p,f] = filtbank(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenuationCorrection,96000);
+[p,foct] = filtbank(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenuationCorrection,96000);
 [pfree,ffree] = filtbank(IRfreeWindowed.*attenuationCorrection,96000);
 
 ptot = p - pfree;
@@ -91,7 +92,7 @@ sweep = logsweep(50,10000,1,96000);
 flatLength = 8; %in ms
 
 %free field
-sweeps = loadfile([dir,'\',signal,'-h315-rsm300-vrij-gras-1']);
+sweeps = loadfile([dir,slash,signal,'-h315-rsm300-vrij-gras-1']);
 sweeps = sweeps(:,1);
 
 IRfree = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
@@ -101,7 +102,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 
 
 
-sweeps = loadfile([dir,'\',signal,'-h315-rsm300-theta100-gras-1']);
+sweeps = loadfile([dir,slash,signal,'-h315-rsm300-theta100-gras-1']);
 sweeps = sweeps(:,1);
 
 IR = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
@@ -164,7 +165,7 @@ sweep = logsweep(50,10000,1,96000);
 flatLength = 8; %in ms
 
 %free field
-sweeps = loadfile([dir,'\',signal,'-h315-rsm300-vrij-gras-1']);
+sweeps = loadfile([dir,slash,signal,'-h315-rsm300-vrij-gras-1']);
 sweeps = sweeps(:,1);
 
 IRfree = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
@@ -174,7 +175,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 
 
 
-sweeps = loadfile([dir,'\',signal,'-h315-rsm300-theta110-gras-1']);
+sweeps = loadfile([dir,slash,signal,'-h315-rsm300-theta110-gras-1']);
 sweeps = sweeps(:,1);
 
 IR = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
@@ -237,7 +238,7 @@ sweep = logsweep(50,10000,1,96000);
 flatLength = 8; %in ms
 
 %free field
-sweeps = loadfile([dir,'\',signal,'-h315-rsm300-vrij-gras-1']);
+sweeps = loadfile([dir,slash,signal,'-h315-rsm300-vrij-gras-1']);
 sweeps = sweeps(:,1);
 
 IRfree = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
@@ -247,7 +248,7 @@ IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRfree));
 
 
 
-sweeps = loadfile([dir,'\',signal,'-h315-rsm300-theta120-gras-1']);
+sweeps = loadfile([dir,slash,signal,'-h315-rsm300-theta120-gras-1']);
 sweeps = sweeps(:,1);
 
 IR = impulseResponseFromSweeps(sweeps, sweep, numberOfAverages, numPreTrigger, 20, 20e3, 20, 2e3, 96000);
@@ -289,7 +290,7 @@ psom = psom + p;
 paverage = psom/4 - pfree;
 
 
-semilogx(foct, 10.^(paverage/10),'k-o',foct,ones(size(foct)),'y');
+semilogx(foct, 10.^(paverage/10),'k-o',foct,ones(size(foct)),'k');
 hold off;
 axis([200, 5000, 0, 1.6]);
 legend('$90\deg$','$100\deg$','$110\deg$','$120\deg$','average');
