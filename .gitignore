@@ -10,3 +10,4 @@
 *.log
 *.aux
 octave-core
+slash.m
