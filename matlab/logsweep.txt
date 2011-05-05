@@ -35,4 +35,107 @@ onderkant plaat 39,1
 bovenkant plaat 41,5
 
 bij s3-h101-r200-lv391-3-n20.mat de plaat een klein beetje verschoven
+bij s3-h101-r200-lv391-4-n20.mat de plaat een klein beetje verschoven
+
+59,5
+61,9
+
+
+B&K
+s4
+sync = [zeros(10000,1); ones(10,1)];
+signal = [zeros(10000,1); sync; sync; sync; zeros(10000,1); logsweep(50,10000,3,96000); zeros(24000,1)];
+De metingen met s4 zijn uitgevoerd met 0.0dB gevoeligheid.
+
+
+
+
+Zircon
+
+
+s5
+signal = [zeros(10000,1); sync; zeros(10000,1); logsweep(50,10000,3,96000); zeros(24000,1)];
+
+s6
+signal = [zeros(10000,1); sync; zeros(10000,1); logsweep(5,20000,3,96000); zeros(24000,1)];
+zircon volgens bissectrice op tafel, plaat op vloer
+
+r1
+% signal2 = randn(96000*3,1);
+% xs=linspace(-2.5,2.5,length(signal2))';
+% gauss=exp(-xs.^2/2); 
+% signal2 = [signal2.*gauss; zeros(24000,1)];
+
+
+s7
+syn = [zeros(10000,1); ones(10,1)];
+sw = logsweep(10,10000,2,96000);
+signal = [syn; zeros(10000,1); sw; zeros(24000,1)];
+
+
+mls18
+X = loadfile('mls18.mat');
+syn = [zeros(10000,1); ones(10,1)];
+signal = [syn; zeros(10000,1); X; zeros(24000,1)];
+
+
+mls20.1
+X = loadfile('mls20.mat');
+syn = [zeros(10000,1); ones(10,1)];
+signal = [syn; zeros(10000,1); X; zeros(24000,1)];
+
+
+slin1
+syn = [zeros(10000,1); ones(10,1)];
+swp = linsweep(10,10000,2,96000);
+signal = [syn; zeros(10000,1); swp; zeros(24000,1)];
+
+
+slin2
+syn = [zeros(10000,1); ones(10,1)];
+swp = linsweep(10,10000,4,96000);
+signal = [syn; zeros(10000,1); swp; zeros(24000,1)];
+
+
+s8
+syn = [zeros(10000,1); ones(10,1)];
+swp = logsweep(10,10000,10,96000);
+signal = [syn; zeros(10000,1); swp; zeros(24000,1)];
+
+
+s9
+LET OP h=150
+Meten directionaliteit zircon
+Moussebox op de vloer
+syn = [zeros(10000,1); ones(10,1)];
+swp = logsweep(10,10000,3,96000);
+signal = [syn; zeros(10000,1); swp; zeros(24000,1)];
+
+hoogte microfoon:
+phi = 0, h = 150.5
+phi = 15, h = 186
+phi = 30, h = 216
+
+
+s10
+Directionaliteit zircon (verticaal)
+Moussebox op de vloer
+syn = [zeros(10000,1); ones(10,1)];
+swp = logsweep(10,10000,3,96000);
+signal = [syn; zeros(10000,1); swp; zeros(24000,1)];
+
+Hoogte speaker 150
+Horizontale afstand 120
+Theta = 0
+
+
+31.03
+mls16x16
+X = loadfile('mls16.mat');
+X = [X;X];
+X = [X;X];
+X = [X;X];
+X = [X;X];
+
+signal = [zeros(10000,1); X; zeros(24000,1)];
 

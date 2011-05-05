@@ -40,25 +40,33 @@ IRsubtracted = IRsynced - IRfreeWindowed;
 
 IRsubtractedWindowed = adrienneTillEnd(IRsubtracted, 0.0, 96000);
 
-spectrum = abs(fft(IRsubtractedWindowed, length(IRwindowed)) ./ fft(IRfreeWindowed));
-f = linspace(0, 96000, length(spectrum));
+attenuationCorrection = correctDistanceAttenuation(IRfreeWindowed,3,96000);
 figure;
-plot(f, spectrum, '-x');
+plot(IRfreeWindowed.*attenuationCorrection);
 
-axis([0, 10000, 0, 1], 'autoy');
+spectrum = abs(fft(prepad(IRsubtractedWindowed, length(IRfreeWindowed)).*attenuationCorrection)...
+    ./ fft(IRfreeWindowed.*attenuationCorrection));
+f = linspace(0, 96000, length(spectrum));
+
+figure;
+semilogx(f, 20*log10(spectrum));
+axis([100, 10000, 0.5, 1.6], 'autoy');
+xlabel('Frequency (Hz)');
+ylabel('Amplitude (dB)');
+title(signal);
 
 
 %% deconvolve
-IRwindowedPadded = prepad(IRwindowed, length(IRwindowed) * 1.1);
-IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRwindowedPadded));
-
-tanhWind = tanhWindow(50, 4000, 20, 1000, 96000, length(IRwindowedPadded));
-IRdeconv = ifft(fft(IRwindowedPadded) ./ fft(IRfreeWindowedPadded));
-IRdeconvTanh = ifft(fft(IRwindowedPadded) ./ fft(IRfreeWindowedPadded) .* tanhWind);
-
-
-
-figure;
-plot(real(IRdeconvTanh));
+% IRwindowedPadded = prepad(IRwindowed, length(IRwindowed) * 1.1);
+% IRfreeWindowedPadded = postpad(IRfreeWindowed, length(IRwindowedPadded));
+% 
+% tanhWind = tanhWindow(50, 4000, 20, 1000, 96000, length(IRwindowedPadded));
+% IRdeconv = ifft(fft(IRwindowedPadded) ./ fft(IRfreeWindowedPadded));
+% IRdeconvTanh = ifft(fft(IRwindowedPadded) ./ fft(IRfreeWindowedPadded) .* tanhWind);
+% 
+% 
+% 
+% figure;
+% plot(real(IRdeconvTanh));
 
 

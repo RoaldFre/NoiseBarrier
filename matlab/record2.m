@@ -18,7 +18,7 @@ ao.BitsPerSample = depth;
 addchannel(ao,1);
 
 %set up all the input channels
-ai0 = analoginput('winsound',0);
+ai0 = analoginput('winsound',2);
 addchannel(ai0,1);
 addchannel(ai0,2);
 ai0.SampleRate = rate;
@@ -28,7 +28,7 @@ ai0.SamplesPerTrigger = samples;
 %the Octa-Capture soundcard seems to provide its own loop through 
 %interface. This is probably just a literal copy of what we sent in (TODO: 
 %verify this).
-main = analoginput('winsound',5);
+main = analoginput('winsound',6);
 addchannel(main,1);
 main.SampleRate = rate;
 main.BitsPerSample = depth;

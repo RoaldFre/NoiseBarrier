@@ -5,7 +5,7 @@ With the ever increasing strength of modern computers, it has become feasible to
 \subsection{Finite difference time domain method}
 In this section, we describe an implementation of a finite difference time domain (FDTD) method. This is a simple and intuitive way of simulating the progression of acoustic waves through a medium (in our case, air) that allows one to easily implement obstacles (eg. a hard floor, a wall). For simplicity, an infinitely long barrier on an infinitely large floor is assumed. The problem thus reduces to two dimensions.
 
-The FDTD method consists of simulating the pressure field, $p$, and velocity field, $\vec{v} = (v, w)$,  on a discrete spacial grid. The basic equations that govern the evolution of these fields are equations \ref{newt} and \ref{dpdt}, which in two dimensions read
+The FDTD method consists of simulating the pressure, $p$, and velocity, $\vec{v} = (v, w)$, fields on a discrete spacial grid. The basic equations that govern the evolution of these fields are equations \ref{newt} and \ref{dpdt}, which in two dimensions read
 $$
 \pderiv{v(x,y,t)}{t} = -\frac{1}{\rho} \pderiv{p(x,y,t)}{x}
 , \qquad
@@ -68,7 +68,7 @@ $$
 
 
 \subsection{Modelling the physical scale model}
-The scale model setup discussed earlier will be represented in the general framework from the previous section.
+The scale model setup discussed earlier/below TODO will be represented in the general framework from the previous section.
 
 \subsubsection*{The grid}
 The setup of the grid is summarized in table \ref{gridSetup}.
@@ -103,23 +103,12 @@ distance from source to wall&
 
 The height of the excitation source was 15\,cm in both setups, which is the height of the actual spark source used in the scale model measurements.
 
-A visual representation of the geometry of the grids is given in figure \ref{simulationGrids}.
-
-\figOctaveTwoVariableSpace{-0.9cm}{simulationGrids}{Visualisation of the grids used in the simulations. The mesh of points correspond to the measurement positions. The source position is indicated as a single point.}
-	{gridBeforeWall}{measurements in front of the wall}
-	{gridBehindWall}{measurements behind the wall}
-
-
-
+TODO imagesc of grid
 
 \subsubsection*{The excitation}
 The excitation signal consisted of a temporal impulse shaped like a hanning function with a duration of 25\,$\mu$s. This is sufficiently long to avoid temporal discretization artifacts, and sufficiently short to cover all the frequencies we are interested in. This time also approximates the duration of the actual spark used in the scale model measurements.
 
 To avoid spatial discretization artifacts, the excitation was spread out over a two dimensional gaussian with a width $2\sigma$ of 3\,mm. This proved to be a good trade-off between a perfect point source and excessive discretization artifacts. Note that the spark gap of the spark source used in the experiment had a comparable size of 3\,mm.
-
-\figOctaveTwo[htb]{simuExcitationPlots}{Characteristics of the excitation signal of the simulation}
-	{simuImpulseResponse}{impulse response}
-	{simuSpectrum}{spectrum}
 
 The excitation signal was applied as a soft 
 source\cite{soft-hard-source} by simply adding it to the 
@@ -128,10 +117,9 @@ field, and not forced (as for hard sources), the actual signal that will be
 radiated from the source point will not be equal to the excitation signal 
 itself. It will be altered by the response of the system. A virtual free 
 field measurement was performed to characterize the total resulting 
-excitation signal. The results are shown in figure \ref{simuExcitationPlots}.They can be compared to the actual spark source used in figure \ref{sparkSourcePlots}. 
+excitation signal.
 
-
-[TODO plots: imagesc van gaussische?]
+[TODO plots: timesignal hanning en freefield + spectrum; imagesc van gaussische]
 
 
 \subsubsection*{The boundaries}

@@ -18,28 +18,28 @@ ao.BitsPerSample = depth;
 addchannel(ao,1);
 
 %set up all the input channels
-ai0 = analoginput('winsound',0);
+ai0 = analoginput('winsound',1);
 addchannel(ai0,1);
 addchannel(ai0,2);
 ai0.SampleRate = rate;
 ai0.BitsPerSample = depth;
 ai0.SamplesPerTrigger = samples;
 
-ai1 = analoginput('winsound',6);
+ai1 = analoginput('winsound',2);
 addchannel(ai1,1);
 addchannel(ai1,2);
 ai1.SampleRate = rate;
 ai1.BitsPerSample = depth;
 ai1.SamplesPerTrigger = samples;
 
-ai2 = analoginput('winsound',3);
+ai2 = analoginput('winsound',4);
 addchannel(ai2,1);
 addchannel(ai2,2);
 ai2.SampleRate = rate;
 ai2.BitsPerSample = depth;
 ai2.SamplesPerTrigger = samples;
 
-ai3 = analoginput('winsound',7);
+ai3 = analoginput('winsound',5);
 addchannel(ai3,1);
 addchannel(ai3,2);
 ai3.SampleRate = rate;

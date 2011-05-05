@@ -70,7 +70,7 @@ The derivation of the wave equation for propagation in a nonviscous fluid is bas
 \begin{wrapfigure}{r}{0.4\textwidth}
 	\vspace{-10pt}
   \begin{center}
-    \includegraphics[width=0.39\textwidth]{newton}
+    \includegraphics[width=0.39\textwidth]{newton.pdf}
   \end{center}
   \caption{}\label{fig: newton}
   \vspace{-20pt}
@@ -93,7 +93,6 @@ with $\rho_0$ the static value of the density $\rho$. Simplifying the previous e
 \[
 - \frac{\partial p}{\partial x} = \rho_0 \frac{\partial v_x}{\partial t}.
 \]
-
 This derivation can be repeated for the $y$- and $z$-directions, which ultimately gives the following equation:
 \begin{equation}
 \vec{\nabla} p = - \rho_0 \frac{\partial \vec{v}}{\partial t}.
@@ -116,7 +115,6 @@ The flux of particles can be rewritten according to the divergence theorem:
 \[
 \Phi_m = - \rho_0 \oint_A \vec{v} \cdot d\vec{A} =- \rho_0 \int_{V} (\vec{\nabla} \cdot \vec{v}) \, dV.
 \]
-
 Since the change of mass is equal to the mass flux, following relation between the density and the velocity of the particles can be obtained:
 \begin{equation}
 \frac{\partial \rho}{\partial t}  = - \rho_0 (\vec{\nabla} \cdot \vec{v})
@@ -189,7 +187,7 @@ An important quantity is the characteristic impedance $Z$ of a material. It is d
 \[
 Z = \rho c
 \]
-with $\rho$ the density of the medium and $c$ the longitudinal wave speed in that medium. In case of plane waves travelling through a homogeneous fluid (like air), the characteristic impedance equals the ratio of the complex pressure amplitude and the particle velocity:
+with $\rho$ the density of the medium and $c$ the longitudinal wave speed. In case of plane waves travelling through a homogeneous fluid (like air), the characteristic impedance equals the ratio of the complex pressure amplitude and the particle velocity:
 \[
 Z = \frac{p}{v} = \rho c
 \]
@@ -200,21 +198,59 @@ where the particle velocity is evaluated in the direction of propagation.
 \vspace{-15pt}
 When a sound wave travels from one medium to another, it will be reflected and refracted at the boundary surface. Let us consider plane longitudinal waves:
 \begin{align*}
-&p_{in} = p_{in,0}\, exp\left(i \vec{r} \cdot \vec{k_{in}} - i \omega t \right)\\
-&p_{ref} = p_{ref,0}\, exp\left(i \vec{r} \cdot \vec{k_{ref}} - i \omega t \right)\\
-&p_{tr} = p_{tr,0}\, exp\left(i \vec{r} \cdot \vec{k_{tr}} - i \omega t \right)
+&p_{in} = p_{in,0}\; \exp\left[ i (\vec{r} \cdot \vec{k}_{in} -  \omega t )\right]\\
+&p_{ref} = p_{ref,0}\; \exp\left[ i (\vec{r} \cdot \vec{k}_{ref} -  \omega t )\right]\\
+&p_{tr} = p_{tr,0}\; \exp\left[ i (\vec{r} \cdot \vec{k}_{tr} -  \omega t )\right]
 \end{align*}
 
-Let $\theta_{in}$, $\theta_{ref}$ and $\theta_{tr}$ be the angles with the normal of the incoming (in) wave, reflected (ref) wave and transmitted (tr) wave respectively. The norm of the wave vectors are 
+Let $\theta_{in}$, $\theta_{ref}$ and $\theta_{tr}$ be the angles respective to the normal of the surface of the incoming wave (in), reflected  wave (ref) and transmitted  wave (tr) respectively. The norm of the wave vectors are 
 \[
-\left\|k_{in}\right\| = \left\|k_{ref}\right\| = \frac{\omega}{c_1} \qquad \textrm{ and } \qquad \left\|k_{tr}\right\| = \frac{\omega}{c_2}
+\left\|\vec{k}_{in}\right\| = \left\|\vec{k}_{ref}\right\| = \frac{\omega}{c_1} \qquad \textrm{ and } \qquad \left\|\vec{k}_{tr}\right\| = \frac{\omega}{c_2}
 \]
 with $c_1$ and $c_2$ the speeds of sound in medium 1 and 2. The acoustical waves are subject to boundary conditions at the surface. First of all, the law of action and reaction dictates that the pressure should vary continuously at the boundary: $p_{in} + p_{ref} = p_{tr}$.
 Secondly, the normal velocity of the particles remains the same in both media at the boundary, whereas the tangential component may differ: $v_{in,n} + v_{ref,n} = v_{tr,n}$.
 
-These boundary conditions result in the 
- 
+These boundary conditions result in Snell's law
+\[
+\left\|\vec{k}_{in}\right\| \sin\theta_{in} = \left\|\vec{k}_{ref}\right\| \sin\theta_{ref} = \left\|\vec{k}_{tr}\right\| \sin\theta_{tr}
+\]
+and the following relations between the angles and the pressure amplitudes:
+\[
+\left\{
+\begin{array}{l}
+p_{in,0} + p_{ref,0} = p_{tr,0}\\
+\frac{1 }{\rho_1 c_1}p_{in,0}\; \cos\theta_{in} - \frac{ 1}{\rho_1 c_1}p_{ref,0}\; \cos\theta_{ref} = \frac{ 1}{\rho_2 c_2}p_{tr,0}\; \cos\theta_{tr}.
+\end{array}\right.
+\]
+These equations can be simplified by changing the variables to the pressure reflection coefficient $R_p = p_{ref,0}/p_{in,0}$ and the pressure transmission coefficient $T_p = p_{tr,0}/p_{in,0}$.  
+\[
+\left\{
+\begin{array}{l} 
+1+R_p = T_p\\ 
+\frac{ 1}{\rho_1 c_1}(1-R_p ) \cos\theta_{ref} = \frac{ 1}{\rho_2 c_2}T_p  \cos\theta_{tr}.
+\end{array}\right.
+\]
+The solution of this set of equations is
+\[
+R_p = \frac{Z_2 \cos \theta_{in} - Z_1 \cos \theta_{tr}}{Z_2 \cos \theta_{in} + Z_1 \cos \theta_{tr}} \qquad \textrm{ and } \qquad
+T_p = \frac{2 Z_2 \cos \theta_{in} }{Z_2 \cos \theta_{in} + Z_1 \cos \theta_{tr}}.
+\]
+with $Z_1 = \rho_1 c_1$ the characteristic impedance of fluid 1 and $Z_2 = \rho_2 c_2$ the impedance of medium 2.  
+The reflection coefficient ranges from -1 to 1, while the transmission coefficient has a value between 0 and 2. A value greater than 1 for the transmission coefficient may seem in disagreement with conservation of energy, but that is not the case. We speak of pressure coefficients, instead of intensity coefficients. 
 
+The average acoustic intensity $\vec{I}$ of a sound wave is defined as 
+\[
+\vec{I} = \frac{1}{T} \int^{T}_{0}{p(t) \vec{v}(t) \,dt}.
+\]
+with $p$ the instantaneous pressure and $\vec{v}$ the particle velocity. It equals the sound power per unit area. For plane waves, the magnitude of the intensity becomes 
+\[
+I = \frac{1}{T} \int^{T}_{0}{\frac{\left(p(t)\right)^2}{Z} \,dt} = \frac{p^2_{rms}}{Z}.
+\]
+The reflection and transmission coefficients are then defined as
+\[
+R_I = \frac{I_{ref}}{I_{in}} = \frac{p^2_{ref,rms}}{Z_1} \frac{Z_1}{p^2_{in,rms}} = R_p^2 \qquad\textrm{ and } \qquad T_I = \frac{I_{tr}}{I_{in}} = \frac{p^2_{tr,rms}}{Z_2} \frac{Z_1}{p^2_{in,rms}} = T_p^2 \frac{Z_1}{Z_2}. 
+\]
+When $Z_1 << Z_2$, $T_p \approx 2$, but $T_I$ becomes 0. Hence there is no discrepancy.
 
 
 
@@ -223,7 +259,7 @@ These boundary conditions result in the
 \vspace{-15pt}
 The sound absorption coefficient is defined as the fraction of acoustic energy that is absorbed by the surface on reflection \cite[p.12]{Geetere}.  When dealing with incident plane waves, the absorption coefficient can be written as a function of the (pressure) reflection coefficient:
 \[
-\alpha(\theta) = 1 - \left|R_p(Z_s, \theta)\right|^2.
+\alpha(\theta_{in}) = 1 - \left|R_p(\theta_{in})\right|^2.
 \]
 
 

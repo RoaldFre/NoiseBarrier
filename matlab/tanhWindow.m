@@ -15,13 +15,13 @@ end
 freqs = ifftshift(freqs)';
 
 
-if width1 != 0
+if width1 ~= 0
 	left = (0.5 + 0.5*tanh((abs(freqs) - f1)/width1));
 else
 	left = ones(size(freqs));
 end
 
-if width2 != 0
+if width2 ~= 0
 	right = (0.5 + 0.5*tanh(-(abs(freqs) - f2)/width2));
 else
 	right = ones(size(freqs));

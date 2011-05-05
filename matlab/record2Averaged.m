@@ -1,5 +1,5 @@
 %function [mic, loop, main] = record2Averaged(signal, rate, depth, n)
-function [mic, loop] = record2Averaged(signal, rate, depth, n)
+function [mic, loop, main] = record2Averaged(signal, rate, depth, n)
 % [received, sent] = recordAveraged(signal, rate, depth, n)
 %
 % Record the given signal at given rate and bitdepth by averaging n 
@@ -12,7 +12,7 @@ function [mic, loop] = record2Averaged(signal, rate, depth, n)
 samples = length(signal);
 
 mic = zeros(samples,1);
-%loop = zeros(samples,1);
+loop = zeros(samples,1);
 main = zeros(samples,1);
 
 for i = 1:n
@@ -31,7 +31,7 @@ for i = 1:n
     if i ~= 1
         % Sync to the accumulated signal, or just the first? We'll use the 
         % accumulated for now...
-        thismic = sync(mic/i, thismic,5);
+        thismic = sync(mic/i, thismic, 4);
         %thisloop = sync(loop/i, thisloop,5);
         % thismain = sync(main/i, thismain,5);
 	%Don't waste time syncing loop and main.
