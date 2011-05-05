@@ -5,8 +5,7 @@ function makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 	system(['mkdir ',destdir,' &>/dev/null']);
 	print([destdir,'/',name,'.tex'],'-depslatex',['-S',width,',',height]);
 
-	system(['cd ',destdir,'; epstopdf ',name,'.eps; rm ',name,'.eps',
-		"; sed -e 's#",destdir,'#',relImgDir,"#' ", name,".tex > ",
-		name,"-fixed.tex; mv ",name,"-fixed.tex ", name,".tex"]);
+	system(['cd ',destdir,'; epstopdf ',name,'.eps; rm ',name,'.eps', ...
+		"; sed -ie 's#",destdir,'#',relImgDir,"#' ", name,".tex"]);
 endfunction
 

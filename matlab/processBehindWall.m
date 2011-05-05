@@ -21,8 +21,8 @@ fraction(3) = 0.70;
 fraction(9) = 0.70;
 fraction(10) = 0.70;
 fraction(11) = 0.70;
-fraction(18) = 0.72;
-fraction(26) = 0.70;
+fraction(18) = 0.58;
+fraction(26) = 0.60;
 fraction(43) = 0.70;
 fraction(44) = 0.70;
 fraction(45) = 0.70;
@@ -35,12 +35,11 @@ fHigh = 500000;
 fNyq = samplerate/2;
 
 
-reflectionWindow = windowTail(fraction, 0.05, length(measurements(additionalStart:end,1)));
+reflectionWindow = windowTail(fraction, 0.06, length(measurements(additionalStart:end,1)));
 for i=1:length(measurements(1,:))
 	measurements(:,i) = measurements(:,i) - sum(measurements(:,i))/length(measurements(:,i));
 	[b, a] = butter(1, [fLow/fNyq, fHigh/fNyq]); %in fraction of fNyq
 	%measurementsW(:,i) = filter(b, a, measurements(:,i)) .* reflectionWindow(i,:)';
-	%measurements(:,i) = filter(b, a, measurements(:,i)); %second order hack...
 	%measurements2(:,i) = filter(b, a, measurements(additionalStart:end,i)) .* reflectionWindow(i,:)';
 	measurements2(:,i) = measurements(additionalStart:end,i) .* reflectionWindow(i,:)';
 end
@@ -98,11 +97,11 @@ deconvolvedCorrected = zeros(size(measurements));
 freeFieldSpectrum = fft(freeFieldWindowed, len);
 freeFieldSpectrumCorrected = fft(freeFieldWindowedCorrected, len);
 %window = tanhWindow(5000, 90000, 100, 5000, samplerate, len);
-window = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
+nindow = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
 
 
-failedx = [0, 8, 9,10,11];
-failedy = [3, 4, 4, 4, 4];
+failedx = [0, 7, 8, 9,10,11];
+failedy = [3, 4, 4, 4, 4, 4];
 failedi = failedx * upSteps + failedy + 1;
 
 
@@ -146,6 +145,7 @@ for x = 0 : sideSteps - 1
 		subplot(2,1,2);
 		distances = linspace(0, len / samplerate * 340, len);
 		clf; hold on;
+		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
 		plot(distances, deconvolved(:,i)/max(abs(deconvolved(:,i))));
 		%plot(distances, deconvolvedW(:,i)/max(abs(deconvolved(:,i))),'g');
 		plot(distances, -1+measurements(:,i)/max(abs(measurements(:,i)))/2, 'r');

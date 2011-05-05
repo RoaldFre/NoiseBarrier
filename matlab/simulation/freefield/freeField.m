@@ -1,4 +1,4 @@
-function freeField(dx)
+%function freeField(dx)
 
 %this script performs a finite difference calculation on SCK-CEN interest
 %samples
@@ -88,7 +88,7 @@ Precord = zeros(length(xrec), floor(ndt/recordstep));
 
 
 
-vis = false
+vis = 1
 visualizeSteps = 30;
 counter = 1;
 counterM = 1;

@@ -11,6 +11,8 @@ savefile(measured, 'achter-muur');
 
 dir = '../data/scalemodel/voor-muur/';
 name = '30hoog-40ver-40stap-2000vonk';
+	%STAP IS EIGENLIJK 30 !!!
+	%en vanaf x=10 heeft het xy positiesysteem blijkbaar gehaperd ... FFFFFFFUUUUUUUUUUUU !!!
 n = 96;
 measured = loadAsciiFiles([dir, name], n);
 savefile(measured, 'voor-muur');

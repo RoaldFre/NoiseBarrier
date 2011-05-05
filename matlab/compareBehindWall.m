@@ -13,9 +13,10 @@ tMax = time(end);
 c = 340;
 
 %normalize
-factor = max(abs(deconvolved(:,8)));
+factor = max(abs(deconvolvedCorrected(:,8)));
 %measurements = measurements / factor;
 %deconvolved = deconvolved / factor;
+%deconvolvedCorrected = deconvolvedCorrected / factor;
 
 simFactor = max(abs(simDeconvolved(:,8)));
 %simulated = simulated / simFactor;
@@ -40,6 +41,7 @@ for x = 0 : sideSteps - 1
 		plot(time, deconvolvedCorrected(:,i), 'g');
 		plot(simTime, simDeconvolved(:,i), 'k');
 		axis([tMin, tMax, -0.004, 0.006],'autoy');
+		axis([tMin, tMax, -0.6, 1.1],'autoy');
 
 		pause(1.5);
 	end

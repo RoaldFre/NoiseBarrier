@@ -58,10 +58,10 @@ deconvolvedCorrected = zeros(size(measurements));
 freeFieldSpectrum = fft(freeFieldWindowed, len);
 freeFieldSpectrumCorrected = fft(freeFieldWindowedCorrected, len);
 %window = tanhWindow(5000, 90000, 100, 5000, samplerate, len);
-window = tanhWindow(5000, 40000, 100, 5000, samplerate, len);
+window = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
 
-failedx = [];
-failedy = [];
+failedx = [0];
+failedy = [2];
 failedi = failedx * upSteps + failedy + 1;
 
 for x = 0 : sideSteps - 1
