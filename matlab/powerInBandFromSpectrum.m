@@ -1,4 +1,4 @@
-function power = powerInBandFromSpectrum(spectrum, samplerate, fMin, fMax, order)
+function power = powerInBandFromSpectrum(spectrum, samplerate, fMin, fMax)
 % spectrum is plain linear as returned by fft, can still be complex or already abs
 
 len = length(spectrum);
