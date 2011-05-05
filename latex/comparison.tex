@@ -1,9 +1,12 @@
 \section{Comparison of scale model with simulation \label{sectComparison}}
-Figures \ref{band1}, \ref{band2} and \ref{band3} give a visual representation of the characteristics of the wall on various spatial coordinates. Each figure represents the intensities in a fixed octave band. All intensities are normalized to the maximum intensity of all three octave bands so they can be compared.
+Figures \ref{band1}, \ref{band2}, \ref{band3} and \ref{band4} give a visual representation of the characteristics of the wall on various spatial coordinates. Each figure represents the intensities in a fixed octave band. All intensities are normalized to the maximum of all considered octave bands so they can be compared.
 
-The white areas in the experimental graphs represent lacking data (due to a technical error during the measurement).
+The white areas in the experimental graphs represent lacking data (due to a technical error during the measurement). Also note that the frequency range in figure \ref{bands1} is bordering on the frequency range where measurement noise becomes significant, hence the rather large deviation from the simulated graph in figure \ref{bands1Sim}
 
-In figure \ref{band1}, the frequencies under consideration are comparable to the width of the wall. Compared to the high frequency regime of figure \ref{band3}, noticably more intensity can be found behind the barrier due to diffraction. However, this lowest spectral band is only the onset of diffraction, it would have been interesting to examine even lower frequencies, where the wavelength becomes comparable to the \emph{height} of the barrier. Sadly, the data in that frequency regime was not usable due to excessive noise.
+In figure \ref{band2}, the frequencies under consideration are comparable to the width of the wall. Compared to the high frequency regime of figure \ref{band4}, noticably more intensity can be found behind the barrier due to diffraction. However, these lowest spectral bands (figure \ref{band1} and \ref{band2}) are only on the onset of diffraction. It would have been interesting to examine even lower frequencies, where the wavelength becomes comparable to the \emph{height} of the barrier. Sadly, the data in that frequency regime was not usable due to excessive noise. The comb-like shape of the spectrum also prevents from assigning a representative value to the average intensity in the small (absolute, linear) frequency span of those lower octave bands. This, by itself, also explains the noisy appearance of figure \ref{bands1}.
+
+SOLVE?
+DECONVOLVING DID NOT WORK
 
 
 
@@ -50,5 +53,25 @@ In figure \ref{band1}, the frequencies under consideration are comparable to the
 
 
 
+
+\begin{figure}
+\figOctaveTwoNoFigNoCaption{-0.0cm}
+	{before-x1-y1}{$x$ = 7\,cm, $y$ = 6\,cm}
+	{before-x1-y3}{$x$ = 7\,cm, $y$ = 12\,cm}
+\figOctaveTwoNoFigNoCaption{-0.0cm}
+	{before-x1-y5}{$x$ = 7\,cm, $y$ = 18\,cm}
+	{before-x1-y7}{$x$ = 7\,cm, $y$ = 24\,cm}
+\caption{Results of some measurements close before the wall, with $x$ the distance to the wall and $y$ the distance above the floor. The curves plotted are the raw measurement without (red) and with (green) correction for the attenuation of high frequencies, and the result of the simulation (black). \label{behindNear}}
+\end{figure}
+
+\begin{figure}
+\figOctaveTwoNoFigNoCaption{-0.0cm}
+	{before-x9-y1}{$x$ = 31\,cm, $y$ = 6\,cm}
+	{before-x9-y3}{$x$ = 31\,cm, $y$ = 12\,cm}
+\figOctaveTwoNoFigNoCaption{-0.0cm}
+	{before-x9-y5}{$x$ = 31\,cm, $y$ = 18\,cm}
+	{before-x9-y7}{$x$ = 31\,cm, $y$ = 24\,cm}
+\caption{Results of some measurements far before the wall, with $x$ the distance to the wall and $y$ the distance above the floor. The curves plotted are the raw measurement without (red) and with (green) correction for the attenuation of high frequencies, and the result of the simulation (black). \label{behindFar}}
+\end{figure}
 
 
