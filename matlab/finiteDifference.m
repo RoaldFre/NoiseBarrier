@@ -1,5 +1,5 @@
-nr = 500; %number of rows
-nc = 500; %number of columns
+nr = 50; %number of rows
+nc = 50; %number of columns
 
 lr = 0.1; %length in the "rows direction" -> height (in meter)
 lc = 0.1; %length in the "columns direction" -> width (in meter)
@@ -10,15 +10,15 @@ dr = lr / nr;
 dc = lc / nc;
 
 sourcer = round(nr *3/4);
-sourcec = round(nc *1/4);
+sourcec = round(nc *1/4);;
 
 %excitation = sin(linspace(0,4*pi,10000));
 
 %"free" delta
-excitation = [1];
+%excitation = [1];
 
 %delta, forced zero afterwards
-%excitation = [1, zeros(1,10000000)];
+excitation = [1, zeros(1,10000000)];
 
 %hanning
 %excitation = hanning(20);
@@ -68,7 +68,7 @@ while 1
 		p_grid(sourcer-1, sourcec) = excitation(iteration);
 		%plane wave:
 		%p_grid(1:end, sourcec) = excitation(iteration);
-    end
+	endif
 
 	%barrier
 	p_grid(round(nr/2):end, round(nc/3)-1) = -p_grid(round(nr/2):end, round(nc/3));
@@ -78,14 +78,14 @@ while 1
 	p_grid(end, 1:end) = -p_grid(end-1, 1:end);
 
 
-	if ~mod(iteration,30)
+	if ~mod(iteration,300)
 		imagesc(p_grid);
 		%drawnow();
 		pause(0.001);
-    end
+	endif
 
 %	if iteration * dt * c >= lc/2
 %		%we should have reached the other side already now!
 %		return
 %	endif
-end
+endwhile
