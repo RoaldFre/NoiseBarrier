@@ -262,8 +262,21 @@ The parameter $t$ which is added to both the numerator and denominator is
 The reflection index is a measure for the average ratio of reflected energy and incident energy. It is this standardized quantity that is used to compare the reflection capacities of different noise barriers. For more details, see \cite{Adrienne}.
 
 \subsubsection{Shortcomings}
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\vspace{-10pt}
+  \centering
+    \includegraphics[width=0.48\textwidth]{adriennedir}
+  \caption{Path of the reflected wave.}
+  \label{fig: adriennedir}
+  \vspace{-40pt}
+\end{wrapfigure}
+The problem with the Adrienne method is that the directionality of the speaker is not accounted for. For example: when measuring at an angle of $130\degr$, the path of the reflected wave will resemble figure \ref{fig: adriennedir}. It is clear that the reflected component was emitted at a different angle than the direct component. Hence the reflected component contains a different speaker response. And this was only the case for a flat surface, imagine what would happen for non flat walls. Another disadvantage of this setup is that the speaker itself can be the cause of the first parasitic reflection which limits the time window, since it stands relatively close to the wall. Therefore, it would be advisedly to place the speaker at greater distance from the wall and keep the microphone close to it.
 
-Directionality of the speaker, speaker reflection before floor, short time window
+This would not only solve the problem of parasitic reflections from the speaker, it would also reduce the influence of the speaker's directivity. The solid angle in which the response of the speaker can be considered as more or less equal remains the same, but the effective surface on the wall becomes larger. The angle between the direct sound path and the reflected sound path becomes smaller as the speaker is further removed of the wall. And hence the influence of the speaker diminishes.
+
+The disadvantage of placing the speaker further away, is that the reflection with the ground comes quicker after the reflected sound. This results in shorter Adrienne windows and consequently a larger lowest frequency limit. The solution to this problem would be to place the speaker and microphone higher. This however results in parasitic reflections due to diffraction effects at the top of the wall.   
+
+
 
 
 
@@ -271,7 +284,7 @@ Directionality of the speaker, speaker reflection before floor, short time windo
 Gebruik de mls measurements, want buiten gemeten en rekening houden met extra artifacten (vandaar windowen)
 niet echt praktisch
 Octave bands conform the norm. Probleem voor banden bij lage frequenties:
-
+helaas uitstap echte muur afgelast
 {\huge Warning: for meaningful design results, center frequency used should preferably be in range Fs/200 < Fc < Fs/5.}
 
 p 68 de geetere heeft ook de muur gemeten!
