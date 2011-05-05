@@ -1,0 +1,10 @@
+NOTE: this need sto be merged into the theorectial section somewhere
+
+A simple rule of thumb is that diffraction effects occur when the dimensions of the obstacle are comparable to the wavelength. A more elaborate rule is given by Rindel\cite{rindel-diffraction} and has been applied by others\cite{dave-diffraction, stage-acoustics}. It states that the diffraction from an infinite band of height $h$ in the far field can be characterized by a frequency $f_0$
+$$
+f_0 = \frac{c}{
+	\left(\frac{1}{s} + \frac{1}{r}\right) h^2 \cos^2 \theta}
+$$
+with $s$ and $r$ the distance from the reflectorto the source, respectively to the receiver, and $\theta$ the angle of incidence. For frequencies higher than $f_0$, there is no diffraction. For frequencies lower than $f_0$, the intensity is attenuated by 6dB per octave. 
+
+We will use this formula as a rule of thumb in the measurements and the scalemodel, even though it only applies in the far field and doesn't take the floor nor the width of the wall into account. More elaborate solutions that would incorporate these factors and also be valid in the near field are not analytically tractable. Hence the system will be simulated numerically in order to compare measurement with theory.
