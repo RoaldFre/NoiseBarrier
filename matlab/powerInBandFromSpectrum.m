@@ -2,9 +2,8 @@ function power = powerInBandFromSpectrum(spectrum, samplerate, fMin, fMax)
 % spectrum is plain linear as returned by fft, can still be complex or already abs
 
 len = length(spectrum);
-lowerIndex = round(fMin / samplerate * len);
-upperIndex = round(fMax / samplerate * len);
+lowerIndex = round(fMin / samplerate * (len-1))+1;
+upperIndex = round(fMax / samplerate * (len-1))+1;
 
 power = sum(abs(spectrum(lowerIndex:upperIndex)).^2) / (upperIndex - lowerIndex + 1);
 
-power = 2*power; %because we only looked at 1 side of the spectrum (positive frequencies)
