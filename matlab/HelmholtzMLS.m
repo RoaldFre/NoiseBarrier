@@ -49,7 +49,7 @@ xlab='Time (ms)';
 ylab='Amplitude (arb. units)';
 width='500';
 height='400';
-%makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
+makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 IRsubtracted = IRsynced - IRfreeWindowed;
 %figure;
@@ -84,7 +84,7 @@ xlab='Frequency (Hz)';
 ylab='Amplitude (dB)';
 width='500';
 height='400';
-%makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
+makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 figure;
 tanhWind = tanhWindow(100, 6500, 20, 1000, 96000, length(spectrum));
@@ -92,8 +92,7 @@ impulseresponse = real(ifft(spectrum.*tanhWind));
 impulseresponse = impulseresponse / max(abs(impulseresponse));
 plot(t,impulseresponse);
 axis([0 14 -0.6 1.2])
-xlabel('Time (ms)');
-ylabel('Amplitude (arb. units)');
+
 
 name='helmimp';
 destdir = '../latex/images';
@@ -103,7 +102,7 @@ xlab='Time (ms)';
 ylab='Amplitude (arb. units)';
 width='700';
 height='400';
-%makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
+makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 % figure;
 % semilogx(f, spectrumabs.^2);
