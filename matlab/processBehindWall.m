@@ -97,8 +97,8 @@ deconvolvedCorrected = zeros(size(measurements));
 freeFieldSpectrum = fft(freeFieldWindowed, len);
 freeFieldSpectrumCorrected = fft(freeFieldWindowedCorrected, len);
 %window = tanhWindow(5000, 90000, 100, 5000, samplerate, len);
-nindow = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
-
+%window = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
+window = tanhWindow(500, 42000, 50, 2000, samplerate, len);
 
 failedx = [0, 7, 8, 9,10,11];
 failedy = [3, 4, 4, 4, 4, 4];
@@ -127,7 +127,9 @@ for x = 0 : sideSteps - 1
 		if ismember(i, failedi)
 			bandsGrid(x+1, y+1, :) = NaN;
 		else
-			bandsGrid(x+1, y+1, :) = powerInBands(deconvolvedCorrected(:,i), bandBorders, samplerate, order);
+			%bandsGrid(x+1, y+1, :) = powerInBands(deconvolvedCorrected(:,i), bandBorders, samplerate, order);
+			%bandsGrid(x+1, y+1, :) = powerInBands(deconvolved(:,i), bandBorders, samplerate, order);
+			bandsGrid(x+1, y+1, :) = powerInBandsFromSpectrum(spectraCorrected(:,i), bandBorders, samplerate, order);
 		end
 	end
 end
@@ -141,19 +143,22 @@ for x = 0 : sideSteps - 1
 		subplot(2,1,1);
 		loglog(measurementFreqs, spectra(:,i));
 		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
-		axis([5000, 50000, 0.0001, 0.5]);
+		%axis([50, 50000, 0.0001, 0.5]);
+		axis([50, 50000, 0.0001, 0.5],'autoy');
 		subplot(2,1,2);
+
+
 		distances = linspace(0, len / samplerate * 340, len);
-		clf; hold on;
+		hold on;
+		plot(distances, 10*deconvolved(:,i));
+		plot(distances, 10*deconvolvedCorrected(:,i) - 0.5,'k');
+		plot(distances, measurements(:,i) - 1.5, 'r');
+		plot(distances, measurementsCorrected(:,i) - 3, 'g');
 		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
-		plot(distances, deconvolved(:,i)/max(abs(deconvolved(:,i))));
-		%plot(distances, deconvolvedW(:,i)/max(abs(deconvolved(:,i))),'g');
-		plot(distances, -1+measurements(:,i)/max(abs(measurements(:,i)))/2, 'r');
-		%plot(distances, -2+measurementsW(:,i)/max(abs(measurements(:,i)))/2, 'r');
-		plot(distances, reflectionWindow(i,:), 'k');
 		hold off;
-		%axis([1, 2, -1, 1],'autox');
-		pause(1.5);
+		axis([0.5, 1.5, -0.0003, 0.0008],'autoy');
+		pause(1);
+		clf;
 	end
 	pause(1);
 end

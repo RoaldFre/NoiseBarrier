@@ -16,9 +16,10 @@ upSteps = 8;
 
 
 bandBorders = [5e3, 10e3, 20e3, 40e3];
+bandBorders = [2.5e3, 5e3, 10e3, 20e3, 40e3];
 nbBands = length(bandBorders) - 1;
 bandsGrid = zeros([sideSteps, upSteps, nbBands]);
-order = 1; %order of butterworth bandpass filter for bands
+order = 3; %order of butterworth bandpass filter for bands
 % TODO octave only accepts order one?
 
 

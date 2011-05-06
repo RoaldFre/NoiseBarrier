@@ -48,7 +48,7 @@ ylabrule='0.9cm';
 xlab='Time (ms)';
 ylab='Amplitude (arb. units)';
 width='500';
-height='400';
+height='300';
 makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 IRsubtracted = IRsynced - IRfreeWindowed;
@@ -71,7 +71,7 @@ spectrumabs = smoothBins(abs(spectrum), 5);
 
 figure;
 tanhWind = tanhWindow(100, 6500, 20, 1000, 96000, length(spectrum));
-semilogx(f, 20*log10(spectrumabs), f, 20*log10(tanhWind));
+semilogx(f, 20*log10(spectrumabs), f, 20*log10(tanhWind), 'linewidth', 1.5);
 axis([100, 10000, -30, 20]);
 xlabel('Frequency (Hz)');
 ylabel('Amplitude (dB)');
@@ -83,14 +83,14 @@ ylabrule='0.9cm';
 xlab='Frequency (Hz)';
 ylab='Amplitude (dB)';
 width='500';
-height='400';
+height='300';
 makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 figure;
 tanhWind = tanhWindow(100, 6500, 20, 1000, 96000, length(spectrum));
 impulseresponse = real(ifft(spectrum.*tanhWind));
 impulseresponse = impulseresponse / max(abs(impulseresponse));
-plot(t,impulseresponse);
+plot(t,impulseresponse, 'linewidth', 1.5);
 axis([0 14 -0.6 1.2])
 
 
@@ -101,7 +101,7 @@ ylabrule='0.9cm';
 xlab='Time (ms)';
 ylab='Amplitude (arb. units)';
 width='700';
-height='400';
+height='300';
 makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 % figure;

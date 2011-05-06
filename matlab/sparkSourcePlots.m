@@ -22,7 +22,7 @@ freqsWin = linspace(0,samplerate,length(windowed));
 
 
 
-plot(triggerTime * 1e3, freeFieldSignal);
+plot(triggerTime * 1e3, freeFieldSignal, 'linewidth', 1.5);
 axis([-0.1,1.0,0,1],'autoy');
 
 name='sparkImpulseResponse';
@@ -32,7 +32,7 @@ ylabrule='0.9cm';
 xlab='$t$ (ms)';
 ylab='$p$ (arb. units)';
 width='500';
-height='400';
+height='280';
 makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 
@@ -40,15 +40,16 @@ makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 spectrum = abs(fft(windowed));
 spectrum = spectrum/max(spectrum(1:end-100));
 spectrum = smoothBins(spectrum,5);
-semilogx(freqsWin, 20*log(spectrum));
-axis([1000,400e3,0,1],'autoy');
+semilogx(freqsWin / 1e3, 20*log(spectrum), 'linewidth', 1.5);
+axis([1,400,0,1],'autoy');
+logAxis(1, 400, 2);
 
 name='sparkSpectrum';
 destdir = '../latex/images';
 relImgDir = 'images';
 ylabrule='0.9cm';
-xlab='$f$ (Hz)';
+xlab='$f$ (kHz)';
 ylab='Intensity (dB)';
 width='500';
-height='400';
+height='280';
 makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);

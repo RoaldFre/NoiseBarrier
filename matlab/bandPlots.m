@@ -17,7 +17,7 @@ xStepsAft = sideSteps;
 xvec = [xvecBef(end:-1:1), 0, 0.001, wallWidth-0.001, wallWidth, wallWidth + xvecBeh];
 yvec = ((0:upSteps-1)*recordUpStep + recordHeight);
 
-yWallVec = dBmin * [0 0 0 0 0 0 0 1]';
+yWallVec = [0 0 0 0 0 0 0 Inf]';
 yWallVecs = yWallVec * ones(1, 4);
 
 left = min(xvec) - recordSideStep/2;
@@ -25,11 +25,9 @@ right = max(xvec) + recordSideStep/2;
 down = 0
 up = max(yvec) + recordUpStep/2;
 
-normalization = max(max(max(max(bandsGridBehind))), max(max(max(bandsGridBefore))));
-
 for i=1:nbBands
-	bandsGrid = [bandsGridBefore(end:-1:1, :, i)', yWallVecs, bandsGridBehind(:,:,i)'] / normalization;
-	bandsGrid = real(10*log(bandsGrid))
+	bandsGrid = [bandsGridBefore(end:-1:1, :, i)', yWallVecs, bandsGridBehind(:,:,i)'];
+	bandsGrid = real(10*log(bandsGrid));
 	bandsGrid(find(isnan(bandsGrid))) = Inf;
 	imagesc(100*xvec, 100*yvec, bandsGrid, [dBmin, dBmax]);
 
@@ -50,5 +48,5 @@ for i=1:nbBands
 	makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 end
 
-
+clf;
 

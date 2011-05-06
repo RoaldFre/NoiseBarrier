@@ -3,7 +3,7 @@ function [measurements, time, spectra, measurementFreqs, freeField, deconvolved,
 beforeWallData;
 
 %load('../data/simulation/voorMuurGroffer/all');
-load('../data/simulation/voorMuurGroffer/all');
+load('../data/simulation/voorMuur/all');
 measurements = Precord';
 len = length(measurements(:,1));
 time = linspace(0, len*dt, len)';
@@ -52,6 +52,8 @@ freeFieldSpectrum = fft(freeField, len);
 %window = tanhWindow(5000, 40000, 100, 5000, samplerate, len);
 window = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
 window = tanhWindow(4900, 40000, 100, 5000, samplerate, len);
+window = tanhWindow(80, 42000, 10, 2000, samplerate, len);
+window = tanhWindow(500, 42000, 50, 2000, samplerate, len);
 for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;
@@ -62,7 +64,8 @@ for x = 0 : sideSteps - 1
 		spectra(:,i) = abs(spectra(:,i));
 		%spectraFloor(:,i) = abs(spectraFloor(:,i));
 
-		bandsGrid(x+1, y+1, :) = powerInBands(deconvolved(:,i), bandBorders, samplerate, order);
+		%bandsGrid(x+1, y+1, :) = powerInBands(deconvolved(:,i), bandBorders, samplerate, order);
+		bandsGrid(x+1, y+1, :) = powerInBandsFromSpectrum(spectra(:,i), bandBorders, samplerate, order);
 	end
 end
 

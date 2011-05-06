@@ -58,7 +58,9 @@ deconvolvedCorrected = zeros(size(measurements));
 freeFieldSpectrum = fft(freeFieldWindowed, len);
 freeFieldSpectrumCorrected = fft(freeFieldWindowedCorrected, len);
 %window = tanhWindow(5000, 90000, 100, 5000, samplerate, len);
-window = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
+%window = tanhWindow(4900, 42000, 100, 2000, samplerate, len);
+window = tanhWindow(80, 42000, 10, 2000, samplerate, len);
+window = tanhWindow(500, 42000, 50, 2000, samplerate, len);
 
 failedx = [0];
 failedy = [2];
@@ -81,7 +83,9 @@ for x = 0 : sideSteps - 1
 		if ismember(i, failedi)
 			bandsGrid(x+1, y+1, :) = NaN;
 		else
-			bandsGrid(x+1, y+1, :) = powerInBands(deconvolvedCorrected(:,i), bandBorders, samplerate, order);
+			%bandsGrid(x+1, y+1, :) = powerInBands(deconvolvedCorrected(:,i), bandBorders, samplerate, order);
+			%bandsGrid(x+1, y+1, :) = powerInBands(deconvolved(:,i), bandBorders, samplerate, order);
+			bandsGrid(x+1, y+1, :) = powerInBandsFromSpectrum(spectraCorrected(:,i), bandBorders, samplerate, order);
 		end
 
 	end
@@ -98,14 +102,24 @@ for x = 0 : sideSteps - 1
 		subplot(2,1,1);
 		loglog(measurementFreqs, spectra(:,i));
 		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
-		axis([5000, 50000, 0.0001, 0.5]);
+		%axis([50, 50000, 0.0001, 0.5]);
+		axis([250, 50000, 0.0001, 0.5],'autoy');
 		subplot(2,1,2);
+
+
 		distances = linspace(0, len / samplerate * 340, len);
-		plot(distances, deconvolved(:,i));
-		axis([1, 2, -0.0003, 0.0008],'autox');
-		pause(2);
+		hold on;
+		plot(distances, 10*deconvolved(:,i));
+		plot(distances, 10*deconvolvedCorrected(:,i) - 0.5,'k');
+		plot(distances, measurements(:,i) - 1.5, 'r');
+		plot(distances, measurementsCorrected(:,i) - 3, 'g');
+		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
+		hold off;
+		axis([0.5, 1.5, -0.0003, 0.0008],'autoy');
+		pause(1);
+		clf;
 	end
-	pause(3);
+	pause(1);
 end
 
 

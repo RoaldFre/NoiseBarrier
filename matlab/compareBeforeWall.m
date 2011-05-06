@@ -1,5 +1,5 @@
-%[simulated, simTime, simSpectra, simFreqs, simFreeField, simDeconvolved] = processSimulationBeforeWall;
-%[measurements, time, spectra, measurementFreqs, freeField, deconvolved, measurementsCorrected, spectraCorrected, deconvolvedCorrected] = processBeforeWall;
+[simulated, simTime, simSpectra, simFreqs, simFreeField, simDeconvolved] = processSimulationBeforeWall;
+[measurements, time, spectra, measurementFreqs, freeField, deconvolved, measurementsCorrected, spectraCorrected, deconvolvedCorrected] = processBeforeWall;
 
 beforeWallData;
 
@@ -8,11 +8,11 @@ tMax = time(end);
 c = 340;
 
 %for x = 0 : sideSteps - 1
-for x = 10 : sideSteps - 1
+for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;
 		iMeasurement = i; 
-		iSimulation = i-upSteps;
+		iSimulation = i;
 		
 		clf;
 		subplot(2,1,1);
@@ -22,6 +22,7 @@ for x = 10 : sideSteps - 1
 		semilogx(simFreqs, 20*log10(simSpectra(:,iMeasurement)), 'k');
 		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(iMeasurement)])
 		axis([2000, 50000, -60, 20]);
+		axis([20, 50000, -60, 20]);
 		
 		subplot(2,1,2);
 		hold on;
@@ -30,9 +31,9 @@ for x = 10 : sideSteps - 1
 		plot(simTime, simDeconvolved(:,iSimulation), 'k');
 		axis([tMin, tMax, -0.004, 0.006],'autoy');
 
-		pause(2);
+		pause(1.5);
 	end
-	pause(3);
+	pause(1);
 end
 hold off;
 

@@ -1,3 +1,3 @@
 function slash = slash
-%slash = '/';
-slash = '\';
+slash = '/';
+%slash = '\';
