@@ -53,25 +53,14 @@
 
 
 \section{In situ measurements of the reflection coefficient}
-One of the objectives of our project was to develop a program in Matlab to record and process several acoustic signals to determine the sound characteristics of a wall. 
-This section contains a description of our method; an assessment of the standard measuring method (the Adrienne method) and the results of an in situ measurement. 
+One of the objectives of our project was to develop a suite of scripts in Matlab to record and process several acoustic signals to determine the sound characteristics of a wall. 
+This section contains a description of our method; an assessment of the standard measuring method (the Adrienne method) and the results of an in situ measurement comparing both methods. 
 
 \subsection{Recording method}
-The particulars regarding the measurement equipment will be discussed in the following section; as well as the methods of data gathering and processing. Furthermore, a short description of possible excitation signals will be given and finally the developed method will be put to the test by measuring the absorption characteristics of a Helmholtz resonator.
+The particulars regarding the measurement equipment will be discussed in the following section; as well as the methods of data gathering and processing. Furthermore, a short description of possible excitation signals will be given. Lastly, the developed method will be put to the test by measuring the absorption characteristics of a Helmholtz resonator.
 
 \subsubsection{Recording equipment}
-% Weet niet goed wat er hier allemaal moet staan
-The following hardware was used during the experiments:
-%\vspace{-20pt}
-\begin{itemize}
-	\setlength{\itemsep}{1pt}
-  \setlength{\parskip}{0pt}
-  \setlength{\parsep}{0pt}
-	\item Octa-Capture sound card by Roland.
-	\item Amplifier.
-	\item Zircon loudspeaker.
-	\item 1/2" Condenser Microphone Cartridge Type 4130 with Microphone Preamplifier Type 2642.
-\end{itemize}
+The signal was sent from an Roland Octa-Capture sound card via a B\&K amplifyer (type 2716) to the Zircon loudspeaker. The signal was captured by a B\&K condensor microphone and preamplifier and sent back to the Octa-Capture sound card.
 
 \begin{wrapfigure}{R}{0.2\textwidth}
 	%\vspace{-20pt}
@@ -81,7 +70,8 @@ The following hardware was used during the experiments:
   \label{fig: thetaphi}
   %\vspace{-40pt}
 \end{wrapfigure}
-The software necessary to play and record sounds with these instruments was written in Matlab using the Data Acquisition Toolbox. The subsequent processing of these signals was also done in Matlab. The general content of this software will be discussed in section \ref{processing}. But in order to do accurate measurements, the specifics of the speaker have to be examined.
+
+The software necessary to play and record sounds with these instruments was written in Matlab using the Data Acquisition Toolbox. The subsequent processing of these signals also took place in Matlab. The general content of this software will be discussed in section \ref{processing}. But in order to do accurate measurements, the specifics of the speaker have to be examined.
 
 The impulse and frequency response of the Zircon speaker are shown in figure \ref{fig: ZirconImp}. The impulse response is rather short (less than 4 ms) and the frequency response has a smooth magnitude. To determine these responses, the measurement was performed in front of the speaker. However, the speaker is not omnidirectional; figures \ref{fig: thetavar} and \ref{fig: phivar} show the frequency response at different vertical and horizontal angles. The definition of the angles is given in figure \ref{fig: thetaphi}. 
 \begin{figure}[h!]
@@ -93,7 +83,7 @@ The impulse and frequency response of the Zircon speaker are shown in figure \re
 \end{figure}
 
 
-It is clear that the speaker is very directional; when doing measurements, one should keep this in mind. For $\theta$ and $\phi$ between $75^{\circ}$ and $105^{\circ}$, the frequency response is approximately constant (per frequency). Thus when the measured sound is reflected within that solid angle, the received signal of the speaker can be considered the same for those reflecting surfaces.
+It is clear that the speaker is very directional; when doing measurements, one should keep this in mind. For $\theta$ and $\phi$ between $75^{\circ}$ and $105^{\circ}$, the frequency response is approximately constant (per frequency). Thus, when the measured sound is reflected within that solid angle, the received signal of the speaker can be considered the same for those reflecting surfaces.
 
 \begin{figure}[h!]
   \centering
@@ -118,9 +108,9 @@ It is clear that the speaker is very directional; when doing measurements, one s
 
 \subsubsection{Data processing}\label{processing}
 The content of our Matlab program will be briefly discussed in the following paragraphs. 
-\subsubsection*{Recording}
+\subsubsection{Recording}
 %\vspace{-15pt}
-The program is capable of sending a signal to the loudspeaker while simultaneously recording the 8 analog inputs of the Octa-Capture sound card at a sample rate of 96/,kHz. Due to software limitations, however, the signals can not be recorded perfectly simultaneously. A (variable) delay of the order of tens of  milliseconds is possible. Hence a marker pulse should be added at the beginning of the excitation in order to facilitate synchronization later on.
+The program is capable of sending a signal to the loudspeaker while simultaneously recording the 8 analog inputs of the Octa-Capture sound card at a sample rate of 96\,kHz. Due to software limitations, however, the signals can not be recorded perfectly simultaneously. A (variable) delay of the order of tens of  milliseconds is possible. Hence a marker pulse should be added at the beginning of the excitation in order to facilitate synchronization later on.
 
 There are 2 modes of recording: the first one averages $n$ successive measurements on the spot. The excitation signal is sent to the speaker and the resulting sound is recorded. The obtained signal is then synchronized with the previous recordings by determining the peak in the cross-correlation of both signals and shifting accordingly. An additional step will be carried out to synchronize on a sub-sample time scale by means of fourier interpolation and minimizing the RMS value of the difference vector. The signal is subsequently added to the average and the cycle continues. This method gives small files, but is rather time-consuming because the signals have to be synchronized.
 
@@ -128,11 +118,17 @@ The second method consists of repeating the excitation signal $n$ times back-to-
 
 
 
-\subsubsection*{Impulse and frequency response}
+\subsubsection{Impulse and frequency response}
 %\vspace{-15pt}
 The next step in the process is the determination of the impulse and frequency responses. The method to determine the response of the system (with speaker) is dependent on the excitation signal and will be discussed in \ref{exc}. In order to procure the response of the device under test, one has to remove the parasitic reflections. This can be achieved by applying an appropriate time window on the signal. The length of the window determines the lowest possible frequency for which the frequency response can be extracted from the signal. The longer the window, the better. The window which we use in our program is based on the Adrienne temporal window (see \ref{adrwindow}). The length of the window can be adjusted by changing the length of the flat portion and the trailing end, while keeping the ratio of the lengths 7/3.
 
-To remove the direct sound from the impulse response, our program uses the subtraction method. This method requires a free field measurement of the direct sound: the direct sound is measured with the microphone and speaker in the same relative position as during the reflection measurement, but without nearby reflecting surfaces. The impulse response with reflections is first synchronized with the free field impulse response. Secondly, the free field measurement is subtracted from the signal. The resulting impulse response (which contains only the reflected component) is then windowed with an Adrienne window. Both the impulse responses are corrected for attenuation due to travel distance by multiplying the impulse response with the distance traveled. And finally, the frequency response of the reflecting device is determined by deconvolving the influence of the speaker out of the resulting windowed impulse response.
+To remove the direct sound from the impulse response, our program uses the subtraction method. This method requires a free field measurement of the direct sound: the direct sound is measured with the microphone and speaker in the same relative position as during the reflection measurement, but without nearby reflecting surfaces.
+
+The impulse response with reflections is first synchronized with the free field impulse response. This synchronzation only happens on the first few miliseconds of the impulseresponses, when there are no reflections yet, both impulseresponses are still the same.
+
+Secondly, the free field measurement is subtracted from the signal. The resulting impulse response (which contains only the reflected component) is then windowed with an Adrienne window.
+
+Both impulse responses are corrected for attenuation due to travel distance by multiplying the impulse response with the distance traveled ($ct$). And finally, the frequency response of the reflecting device is determined by deconvolving the influence of the speaker out of the resulting windowed impulse response.
 
 
 
@@ -140,21 +136,30 @@ To remove the direct sound from the impulse response, our program uses the subtr
 In the domain of acoustics, the two most prominent types of excitation signals are the Maximum Length Sequence (MLS) and the frequency sweep.
 This section contains a short description of both signal types and the way to calculate the impulse response from them. 
 
+\paragraph{MLS}
+A MLS is a periodic pseudo-random binary signal with a white noise spectrum \cite{Stan}. A more theoretical description of the maximum length sequence can be found in \cite{mls}.  In order to recover the system response, the recorded signal has to be circularly cross-correlated with the input MLS.
 
-A MLS is a periodic pseudo-random binary signal with a white noise spectrum \cite{Stan}.
-{\huge TODO vs:}
-A MLS is a periodic pseudo-random binary signal with almost the same characteristics as white noise
+Any disturbing components (not correlated with the MLS) in the measured output will be phase randomized and hence appear as uniformly distributed noise along the impulse response in stead of localized peaks in the time domain\cite{Stan}. This additional noise can be reduced by averaging over multiple MLS periods.
 
-A more theoretical description of the maximum length sequence can be found in \cite{mls}.  In order to recover the system response, the recorded signal has to be circularly cross-correlated with the input MLS. According to \cite{Stan}, any disturbing components (not correlated with the MLS) in the measured output will be phase randomized and hence appear as uniformly distributed noise along the impulse response in stead of localized peaks in the time domain. This additional noise can be reduced by averaging over multiple MLS periods. The problem with MLS is the fact that distortion artifacts (peaks) appear in the impulse response as a result of the non linearities inherent to (mainly) the loudspeaker \cite{Geetere}. These additional peaks in the impulse response can not be removed by averaging over multiple periods because it is correlated with the input signal.
+The problem with MLS is the fact that distortion artifacts (peaks) appear in the impulse response as a result of the non linearities inherent to (mainly) the loudspeaker\cite{Geetere}. These additional peaks in the impulse response can not be removed by averaging over multiple periods because it is correlated with the input signal.
 
-The second type of excitation signal is the frequency sweep. The excitation signal consists of a sine function with a frequency growing in time. To obtain the impulse response of a system excited with a sweep, one has to deconvolve the original sweep from the measured signal. This is done by dividing the spectrum of the output by the spectrum of the sweep. This procedure can cause difficulties because of dividing by zero. The remedy for this problem is placing a window in the frequency domain to dampen the areas where the spectrum of the emitted signal goes to zero. The window we use in our data processing is a hyperbolic tangent window. It is defined as:
+
+\paragraph{Frequency sweep}
+The second type of excitation signal is the frequency sweep. The excitation signal consists of a sine function with a frequency growing in time.
+
+To obtain the impulse response of a system excited with a sweep, one has to
+deconvolve the original sweep from the measured signal. This is done by dividing the spectrum of the output by the spectrum of the sweep. Doing so, however, can can cause difficulties because of dividing by (near) zero.
+
+The remedy for this problem is placing a window in the frequency domain to dampen the areas where the spectrum of the emitted signal goes to zero. The window we use in our data processing is a hyperbolic tangent window. It is defined as:
 \[
 w(f) = \frac{1}{4}\left(1 + \tanh \frac{f - f_1}{a_1}\right)
 		\left(1 - \tanh \frac{f - f_2}{a_2}\right)
 \]
 with $f_1$ the lower and $f_2$ the upper frequency bounds. The parameters $a_1$ and $a_2$ determine the width of the transitions and control the steepness of the window.
 
-The advantage of the sine sweep excitation is that the distortion artifacts due to non linear behaviour appear before the linear response (as a result of linear deconvolution) and can be removed by time windowing \cite{Geetere}.  Moreover, the signal-to-noise ratio for the sine sweep method is larger since the impulse response has no distortion artifacts in its tail \cite{Stan}.   However, the presence of impulsive noise compromises the impulse response and these residual peaks will not be properly eliminated when using signal averaging techniques. Therefore it is concluded in \cite{Stan} that the MLS excitation signal gives more accurate results in  the presence of non white noise, whereas the sine sweep gives better results in quiet environments. 
+The advantage of the sine sweep excitation is that the distortion artifacts due to non linear behaviour appear before the linear response (as a result of linear deconvolution) and can be removed by time windowing\cite{Geetere}.  Moreover, the signal-to-noise ratio for the sine sweep method is larger since the impulse response has no distortion artifacts in its tail\cite{Stan}.   
+
+However, the presence of impulsive noise compromises the impulse response and these residual peaks will not be properly eliminated when using signal averaging techniques. Therefore it is concluded in \cite{Stan} that the MLS excitation signal gives more accurate results in  the presence of non white noise, whereas the sine sweep gives better results in quiet environments. 
 
 
 
@@ -173,7 +178,7 @@ The advantage of the sine sweep excitation is that the distortion artifacts due 
 \end{wrapfigure}
 In order to check the consistency of our program, a measurement was performed to determine the (known) absorption characteristics of a Helmholtz resonator panel. The experimental setup is presented in figure \ref{fig: helmh}. The Zircon loudspeaker is positioned at an angle of $30^{\circ}$ with  respect to the horizontal. This is to ensure that both the resonator panel and the microphone receive a similar signal from the speaker.
 
-Figure \ref{helmsub} shows the results of a measurement with a MLS of order 16 as excitation signal. At the samplerate of 96\,kHz, this has a length of about 0.68\,s. The plot shows the average of 64 such measurements. Plotted is the impulse response of the system, the synchronized free field impulse response, the subtracted signal and the used Adrienne temporal window. Figure \ref{helmspec} shows the spectrum of the subtracted signal deconvolved with the free field impulse response. The hyperbolic tangent window seen on the same figure was used to determine the impulse response of the Helmholtz resonator panel shown in figure \ref{fig: helmimp}.
+Figure \ref{helmsub} shows the results of a measurement with a MLS of order 16 as excitation signal. At the samplerate of 96\,kHz, this has a length of about 0.68\,s. The plot shows the average of 64 such measurements. Plotted is the impulse response of the system, the synchronized free field impulse response, the subtracted signal and the applied Adrienne temporal window. Figure \ref{helmspec} shows the spectrum of the subtracted signal deconvolved with the free field impulse response. The hyperbolic tangent window seen on the same figure was used to determine the impulse response of the Helmholtz resonator panel shown in figure \ref{helmimp}.
  
   
 
@@ -182,18 +187,14 @@ Figure \ref{helmsub} shows the results of a measurement with a MLS of order 16 a
 	{helmspec}{Spectrum of the Helmholtz resonator (blue) and the hyperbolic tangent window (green).}
 
 
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=\textwidth]{helmimp}
-  %\vspace{-10pt}
-  \caption{Impulse response of the Helmholtz resonator panel.}
-  \label{fig: helmimp}
-  %\vspace{-30pt}
-\end{figure}
+\figOctaveVspace[htb]{helmimp}{Impulse response of the Helmholtz resonator panel.}{-0.7cm}
+
 
 The frequency dependent absorption coefficient is computed using equation \ref{absorption}. The result of this calculation is displayed in figure \ref{fig: helmholtzalles} as the red line. The other lines represent measurements with other excitation signals: the yellow line is obtained as the average of 16 excitations with an MLS of order 18, the green one with a sweep signal of 60 seconds and the blue line as the average of 64 sweeps of 1 second. It is clear that the results of the various measurements are consistent. Moreover, the results agree more or less with the absorption coefficient determined by L. De Geetere is his PhD thesis \cite[p.84]{Geetere}. 
 
-The main deviations are the extra peak at low frequencies (below 250\,Hz) in our spectrum and the height of the peak between 6000\,Hz and 7000\,Hz. The appearance of the extra peak at low frequencies can be attributed to the effects of windowing in the time domain. The determination of the lowest frequencies will be compromised because of the attenuation at the beginning and tail of the signal. A possible explanation for the peak at 6500\,Hz being too high lies in the directionality of the Zircon loudspeaker. As can be seen in figure \ref{fig: thetavar}, the spectrum has a sudden decrease in power at frequencies around 6500\,Hz and at values for $\theta$ between $45\degr$ and $60\degr$. Since the speaker was positioned at $\theta = 120\degr$ in an attempt to give the direct and reflected sound the same speaker response, the angle between speaker and horizontal was \emph{approximately} $30\degr$. It is thus possible that due to a small deviation of the angle, the speaker responses (at 6500\,Hz) were not exactly the same for both travel paths. The reflected path received less power at 6500\,Hz from the speaker, which would show in the spectrum of the reflected component as a dip, or consequently as a enlarger peak in the absorption coefficient.
+The main deviations are the extra peak at low frequencies (below 250\,Hz) in our spectrum and the height of the peak between 6000\,Hz and 7000\,Hz. The appearance of the extra peak at low frequencies can be attributed to the effects of windowing in the time domain. The determination of the lowest frequencies will be compromised because of the attenuation at the beginning and tail of the signal.
+
+A possible explanation for the peak at 6500\,Hz being too high lies in the directionality of the Zircon loudspeaker. As can be seen in figure \ref{fig: thetavar}, the spectrum has a sudden decrease in power at frequencies around 6500\,Hz and at values for $\theta$ between $45\degr$ and $60\degr$. Since the speaker was positioned at $\theta = 120\degr$ in an attempt to give the direct and reflected sound the same speaker response, the angle between speaker and horizontal was \emph{approximately} $30\degr$. It is thus possible that due to a small deviation of the angle, the speaker responses (at 6500\,Hz) were not exactly the same for both travel paths. The reflected path received less power at 6500\,Hz from the speaker, which would show in the spectrum of the reflected component as a dip, or consequently as a enlarger peak in the absorption coefficient.
 
 
 \begin{figure}[h!]
@@ -207,7 +208,9 @@ The main deviations are the extra peak at low frequencies (below 250\,Hz) in our
 
 
 \subsection{The Adrienne method}
-The acoustical characterisation of objects is an essential part in the design of noise reducing devices, such as the noise barriers along a motorway. It is important to be able to evaluate the performance of such barriers and more importantly to be able to compare them objectively. In order to do so a series of standardized methods was developed by CEN (European committee for standardization) to determine the performance of such devices. One of these methods determines the sound reflection of the device and is called the Adrienne method. A short description of the Adrienne method and its shortcomings will be given in this section. For more details, see the technical specification CEN/TS 1793-5:2003 \cite{Adrienne}.
+The acoustical characterisation of objects is an essential part in the design of noise reducing devices, such as the noise barriers along a motorway. It is important to be able to evaluate the performance of such barriers and more importantly to be able to compare them objectively. In order to do so a series of standardized methods was developed by CEN (European committee for standardization) to determine the performance of such devices.
+
+One of these methods determines the sound reflection of the device and is called the Adrienne method. A short description of the Adrienne method and its shortcomings will be given in this section. For more details, see the technical specification CEN/TS 1793-5:2003 \cite{Adrienne}.
 
 
 
@@ -221,12 +224,17 @@ The acoustical characterisation of objects is an essential part in the design of
   \label{fig: adrienne}
   %\vspace{-40pt}
 \end{wrapfigure}
-The Adrienne method requires the setup shown in figure \ref{fig: adrienne}\footnote{This image was taken from \cite[p.45]{Geetere}.}. The microphone is attached to the speaker, such that the distance between them is 1.25m. The speaker is placed at a distance of 1.50\,m of the wall. It is possible to swivel the speaker and microphone assembly up and down in steps of 10 degrees. A set of nine measurement is performed with the angle varying between $50\degr$ and $130\degr$.  Several sets of measurement have to be executed at different positions and rotating along different axes dependent on the homogeneity of the sample.
-The excitation signal is a MLS and the signal is averaged at least 16 times.
+The Adrienne method requires the setup shown in figure \ref{fig: adrienne}\footnote{This image was taken from \cite[p.45]{Geetere}.}. The microphone is attached to the speaker, such that the distance between them is 1.25m. The speaker is placed at a distance of 1.50\,m of the wall. It is possible to swivel the speaker and microphone assembly up and down in steps of 10 degrees.
+
+A set of nine measurement is performed with the angle varying between $50\degr$ and $130\degr$. Several sets of measurement have to be executed at different positions and rotating along different axes dependent on the homogeneity of the sample.
+
+The excitation signal to be used is a MLS and the signal is averaged at least 16 times.
 
 
 \subsubsection{Data processing}\label{adrwindow}
-The processing of the data happens as follows: the impulse response of a measurement is determined using cross correlation. The reflected component is extracted from the total impulse response by subtracting the direct component (obtained from a free field measurement). A time window is placed on the reflected component to remove parasitic reflections (for example from the floor). The window selected for this purpose is called the Adrienne temporal window and it has the following specifications \cite{Adrienne}:
+The processing of the data happens as follows: the impulse response of a measurement is determined using cross correlation. The reflected component is extracted from the total impulse response by subtracting the direct component (obtained from a free field measurement). A time window is placed on the reflected component to remove parasitic reflections (for example from the floor).
+
+The window selected for this purpose is called the Adrienne temporal window and it has the following specifications \cite{Adrienne}:
 %\vspace{-20pt}
 \begin{itemize}
 	\setlength{\itemsep}{1pt}
@@ -241,9 +249,9 @@ The full Blackman-Harris window of length T is defined as
 \[
 w(t) = 0.35875 - 0.48829 \cos\left(\frac{2 \pi t}{T}\right) + 0.14128 \cos\left(\frac{4 \pi t}{T}\right) - 0.01168 \cos\left(\frac{6 \pi t}{T}\right).
 \]
-This window shall be placed such that its flat portion begins 0.2\,ms before the first peak of the needed impulse response.
+This window shall be placed such that its flat portion begins 0.2\,ms before the first peak of the impulse response under investigation.
 
-With these ingredients a parameter called the reflection index of the device under test is computed in $\third$ octave bands using the following formula 
+With these ingredients, a parameter called the reflection index of the device under test is computed in $\third$ octave bands using the following formula
 \begin{equation}
 RI_j = \frac{1}{n_j} \sum^{n_j}_{k=1} \frac{\int_{\Delta f_j} \left|\mathcal{F}\left[t\cdot h_{r,k}(t)\cdot w_r(t)\right]\right|^2 \,df }{\int_{\Delta f_j} \left|\mathcal{F}\left[t \cdot h_{i}(t) \cdot w_i(t)\right]\right|^2 \,df }
 \label{RI}
@@ -272,9 +280,11 @@ The reflection index is a measure for the average ratio of reflected energy and 
   \label{fig: adriennedir}
   %\vspace{-40pt}
 \end{wrapfigure}
-The problem with the Adrienne method is that the directionality of the speaker is not accounted for. For example: when measuring at an angle of $130\degr$, the path of the reflected wave will resemble figure \ref{fig: adriennedir}. It is clear that the reflected component was emitted at a different angle than the direct component. Hence the reflected component contains a different speaker response. And this was only the case for a flat surface, imagine what would happen for non flat walls. Another disadvantage of this setup is that the speaker itself can be the cause of the first parasitic reflection which limits the time window, since it stands relatively close to the wall. Therefore, it would be advisedly to place the speaker at a greater distance from the wall and keep the microphone close to it.
+The problem with the Adrienne method is that the directionality of the speaker is not accounted for. For example: when measuring at an angle of $130\degr$, the path of the reflected wave will resemble figure \ref{fig: adriennedir}. It is clear that the reflected component was emitted at a different angle than the direct component. Hence the reflected component contains a different speaker response. And this was only the case for a flat surface, imagine what would happen for non flat walls.
 
-This would not only solve the problem of parasitic reflections from the speaker, it would also reduce the influence of the speaker's directivity. The solid angle in which the response of the speaker can be considered as more or less equal remains the same, but the effective surface on the wall becomes larger. The angle between the direct sound path and the reflected sound path becomes smaller as the speaker is further removed of the wall. And hence the influence of the speaker's directivity diminishes.
+Another disadvantage of this setup is that the speaker itself can be the cause of the first parasitic reflection which limits the time window, since it stands relatively close to the wall. Therefore, it would be advisedly to place the speaker at a greater distance from the wall and keep the microphone close to it.
+
+This would not only solve the problem of parasitic reflections from the speaker, it would also reduce the influence of the speaker's directivity. The solid angle in which the response of the speaker can be considered as more or less equal remains the same, but the effective surface on the wall becomes larger. The angle between the direct sound path and the reflected sound path becomes smaller as the speaker is further removed of the wall.
 
 \begin{wrapfigure}{R}{0.3\textwidth}
 	%\vspace{-10pt}
@@ -284,7 +294,12 @@ This would not only solve the problem of parasitic reflections from the speaker,
   \label{fig: hoger}
   %\vspace{-40pt}
 \end{wrapfigure}
-The disadvantage of placing the speaker further away, is that the ground reflection comes quicker after the reflected sound. This results in a shorter Adrienne window and consequently a larger lowest frequency limit. The solution to this problem would be to place the speaker and microphone higher. This, however, would cause the sound wave due to diffraction on the top of the wall to arrive sooner. But when considering the fact that the diffracted wave has to travel further than the ground reflection in the Adrienne case, the height of the microphone and speaker can be adjusted so that the ground reflection and the diffracted wave arrive at the same time (see figure \ref{fig: hoger}). In the case of a wall of 4 meters high, the speaker is positioned at a height of 2\,m according to the Adrienne setup and the first parasitic reflection arrives 7.91\,ms after the reflection of the wall. When placing the speaker at 2\,m from the microphone instead of 1.25\,m, the optimal height is 2.16\,m and the first parasitic reflection arrives 7.38\,ms after the wall reflection. The lowest measurable frequency is 160\,Hz for the Adrienne method and 170\,Hz for the adapted version\footnote{The lowest measurable frequency is calculated as $\frac{1}{0.8 T}$ with T the length of the Adrienne window \cite[p.70]{Geetere}.}. Since both belong to the 200\,Hz $\third$ octave band, the loss in frequency range is minimal, but the gain in accuracy is substantial. As will be shown in section \ref{insitu}.
+
+The disadvantage of placing the speaker further away, is that the ground reflection comes quicker after the reflected sound. This results in a shorter Adrienne window and consequently a larger lowest frequency limit.
+
+The solution to this problem would be to place the speaker and microphone higher. This, however, would cause the sound wave diffracting on the top of the wall to arrive sooner. Nonetheless, when considering the fact that the diffracted wave has to travel further than the ground reflection in the Adrienne case, the height of the microphone and speaker can be adjusted so that the ground reflection and the diffracted wave arrive at the same time (see figure \ref{fig: hoger}).
+
+In the case of a wall of 4 meters high, the speaker is positioned at a height of 2\,m according to the Adrienne setup and the first parasitic reflection arrives 7.91\,ms after the reflection of the wall. When placing the speaker at 2\,m from the microphone instead of 1.25\,m, the optimal height is 2.16\,m and the first parasitic reflection arrives 7.38\,ms after the wall reflection. The lowest measurable frequency is 160\,Hz for the Adrienne method and 170\,Hz for the adapted version\footnote{The lowest measurable frequency is calculated as $\frac{1}{0.8 T}$ with T the length of the Adrienne window \cite[p.70]{Geetere}.}. Since both belong to the 200\,Hz $\third$ octave band, the loss in frequency range is minimal, but the gain in accuracy is substantial. As will be shown in section \ref{insitu}.
 
 
 
@@ -324,4 +339,4 @@ It is clear that there are some dissimilarities between the graphs: the Adrienne
 
 
 
-%\end{document}
+% vim: spell spelllang=en_us
