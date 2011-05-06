@@ -57,10 +57,8 @@ One of the objectives of our project was to develop a suite of scripts in Matlab
 This section contains a description of our method; an assessment of the standard measuring method (the Adrienne method) and the results of an in situ measurement comparing both methods. 
 
 \subsection{Recording method}
-The particulars regarding the measurement equipment will be discussed in the following section; as well as the methods of data gathering and processing. Furthermore, a short description of possible excitation signals will be given. Lastly, the developed method will be put to the test by measuring the absorption characteristics of a Helmholtz resonator.
 
-\subsubsection{Recording equipment}
-\begin{wrapfigure}{R}[0.08\textwidth]{0.2\textwidth}
+\begin{wrapfigure}{r}[0.08\textwidth]{0.2\textwidth}
 	%\vspace{-20pt}
   \centering
     \includegraphics[width=0.2\textwidth]{thetaphi.pdf}
@@ -68,6 +66,13 @@ The particulars regarding the measurement equipment will be discussed in the fol
   \label{fig: thetaphi}
   %\vspace{-40pt}
 \end{wrapfigure}
+
+
+The particulars regarding the measurement equipment will be discussed in the following section; as well as the methods of data gathering and processing. Furthermore, a short description of possible excitation signals will be given. Lastly, the developed method will be put to the test by measuring the absorption characteristics of a Helmholtz resonator.
+
+
+
+\subsubsection{Recording equipment}
 
 The signal was sent from an Roland Octa-Capture sound card via a B\&K amplifyer (type 2716) to the Zircon loudspeaker. The signal was captured by a B\&K condensor microphone and preamplifier and sent back to the Octa-Capture sound card.
 
@@ -207,18 +212,22 @@ A possible explanation for the peak at 6500\,Hz being too high lies in the direc
   \end{center}
 \end{figure}
 
+
+
+\begin{wrapfigure}{R}[0.10\textwidth]{0.34\textwidth}
+	%\vspace{-40pt}
+  \includegraphics[width=0.32\textwidth]{Adrienne.pdf}
+  \caption{Setup for the reflection index measurements according to the Adrienne method.\label{fig: adrienne}}
+  %\vspace{-40pt}
+\end{wrapfigure}
+
+
+
 \subsection{The Adrienne method}
 The acoustical characterisation of objects is an essential part in the design of noise reducing devices, such as the noise barriers along a motorway. It is important to be able to evaluate the performance of such barriers and more importantly to be able to compare them objectively. In order to do so a series of standardized methods was developed by CEN (European committee for standardization) to determine the performance of such devices.
 
 One of these methods determines the sound reflection of the device and is called the Adrienne method. A short description of the Adrienne method and its shortcomings will be given in this section. For more details, see the technical specification CEN/TS 1793-5:2003 \cite{Adrienne}.
-\begin{wrapfigure}{R}[0.08\textwidth]{0.4\textwidth}
-	%\vspace{-40pt}
-  \centering
-    \includegraphics[width=0.38\textwidth]{Adrienne.pdf}
-  \caption{Setup for the reflection index measurements according to the Adrienne method.\label{fig: adrienne}}
-  
-  %\vspace{-40pt}
-\end{wrapfigure}
+
 
 
 \subsubsection{Experimental setup}
@@ -299,8 +308,6 @@ The disadvantage of placing the speaker further away, is that the ground reflect
 
 The solution to this problem would be to place the speaker and microphone higher. This, however, would cause the sound wave diffracting on the top of the wall to arrive sooner. Nonetheless, when considering the fact that the diffracted wave has to travel further than the ground reflection in the Adrienne case, the height of the microphone and speaker can be adjusted so that the ground reflection and the diffracted wave arrive at the same time (see figure \ref{fig: hoger}).
 
-In the case of a wall of 4 meters high, the speaker is positioned at a height of 2\,m according to the Adrienne setup and the first parasitic reflection arrives 7.91\,ms after the reflection of the wall. When placing the speaker at 2\,m from the microphone instead of 1.25\,m, the optimal height is 2.16\,m and the first parasitic reflection arrives 7.38\,ms after the wall reflection. The lowest measurable frequency is 160\,Hz for the Adrienne method and 170\,Hz for the adapted version\footnote{The lowest measurable frequency is calculated as $\frac{1}{0.8 T}$ with T the length of the Adrienne window \cite[p.70]{Geetere}.}. Since both belong to the 200\,Hz $\third$ octave band, the loss in frequency range is minimal, but the gain in accuracy is substantial. As will be shown in section \ref{insitu}.
-
 
 
 
@@ -313,21 +320,35 @@ In the case of a wall of 4 meters high, the speaker is positioned at a height of
   \label{fig: wall}
   %\vspace{-40pt}
 \end{wrapfigure}
-Originally, a measurement of the reflection coefficient of a noise barrier along a highway in Brussels was planned, but due to unforeseen circumstances this field trip was cancelled. As a replacement, we decided to put the Adrienne method to the test. As test subject we chose the external concrete wall of the acoustics lab at the KULeuven. The reflection index of this wall was determined with the Adrienne method by L. De Geetere \cite[p.68]{Geetere}. His results are plotted in figure \ref{fig: geetere}. Our goal is to ascertain the reflection coefficient of the wall while considering the directivity of the Zircon speaker and compare it with the Adrienne results (this can be done because De Geetere used the same Zircon speaker). 
 
-Our experimental setup consisted of the following: the speaker and microphone are positioned at a (maximum) height of 3.15\,m and at a mutual distance of 3\,m. The microphone is placed at 0.25\,m of the wall. The setup and wall are shown in figure \ref{fig: wall}. This arrangement makes sure that the first parasitic reflection arrives 10\,ms after the wall reflection. Since the measurements are done in a noisy environment, the excitation signal is an MLS of order 16 and is averaged 64 times. To make sure that no distortion peaks occurred in the relevant time domain, a measurement was done with a sine sweep signal and subtracted. This revealed that the distortion peaks did not contaminate the important part of the impulse response. 
 
-\begin{wrapfigure}{R}[0.08\textwidth]{0.40\textwidth}
-	\vspace{-10pt}
+
+In the case of a wall of 4 meters high, the speaker is positioned at a height of 2\,m according to the Adrienne setup and the first parasitic reflection arrives 7.91\,ms after the reflection of the wall. When placing the speaker at 2\,m from the microphone instead of 1.25\,m, the optimal height is 2.16\,m and the first parasitic reflection arrives 7.38\,ms after the wall reflection. The lowest measurable frequency is 160\,Hz for the Adrienne method and 170\,Hz for the adapted version\footnote{The lowest measurable frequency is calculated as $\frac{1}{0.8 T}$ with T the length of the Adrienne window \cite[p.70]{Geetere}.}. Since both belong to the 200\,Hz $\third$ octave band, the loss in frequency range is minimal, but the gain in accuracy is substantial. As will be shown in section \ref{insitu}.
+
+
+
+
+
+\begin{wrapfigure}{r}[0.08\textwidth]{0.40\textwidth}
   \centering
     \includegraphics[width=0.40\textwidth]{polar}
   \caption{Angular dependence of the frequency response of the speaker for certain frequencies.}
   \label{fig: polar}
   %\vspace{-40pt}
 \end{wrapfigure}
+
+
+
+Originally, a measurement of the reflection coefficient of a noise barrier along a highway in Brussels was planned, but due to unforeseen circumstances this field trip was cancelled. As a replacement, we decided to put the Adrienne method to the test. As test subject we chose the external concrete wall of the acoustics lab at the KULeuven. The reflection index of this wall was determined with the Adrienne method by L. De Geetere \cite[p.68]{Geetere}. His results are plotted in figure \ref{fig: geetere}. Our goal is to ascertain the reflection coefficient of the wall while considering the directivity of the Zircon speaker and compare it with the Adrienne results (this can be done because De Geetere used the same Zircon speaker). 
+
+
+
+
+Our experimental setup consisted of the following: the speaker and microphone are positioned at a (maximum) height of 3.15\,m and at a mutual distance of 3\,m. The microphone is placed at 0.25\,m of the wall. The setup and wall are shown in figure \ref{fig: wall}. This arrangement makes sure that the first parasitic reflection arrives 10\,ms after the wall reflection. Since the measurements are done in a noisy environment, the excitation signal is an MLS of order 16 and is averaged 64 times. To make sure that no distortion peaks occurred in the relevant time domain, a measurement was done with a sine sweep signal and subtracted. This revealed that the distortion peaks did not contaminate the important part of the impulse response. 
+
+
 A set of measurements was performed at horizontal angles of $90\degr$, $100\degr$, $110\degr$ and $120\degr$. This was done by keeping the microphone at the same place and moving the speaker. The results of this set are shown in figure \ref{fig: wallref}. Below 400\,Hz the reflection coefficient can not be considered accurate, as these spectral bands are only populated by a single data point.
 
-It is clear that there are some dissimilarities between the graphs: the Adrienne result contains dips at 1000\,Hz and 4000\,Hz, whereas our results remain approximately one. This discrepancy can be explained by looking at figure \ref{fig: thetavar} and formula \ref{RI}: the reflection index is calculated using the free field measurement as normalization for the $\third$ octave bands. For angles other than $90\degr$, the wall receives a  speaker response which differs from the free field measurement as shown in figure \ref{fig: adriennedir}. And hence the normalization is not correct. Figure \ref{fig: polar} shows the angular dependence of the frequency response of the speaker for several frequencies. The values at $90\degr$ correspond to the free field spectrum. For 4500\,Hz, 3800\,Hz and 1000\,Hz, the frequency response decreases as $\theta$ deviates from $90\degr$. Hence the calculated reflection index is an underestimate, which explains the dips in figure \ref{fig: geetere}. For 2500\,Hz and 5000\,Hz, the frequency response increases as $\theta$ deviates from $90\degr$, thus the calculated reflection index is an overestimate, which explains the increase of the reflection index at 2500Hz and 5000Hz. 
 
 \begin{figure}[h!]
   \centering
@@ -336,6 +357,11 @@ It is clear that there are some dissimilarities between the graphs: the Adrienne
   \caption{The reflection coefficient in $\third$ octave bands of the wall of the acoustics building at the KUL. On the left are the results of our measurements at $90\degr$ (yellow), $100\degr$ (red), $110\degr$ (green) and $120\degr$ (blue). The black line is the average of these 4 measurements. On the right are the results determined by L. de Geetere with the Adrienne method. The figure is taken from \cite[p.68]{Geetere}.}
   \label{fig: reflection}
 \end{figure}
+
+
+
+
+It is clear that there are some dissimilarities between the graphs: the Adrienne result contains dips at 1000\,Hz and 4000\,Hz, whereas our results remain approximately one. This discrepancy can be explained by looking at figure \ref{fig: thetavar} and formula \ref{RI}: the reflection index is calculated using the free field measurement as normalization for the $\third$ octave bands. For angles other than $90\degr$, the wall receives a  speaker response which differs from the free field measurement as shown in figure \ref{fig: adriennedir}. And hence the normalization is not correct. Figure \ref{fig: polar} shows the angular dependence of the frequency response of the speaker for several frequencies. The values at $90\degr$ correspond to the free field spectrum. For 4500\,Hz, 3800\,Hz and 1000\,Hz, the frequency response decreases as $\theta$ deviates from $90\degr$. Hence the calculated reflection index is an underestimate, which explains the dips in figure \ref{fig: geetere}. For 2500\,Hz and 5000\,Hz, the frequency response increases as $\theta$ deviates from $90\degr$, thus the calculated reflection index is an overestimate, which explains the increase of the reflection index at 2500Hz and 5000Hz. 
 
 
 

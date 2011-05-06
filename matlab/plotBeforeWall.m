@@ -50,7 +50,7 @@ for n = 1:length(xs)
 	fact = 20;
 	plot(time * 1e3, -0.75 + fact*deconvolved(:,i), 'r', 'linewidth',1.1);
 	plot(time * 1e3, -0.75 + fact*deconvolvedCorrected(:,i), 'g', 'linewidth',1.1);
-	plot(simTime * 1e3, fact*simDeconvolved(:,i), 'k', 'linewidth',1.1);
+	plot(simTime * 1e3 - 0.048, fact*simDeconvolved(:,i), 'k', 'linewidth',1.1);
 	%axis([tMin, tMax, -0.004, 0.006],'autoy');
 	axis([6.2, 7.7, -1.0, 1.0]);
 	%axis([tMin, tMax, -0.6, 1.1]);

@@ -34,10 +34,10 @@ maxvalue = -max(abs(IRfreeWindowed));
 
 t = linspace(0, length(IRsynced)/96,length(IRsynced));
 figure; hold on;
-plot(t,window,'b');
-plot(t,IRsynced/maxvalue,'r');
-plot(t,IRfreeWindowed/maxvalue, 'g');
-plot(t,(IRsynced - IRfreeWindowed)/maxvalue, 'k');
+plot(t,window,'b','linewidth',1.5);
+plot(t,IRsynced/maxvalue,'r','linewidth',1.5);
+plot(t,IRfreeWindowed/maxvalue, 'g','linewidth',1.5);
+plot(t,(IRsynced - IRfreeWindowed)/maxvalue, 'k','linewidth',1.5);
 axis([0 14 -0.6 1.2])
 hold off;
 
@@ -86,12 +86,16 @@ width='500';
 height='300';
 makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
+
+
+
+
 figure;
 tanhWind = tanhWindow(100, 6500, 20, 1000, 96000, length(spectrum));
 impulseresponse = real(ifft(spectrum.*tanhWind));
 impulseresponse = impulseresponse / max(abs(impulseresponse));
 plot(t,impulseresponse, 'linewidth', 1.5);
-axis([0 14 -0.6 1.2])
+axis([0 14 -0.8 1.2])
 
 
 name='helmimp';
@@ -100,8 +104,8 @@ relImgDir = 'images';
 ylabrule='0.9cm';
 xlab='Time (ms)';
 ylab='Amplitude (arb. units)';
-width='700';
-height='300';
+width='850';
+height='220';
 makeGraph(name,destdir,relImgDir,xlab,ylab,ylabrule,width,height);
 
 % figure;

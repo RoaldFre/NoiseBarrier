@@ -10,4 +10,4 @@
 *.log
 *.aux
 octave-core
-slash.m
+matlab/slash.m

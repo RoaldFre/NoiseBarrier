@@ -22,9 +22,13 @@ end
 dir = '../data/simulation/freefield/';
 filename = [dir,'freeField_Texc',num2str(Texc),'_nexp',num2str(nexpx),'_exSize',num2str(exSize),'_dx',num2str(dx),'_all'];
 load(filename);
-freeField = Precord(1,:)';
+
+freeFieldStart = 1;
+freeField = Precord(1,freeFieldStart:end)';
+%freeField = circshift(freeField, 50);
 freeFieldTime = linspace(0, length(freeField)*dt, length(freeField))';
 freeField = from2Dto3D(freeField, freeFieldTime);
+
 
 samplerate = 1/dt;
 
