@@ -170,7 +170,7 @@ power of the noise and distortions present in the tail of the deconvolved (linea
 In order to check the consistency of our program, a measurement was performed to determine the (known) absorption characteristics of a Helmholtz resonator panel. The experimental setup is presented in figure \ref{fig: helmh}. The Zircon loudspeaker is positioned at an angle of $30^{\circ}$ with  respect to the horizontal. This is to ensure that both the resonator panel and the microphone receive a similar signal from the speaker.
 
 Figure \ref{helmsub} shows the results of a measurement with a MLS of order 16 as excitation signal which was averaged 64 times. The graph 
- contains the impulse response of the system, the free field impulse response, the subtracted signal and the used Adrienne temporal window. Figure \ref{helmspec} shows the spectrum of the subtracted signal deconvolved with the free field impulse response. The hyperbolic tangent window seen on the same figure was used to determine the impulse response of the Helmholtz resonator panel shown in figure \ref{helmimp}.
+ contains the impulse response of the system, the free field impulse response, the subtracted signal and the used Adrienne temporal window. Figure \ref{helmspec} shows the spectrum of the subtracted signal deconvolved with the free field impulse response. The hyperbolic tangent window seen on the same figure was used to determine the impulse response of the Helmholtz resonator panel shown in figure \ref{fig: helmimp}.
  
   
 
@@ -181,16 +181,16 @@ Figure \ref{helmsub} shows the results of a measurement with a MLS of order 16 a
 
 \begin{figure}[h!]
   \centering
-    \includegraphics[width=\textwidth]{helmimp.eps}
+    \includegraphics[width=\textwidth]{helmimp}
   %\vspace{-10pt}
   \caption{Impulse response of the Helmholtz resonator panel.}
   \label{fig: helmimp}
   %\vspace{-30pt}
 \end{figure}
 
-The frequency dependent absorption coefficient is computed using equation \ref{absorption}. The result of this calculation is displayed in figure \ref{helmalles} as the red line. The other lines represent measurements with other excitation signals: the yellow line is obtained as the average of 16 excitations with an MLS of order 18, the green one with a sweep signal of 60 seconds and the blue line as the average of 64 sweeps of 1 second. It is clear that the results of the various measurements are consistent. Moreover, the results agree more or less with the absorption coefficient determined by L. De Geetere is his PhD thesis \cite[p.84]{Geetere}. 
+The frequency dependent absorption coefficient is computed using equation \ref{absorption}. The result of this calculation is displayed in figure \ref{fig: helmholtzalles} as the red line. The other lines represent measurements with other excitation signals: the yellow line is obtained as the average of 16 excitations with an MLS of order 18, the green one with a sweep signal of 60 seconds and the blue line as the average of 64 sweeps of 1 second. It is clear that the results of the various measurements are consistent. Moreover, the results agree more or less with the absorption coefficient determined by L. De Geetere is his PhD thesis \cite[p.84]{Geetere}. 
 
-The main deviations are the extra peak at low frequencies (below 250\,Hz) in our spectrum and the height of the peak between 6000\,Hz and 7000\,Hz. The appearance of the extra peak at low frequencies can be attributed to the effects of windowing in the time domain. The determination of the lowest frequencies will be compromised because of the attenuation at the beginning and tail of the signal. A possible explanation for the peak at 6500\,Hz being too high lies in the directionality of the Zircon loudspeaker. As can be seen in figure \ref{thetavar}, the spectrum has a sudden decrease in power at frequencies around 6500\,Hz and at values for $\theta$ between $45\degr$ and $60\degr$. Since the speaker was positioned at $\theta = 120\degr$ in an attempt to give the direct and reflected sound the same speaker response, the angle between speaker and horizontal was \emph{approximately} $30\degr$. It is thus possible that due to a small deviation of the angle, the speaker responses (at 6500\,Hz) were not exactly the same for both travel paths. The reflected path received less power at 6500\,Hz from the speaker, which would show in the spectrum of the reflected component as pit, or consequently as a enlarger peak in the absorption coefficient.
+The main deviations are the extra peak at low frequencies (below 250\,Hz) in our spectrum and the height of the peak between 6000\,Hz and 7000\,Hz. The appearance of the extra peak at low frequencies can be attributed to the effects of windowing in the time domain. The determination of the lowest frequencies will be compromised because of the attenuation at the beginning and tail of the signal. A possible explanation for the peak at 6500\,Hz being too high lies in the directionality of the Zircon loudspeaker. As can be seen in figure \ref{fig: thetavar}, the spectrum has a sudden decrease in power at frequencies around 6500\,Hz and at values for $\theta$ between $45\degr$ and $60\degr$. Since the speaker was positioned at $\theta = 120\degr$ in an attempt to give the direct and reflected sound the same speaker response, the angle between speaker and horizontal was \emph{approximately} $30\degr$. It is thus possible that due to a small deviation of the angle, the speaker responses (at 6500\,Hz) were not exactly the same for both travel paths. The reflected path received less power at 6500\,Hz from the speaker, which would show in the spectrum of the reflected component as pit, or consequently as a enlarger peak in the absorption coefficient.
 
 
 \begin{figure}[h!]
