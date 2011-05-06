@@ -8,7 +8,7 @@ The derivation of the wave equation for propagation in a nonviscous fluid is bas
 
 
 
-\subsubsection*{Newton's law}
+\subsubsection{Newton's law}
 %\vspace{-15pt}
 
 \begin{wrapfigure}{r}[0.08\textwidth]{0.3\textwidth}
@@ -41,7 +41,7 @@ with $\rho_0$ the static value of the density $\rho$. Simplifying the previous e
 \end{equation}
 
 
-\subsubsection*{Equation of continuity}
+\subsubsection{Equation of continuity}
 %\vspace{-15pt}
 Given that mass is conserved in fluid dynamics, we can write an equation of continuity. Consider a volume element $V$ containing fluid. Any change of mass in $V$ is the result of a flow of particles in or out of this volume element. A change of mass can be written as:
 \[
@@ -61,7 +61,7 @@ Since the change of mass is equal to the mass flux, the following relation betwe
 \end{equation}
 
 
-\subsubsection*{Adiabatic gas law}
+\subsubsection{Adiabatic gas law}
 %\vspace{-15pt}
 It is assumed that the motion of the fluid is an adiabatic process. In combination with the first law of thermodynamics this gives $\delta Q = n C_V dT + p dV = 0$.
 If we suppose the fluid to be an ideal gas, following equation holds: $p dV + V dp = n R dT$.
@@ -78,7 +78,7 @@ with $\rho_0$ the static density and $p_0$ the mean pressure of the surroundings
 
 
 
-\subsubsection*{Combination of previous equations}
+\subsubsection{Combination of previous equations}
 %\vspace{-15pt}
 Combining equations (\ref{cont}) and (\ref{adia}) gives:
 \begin{equation}
@@ -97,11 +97,11 @@ $\frac{\partial^2 p}{\partial t^2} =  c^2 \Delta p$ with $c\equiv \sqrt{\frac{p_
 %2.2 Reflection and Absorbtion
 %Definition of Reflection coeff and absorbtioncoeff
 %Boundary conditions (p_in + p_refl = p_trans and v_n,in + v_n,refl = v_n,trans)
-\subsection{Reflection and absorption}
+\subsection{Some essential acoustic properties}
 In acoustics, several important parameters can be determined in order to characterize the acoustical properties of an object. The  definitions of these parameters are stated in the following paragraphs.
 
 
-\subsubsection*{The reflection coefficient}
+\subsubsection{The reflection coefficient}
 %\vspace{-15pt}
 When a sound wave travels from one medium to another, it will be reflected and refracted at the boundary surface. Let us consider plane longitudinal waves:
 $\pin = \pinnul exp(i (\vec{r} \cdot \kin -  \omega t))$, $\pref = \prefnul exp(i (\vec{r} \cdot \kref -  \omega t))$ and $\ptr = \ptrnul exp(i (\vec{r} \cdot \ktr -  \omega t))$. Let $\thetain$, $\thetaref$ and $\thetatr$ be the angles respective to the normal of the surface of the incoming wave (in), reflected  wave (ref) and transmitted  wave (tr) respectively. The norm of the wave vectors are 
@@ -145,7 +145,7 @@ When $Z_1 \ll Z_2$, $T_p \approx 2$, but $T_I$ becomes 0. Hence there is no disc
 
 
 
-\subsubsection*{The absorption coefficient}
+\subsubsection{The absorption coefficient}
 %\vspace{-15pt}
 The sound absorption coefficient is defined as the fraction of acoustic energy that is absorbed by the surface on reflection \cite[p.12]{Geetere}.  When dealing with incident plane waves, the absorption coefficient can be written as a function of the (pressure) reflection coefficient:
 \begin{equation}
@@ -156,7 +156,17 @@ The sound absorption coefficient is defined as the fraction of acoustic energy t
 
 
 
+\subsubsection{Diffraction}
 
+A simple rule of thumb is that diffraction effects occur when the dimensions of the obstacle are comparable to the wavelength. A more elaborate rule is given by Rindel\cite{rindel-diffraction} and has been applied by others\cite{davy-diffraction, stage-acoustics}. In the case of an infinite band of height $h$, it states that the diffraction in the far field can be characterized by a frequency $f_0$
+\begin{equation}
+\label{diffractionEq}
+f_0 = \frac{c}{
+	\left(\frac{1}{s} + \frac{1}{r}\right) h^2 \cos^2 \theta}
+\end{equation}
+with $s$ and $r$ the distance from the reflector to the source, respectively to the receiver, and $\theta$ the angle of incidence. For frequencies higher than $f_0$, there is no diffraction. For frequencies lower than $f_0$, the intensity is attenuated by 6dB per octave. 
+
+We will use this formula as a rule of thumb in the measurements of the scale model, even though it only applies in the far field and does not take the floor nor the width of the wall into account. More elaborate solutions that would incorporate these factors and also be valid in the near field are not analytically tractable. Hence the system will be simulated numerically in order to compare measurement with theory.
 
 
 
