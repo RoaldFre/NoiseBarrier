@@ -1,7 +1,7 @@
 \section{Comparison of scale model with simulation \label{sectComparison}}
 
 \subsection{Detailed results for several measurement positions}
-The results of several measurements in front of the wall are shown in figure \ref{beforePlots}. Measurements at a similar position, but with the setup for the measurements behind the wall are shown in figure \ref{behindPlots}.
+The results of several measurements in front of the wall are shown in figure \ref{beforePlots}. Measurements at a similar position, but with the setup for the measurements behind the wall, are shown in figure \ref{behindPlots}.
 
 
 \begin{figure}
@@ -31,9 +31,9 @@ The spectra in figure \ref{beforePlots} show a very harsh comb filter shape due 
 
 Apart from the obvious fast comb effect, there is also `slow' comb visible in the plots, due to the short time delay between the directly incident sound and the sound that reflected via the floor first.
 
-The time domain plots give an indication of the reflected signal. The reflected peak at 6.7\,ms is clearly smaller in figure \ref{behind-x6-y7} than it is in the other figures. The peak in this case is completely ascribed to diffraction at the edge of the wall (or diffuse relfections), as there is no direct path available through (specular) reflections.
+The time domain plots give an indication of the reflected signal. The reflected peak at 6.7\,ms is clearly smaller in figure \ref{behind-x6-y7} than it is in the other figures. The peak in this case is completely ascribed to diffraction at the edge of the wall (or diffuse reflections), as there is no direct path available through (specular) reflections.
 
-Notice that the spectra and time domain signals follow the general pattern of the simulated data, though the (air attenuation corrected) spectra are consistently higher than the simulated values. This is a possible result of deviting values of the temperature and humidity during the measurements, as these took about 12 hours and were done overnight. Hence the correction may have been too strong. The uncorrected spectra did not exceed those of the simulation.
+Notice that the spectra and time domain signals follow the general pattern of the simulated data, though the (air attenuation corrected) spectra are consistently higher than the simulated values. This is a possible result of deviating values of the temperature and humidity during the measurements, as these took about 12 hours and were done overnight. Hence the correction may have been too strong. The uncorrected spectra did not exceed those of the simulation.
 
 
 
@@ -41,7 +41,7 @@ Notice that the spectra and time domain signals follow the general pattern of th
 
 Figure \ref{behindPlots} shows some results of the measurement setup where the measurements were made behind the wall. Here the corrected spectra match the simulated spectra more intimately.
 
-Figure \ref{behind-x6-y1} represents a low measurment, where we see two sets of peaks one at 4.3 and 4.5\,ms and a second set at 4.6 and 4.8/,ms. Each set is the result of the diffraction over the top of the wall of (1) the direct sound of the source to the top of the wall, and (2) the diffraction of the sound that reached the top of the wall by first reflecting at the floor. The second set of peaks are a diffracted signal that first reflected of off the floor before reaching the microphone. Measurements that were made on higher positions from the floor have these two sets of peaks further apart.
+Figure \ref{behind-x6-y1} represents a low measurement, where we see two sets of peaks one at 4.3 and 4.5\,ms and a second set at 4.6 and 4.8\,ms. Each set is the result of the diffraction over the top of the wall of (1) the direct sound of the source to the top of the wall, and (2) the diffraction of the sound that reached the top of the wall by first reflecting at the floor. The second set of peaks are a diffracted signal that first reflected of off the floor before reaching the microphone. Measurements that were made on higher positions from the floor have these two sets of peaks further apart.
 
 TODO : refer to figure
 
@@ -49,7 +49,7 @@ The high frequency regime of the spectrum in figure \ref{behind-x6-y1} shows an 
 
 This attenuation due to diffraction can also be found in figures \ref{behind-x6-y3} and \ref{behind-x6-y5}, though in a lesser degree. In figure \ref{behind-x6-y7}, there is a direct path from source to microphone, and this vastly overpowers the small diffraction peaks that are still present (where the diffracted signal reflected of off the floor on the side of the microphone).
 
-Note that the second set of peaks in figure \ref{before-x8-y7} also have this characteristic attenuation due to the diffraction.
+Note that the second set of peaks in figure \ref{before-x8-y7} also have this characteristic attenuation due to the diffraction. However, this feature is overpowered by the direct sound component.
 
 
 
@@ -59,19 +59,9 @@ Figures \ref{band1}, \ref{band2}, \ref{band3} and \ref{band4} give a visual repr
 
 The white areas in the experimental graphs represent lacking data (due to a technical error during the measurement). Also note that the frequency range in figure \ref{bands1} is bordering on the frequency range where measurement noise becomes significant, hence the rather large deviation from the simulated graph in figure \ref{bandsSim1}
 
-In figure \ref{band2}, the frequencies under consideration are comparable to the width of the wall. Compared to the high frequency regime of figure \ref{band4}, noticably more intensity can be found behind the barrier due to diffraction. However, these lowest spectral bands (figure \ref{band1} and \ref{band2}) are only on the onset of diffraction. It would have been interesting to examine even lower frequencies, where the wavelength becomes comparable to the \emph{height} of the barrier. Sadly, the data in that frequency regime was not usable due to excessive noise. The comb-like shape of the spectrum also prevents from assigning a representative value to the average intensity in the small (absolute, linear) frequency span of those lower octave bands. This, by itself, also explains the noisy appearance of figure \ref{bands1}.
+The comb-like shape of the spectrum also prevents from assigning a representative value to the average intensity in the small (absolute, linear) frequency span of those lower octave bands. This, by itself, also explains the noisy appearance of figure \ref{bands1}.
 
-
-
-
-This slow
-
-SOLVE?
-DECONVOLVING DID NOT WORK
-
-
-
-
+In figure \ref{band2}, the frequencies under consideration are comparable to (and slightly above) the characteristic frequency for diffraction. Compared to the high frequency regime of figure \ref{band4}, noticeably more intensity can be found behind the barrier due to diffraction.
 
 
 \begin{figure}
@@ -93,3 +83,4 @@ DECONVOLVING DID NOT WORK
 
 
 
+% vim: spell spelllang=en_us

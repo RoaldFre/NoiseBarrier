@@ -1,5 +1,5 @@
-\section{Numerical simulation}
-With the ever increasing strength of modern computers, it has become feasible to make accurate simulations of physical systems. This is often more practical than building an actual physical (scale)model.
+\section{Numerical simulation \label{sectSimulation}}
+With the ever increasing strength of modern computers, it has become feasible to make accurate simulations of physical systems. This is often more practical than building an actual physical (scale)model. Both approaches will be compared below.
 
 
 \subsection{Finite difference time domain method}
@@ -57,7 +57,7 @@ $$
 $$
 These equations can now easily be solved for $p^{n+1}_{i+\half, j+\half}$, $v_{i,j+\half}^{n+\half}$ and $w_{i+\half,j}^{n+\half}$ to derive the update rules for the simulation.
 
-Lastly, for this method to be stable, a constraint is imposed on the temporal and spacial discretization. Stability ensues only if the Courant-Friedrichs-Lewy condition is satisfied\cite{courant-friedrichs-lewy}\cite{numerical-stability-2D-FDTD}
+Lastly, for this method to be stable, a constraint is imposed on the temporal and spacial discretization. Stability ensues only if the Courant-Friedrichs-Lewy condition is satisfied\cite{courant-friedrichs-lewy, numerical-stability-2D-FDTD}
 $$
 c\Dt \leq \left[\frac{1}{(\Dx)^2} + \frac{1}{(\Dy)^2}\right] ^ {-1/2}
 $$
@@ -70,9 +70,10 @@ $$
 \subsection{Modelling the physical scale model}
 The scale model setup discussed earlier will be represented in the general framework from the previous section.
 
-\subsubsection*{The grid}
-The setup of the grid is summarized in table \ref{gridSetup}.
+The setup of the simulation corresponds to those of the scalemodel discussed in section \ref{sectScalemodel}. 
 
+\subsubsection*{The grid}
+The setup of the grids is summarized in table \ref{gridSetup}. A visual representation of the geometry of the grids is given in figure \ref{simulationGrids}.
 
 \begin{table}[htb]
 \begin{center}
@@ -101,9 +102,6 @@ distance from source to wall&
 \end{center}
 \end{table}
 
-The height of the excitation source was 15\,cm in both setups, which is the height of the actual spark source used in the scale model measurements.
-
-A visual representation of the geometry of the grids is given in figure \ref{simulationGrids}.
 
 \figOctaveTwoVariableSpace{-0.9cm}{simulationGrids}{Visualisation of the grids used in the simulations. The mesh of points correspond to the measurement positions. The source position is indicated as a single point.}
 	{gridBeforeWall}{measurements in front of the wall}
@@ -128,10 +126,8 @@ field, and not forced (as for hard sources), the actual signal that will be
 radiated from the source point will not be equal to the excitation signal 
 itself. It will be altered by the response of the system. A virtual free 
 field measurement was performed to characterize the total resulting 
-excitation signal. The results are shown in figure \ref{simuExcitationPlots}.They can be compared to the actual spark source used in figure \ref{sparkSourcePlots}. 
+excitation signal. The results are shown in figure \ref{simuExcitationPlots}. They can be compared to the actual spark source used in figure \ref{sparkSourcePlots}. 
 
-
-[TODO plots: imagesc van gaussische?]
 
 
 \subsubsection*{The boundaries}
@@ -146,7 +142,7 @@ The most profound difference is the fact that the pressure signal of a point sou
 $$
 \pij^{\mathrm{3D}}(t) = \frac{\pij(t)}{\sqrt{ct}}
 $$
-Note that this correction was applied afterwards on the data of the finished the simulation, not while it was running. In every result that follows, we used the corrected pressure amplitudes $\pij^{\mathrm{3D}}$. [TODO even when we mention $\pij$?]
+Note that this correction was applied afterwards on the data of the finished the simulation, not while it was running. In every result that follows, we used the corrected pressure amplitudes $\pij^{\mathrm{3D}}$.
 
 Additional discrepancies may occur if, for example, there are diffuse reflections on the wall in the 3D case. Those may still reach the observer and contribute to the signal, but they are not accounted for in the 2D case. However, in our case of a hard and flat wall, such effects are not expected to play a significant role.
 

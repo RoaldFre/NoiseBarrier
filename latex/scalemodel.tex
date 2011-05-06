@@ -1,27 +1,30 @@
-\section{Scale model of a noise barrier}
+\section{Scale model of a noise barrier \label{sectScalemodel}}
 A scale model of a simple noise barrier is investigated to characterize several aspects such as the reflection and diffraction of incident sound.
 
 \subsubsection*{The noise barrier}
-The model under consideration is composed of five wooden blocks of dimensions $212\,\mathrm{mm} \times 212\,\mathrm{mm} \times 60\,\mathrm{mm}$. These are positioned side by side to form a barrier that is $1.06\,\mathrm{m}$ long.
+The model under consideration is composed of a wall of five wooden blocks, each with dimensions $212\,\mathrm{mm} \times 212\,\mathrm{mm} \times 60\,\mathrm{mm}$. These are positioned side by side to form a barrier that is $1.06\,\mathrm{m}$ long.
 
 This could realistically be a 1:10 scale model of a noise barrier that is 2.12\,m high and 60\,cm wide. 
 
 \subsubsection*{The excitation source}
 Working with a 1:10 scale model also means that the wavelengths to be considered should be reduced by a factor of 10.
 
-A suitable means of excitation was found in a small spark source. This produces a signal with sufficiently high frequencies and it is an excellent approximation for an ideal point source.
+A suitable means of excitation was found in a small spark source. This produces a signal with sufficiently high frequencies and it is an excellent approximation for an ideal point source. The characteristics of the spark source are plotted in figure \ref{sparkSourcePlots}.
 
 \figOctaveTwo[htb]{sparkSourcePlots}{Characteristics of the spark source}
 	{sparkImpulseResponse}{impulse response}
 	{sparkSpectrum}{spectrum}
 
+The spark source has a height of 15\,cm and it was placed at a distance of 1.2\,m in front of the barrier for the measurements behind the wall. For the measurements in front of the barrier, the source was placed at a distance of 2\,m.
 
 
-[foto's, schets]
 
 \subsubsection*{Capturing the sound field}
 A programmable $x$-$y$-positioning system was used in order to scan a grid of measurement points in front of and behind the wall. The sound field at each measurement point was recorded with a high frequency microphone connected to an oscilloscope sampling at 5\.MHz. The triggering was based on the sudden spike caused by the electromagnetic pick up of the spark on the microphone wires, this accurately defined the moment when the spark was emitted.
 
+The scanning grid consists of 12 horizontal and 8 vertical measurement positions. The step size in each dimension is 3\,cm and the lowest point is at 3\,cm from the floor. For the measurements behind the wall, the points nearest to the wall are at a distance of 10\,cm from the wall. In the measurements in front of the wall, the distance between the scanned grid and the wall measured 4\,cm.
+
+A graphical representation of the entire setup is depicted in figure \ref{simulationGrids} on page \pageref{simulationGrids}.
 
 \subsubsection*{Dealing with noise}
 Because of the very low acoustic energy associated with a single spark, additional pre-amplification was required. Even then, the signal to noise ratio was extremely low. In fact, for the lowest measurement point right behind the wall, the signal to noise ratio was of the order of one in ten!
@@ -37,28 +40,24 @@ Note that the $s/n$ ratio in the time domain plot (fig \ref{measurementsRightBeh
 	{measurementsRightBehindWall}{time domain}
 	{spectraMeasurementsRightBehindWall}{frequency domain}
 
-Averaging even more than a thousand measurements could potentially improve the $s/n$ ratio further. However, the resulting measurement times would quickly become intractable and the noise spikes at the harmonics of 50kHz would remain nonetheless.
+Averaging even more than a thousand measurements could potentially improve the $s/n$ ratio further. However, the resulting measurement times would quickly become intractable and the noise spikes at the harmonics of 52kHz would remain nonetheless.
 
-
-TODO skip following?
-
-Apart from this high frequency noise, there were also low frequency components present. The high magnification made the pick up noise at 50\,Hz (and harmonics thereof) prominent, as can be seen in figure \ref{measurementsLowFreqNoise}. Occasionally also was an additional low frequency attribution, often manifesting itself right after the trigger peak. This is possibly the response of the measurement chain on the high impulse spike created by the electromagnetic pick up of the spark by the microphone wires. This sudden spike was, in fact, order of magnitude larger than the actual signal.
-
-All the factors above mean that with our setup, we could only get reliable spectral data in the 5\,kHz to 40\,kHz area, corresponding to 500\,Hz to 4\,kHz life sized. In order to go beyond this frequency band, a stronger and better shielded spark source is advised.
-
-The results from the scale model will be discussed in depth in section \ref{sectComparison}, in tandem with the results from the simulation discussed below.
-
+Apart from this high frequency noise, there were also spurious low frequency components present.  All things considered, we could only get reliable spectral data in the 2\,kHz to 40\,kHz range, corresponding to 200\,Hz to 4\,kHz life sized.
 
 
 \subsubsection*{Correcting for air attenuation}
-At the high frequencies involved in a scale model measurement, the air starts acting less and less transparent due to the excitation of the air molecules. An empirical formula that describes this effect can be found in\ref{atm-absorption-further-dev} and earlier publications from the same group.
+At the high frequencies involved in a scale model measurement, the air starts acting less and less transparent due to the excitation of the air molecules. An empirical formula that describes this effect can be found in \cite{atm-absorption-further-dev} and earlier publications from the same group.
 
-The formula we used to correct the attenuation is as per ISO 9613-1:1993. The resulting absorption for our measurement conditions is graphed in figure \ref{airAttenuation}.
+The formula we used to correct the attenuation is as per ISO 9613-1:1993, which is based on similar research. The resulting absorption for our measurement conditions is graphed in figure \ref{airAttenuation}.
 
-\figOctave[htb]{airAttenuation}{Atmospherical attenuation for a temperature of 18\degr, a relative humidity of 60\% and at a pressure of 1\,atm}
+\figOctave[htb]{airAttenuation}{Atmospherical attenuation for a temperature of 18$\degr$C, a relative humidity of 60\% and at a pressure of 1\,atm}
 
 The correction was implemented by using a sliding windowing to isolate a time slice. That slice then gets filtered appropriately to correct the attenuation based on the mean time of that slice (and thus distance traveled). The window used was a hanning window of 400 time samples, which equals 0.08\,ms. The benefit of using a hanning window is the fact that overlapping subsequent windows by half a windowlength preserves the energy of the signal.
 
+
+
+\subsubsection*{Results}
+The results from the scale model will be discussed in depth in section \ref{sectComparison}, in tandem with the results from the simulation discussed below in section \ref{sectSimulation}.
 
 
 % vim: spell spelllang=en_us
