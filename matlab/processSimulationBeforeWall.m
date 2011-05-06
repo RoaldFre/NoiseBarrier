@@ -5,12 +5,13 @@ beforeWallData;
 %load('../data/simulation/voorMuurGroffer/all');
 load('../data/simulation/voorMuur/all');
 measurements = Precord';
-len = length(measurements(:,1));
-time = linspace(0, len*dt, len)';
+time = linspace(0, length(measurements(:,1))*dt, length(measurements(:,1)))';
 
 for i=1:length(measurements(1,:))
 	measurements(:,i) = from2Dto3D(measurements(:,i), time);
 end
+
+
 
 %dir = '../data/simulation/vrijAchterMuurGroffer/';
 %filename = [dir,'freeFieldFloor_Texc',num2str(Texc),'_nexp',num2str(nexpx),'_exSize',num2str(exSize),'_dx',num2str(dx),'_all']
@@ -26,6 +27,43 @@ freeFieldTime = linspace(0, length(freeField)*dt, length(freeField))';
 freeField = from2Dto3D(freeField, freeFieldTime);
 
 samplerate = 1/dt;
+
+
+
+%manual hacks ... joy!
+
+
+startTime = 5.9 * ones(1,length(measurements(1,:)));
+
+startTime(4) = 5.96;
+startTime(5) = 5.98;
+startTime(6) = 6.00;
+startTime(7) = 6.04;
+startTime(8) = 6.14;
+
+startTime = startTime / 1e3;
+
+startIndex = round(startTime * samplerate);
+measurementsFull = measurements;
+padTo = ceil((time(end) - min(startTime)) * samplerate + 1);
+for i = 1:length(measurements(1,:))
+	measurements2(:,i) = prepad(measurementsFull(startIndex(i):end, i), padTo);
+end
+measurements = measurements2;
+
+timeFull = time;
+time = time(startIndex:end);
+len = length(measurements(:,1));
+
+
+
+
+
+
+
+
+
+
 
 %spark-to-mic distance free field measurement
 xrecDist = xrec(1)*L/ndx;
@@ -76,12 +114,10 @@ return
 for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;
-		subplot(2,1,1);
-		loglog(measurementFreqs, spectra(:,i));
+		plot(time, measurements(:,i), 'r', timeFull, measurementsFull(:,i));
 		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
-		axis([1000, 50000, 0.001, 1]);
-		subplot(2,1,2);
-		plot(deconvolved(:,i));
+
+	       axis([0.004, 0.009, 0.001, 1],'autoy');
 
 	       % subplot(4,1,3);
 	       % loglog(measurementFreqs, spectraFloor(:,i));
@@ -89,7 +125,7 @@ for x = 0 : sideSteps - 1
 	       % subplot(4,1,4);
 	       % plot(deconvolvedFloor(:,i));
 
-	        pause(2);
+	        pause(1);
 	end
 	pause(2);
 end

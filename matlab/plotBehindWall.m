@@ -54,7 +54,7 @@ for n = 1:length(xs)
 	plot(time * 1e3, -0.75 + fact*deconvolvedCorrected(:,i), 'g', 'linewidth',1.1);
 	plot(simTime * 1e3, fact*simDeconvolved(:,i), 'k', 'linewidth',1.1);
 	%axis([tMin, tMax, -0.004, 0.006],'autoy');
-	axis([tMin * 1e3, tMax * 1e3, -1.0, 1]);
+	axis([4, tMax * 1e3, -1.0, 1]);
 	%axis([tMin, tMax, -0.6, 1.1]);
 	%set(gca,'YTick',[-0.9, -0.6, -0.3, 0, 0.3, 0.6, 0.9]);
 

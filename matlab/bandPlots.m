@@ -25,6 +25,8 @@ right = max(xvec) + recordSideStep/2;
 down = 0
 up = max(yvec) + recordUpStep/2;
 
+hold off; clf;
+
 for i=1:nbBands
 	bandsGrid = [bandsGridBefore(end:-1:1, :, i)', yWallVecs, bandsGridBehind(:,:,i)'];
 	bandsGrid = real(10*log(bandsGrid));

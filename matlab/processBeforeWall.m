@@ -2,7 +2,7 @@ function [measurements, time, spectra, measurementFreqs, freeFieldWindowed, deco
 
 beforeWallData;
 
-startIndex = 1; %to get rid of triggerpeak
+startIndex = 14276; %to get rid of triggerpeak
 endIndex = 25000; %silence (and noise!) anyway
 data = loadfile('voor-muur');
 measurements = data(startIndex : endIndex, 2:end);
@@ -99,23 +99,23 @@ return
 for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;
-		subplot(2,1,1);
-		loglog(measurementFreqs, spectra(:,i));
-		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
-		%axis([50, 50000, 0.0001, 0.5]);
-		axis([250, 50000, 0.0001, 0.5],'autoy');
-		subplot(2,1,2);
+		%subplot(2,1,1);
+		%loglog(measurementFreqs, spectra(:,i));
+		%title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
+		%%axis([50, 50000, 0.0001, 0.5]);
+		%axis([250, 50000, 0.0001, 0.5],'autoy');
+		%%subplot(2,1,2);
 
 
 		distances = linspace(0, len / samplerate * 340, len);
-		hold on;
-		plot(distances, 10*deconvolved(:,i));
-		plot(distances, 10*deconvolvedCorrected(:,i) - 0.5,'k');
-		plot(distances, measurements(:,i) - 1.5, 'r');
-		plot(distances, measurementsCorrected(:,i) - 3, 'g');
+		%hold on;
+		%plot(distances, 10*deconvolved(:,i));
+		%plot(distances, 10*deconvolvedCorrected(:,i) - 0.5,'k');
+		plot(measurements(:,i) - 1.5, 'r');
+		plot(measurementsCorrected(:,i) - 3, 'g');
 		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
 		hold off;
-		axis([0.5, 1.5, -0.0003, 0.0008],'autoy');
+		%axis([0.5, 1.5, -0.0003, 0.0008],'autoy');
 		pause(1);
 		clf;
 	end
