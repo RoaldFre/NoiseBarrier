@@ -1,4 +1,4 @@
-\section{Comparison of scale model with simulation \label{sectComparison}}
+\section{Comparison of the scale model with simulation \label{sectComparison}}
 
 \subsection{Detailed results for several measurement positions}
 The results of several measurements in front of the wall are shown in figure \ref{beforePlots}. Measurements at a similar position, but behind the wall, are shown in figure \ref{behindPlots}.
@@ -24,6 +24,20 @@ The results of several measurements in front of the wall are shown in figure \re
 \caption{Results of a selection of measurements 28\,cm behind the wall, at different heights. The curves plotted are the raw measurement without (red) and with (green) correction for the attenuation of high frequencies, and the result of the simulation (black). \label{behindPlots}}
 \end{figure}
 
+\begin{figure}
+\figOctaveTwoVariableSpaceNonFig{-1.0cm}{band1}{Intensity (dB) in the 2.5\,kHz to 5\,kHz octave band.}
+	{bands1}{measured}
+	{bandsSim1}{simulated}
+\figOctaveTwoVariableSpaceNonFig{-1.0cm}{band2}{Intensity (dB) in the 5\,kHz to 10\,kHz octave band.}
+	{bands2}{measured}
+	{bandsSim2}{simulated}
+\figOctaveTwoVariableSpaceNonFig{-1.0cm}{band3}{Intensity (dB) in the 10\,kHz to 20\,kHz octave band.}
+	{bands3}{measured}
+	{bandsSim3}{simulated}
+\figOctaveTwoVariableSpaceNonFig{-1.0cm}{band4}{Intensity (dB) in the 20\,kHz to 40\,kHz octave band.}
+	{bands4}{measured}
+	{bandsSim4}{simulated}
+\end{figure}
 
 \subsubsection*{Measurements in front of the barrier}
 
@@ -47,7 +61,6 @@ No time windowing was performed on these measurements, every signal that will ge
 
 Figure \ref{behind-x6-y1} represents a low measurement, where we see two sets of peaks one at 4.3 and 4.5\,ms and a second set at 4.6 and 4.8\,ms. Each set is the result of the diffraction over the top of the wall of (1) the direct sound of the source to the top of the wall, and (2) the diffraction of the sound that reached the top of the wall by first reflecting at the floor. The second set of peaks are a diffracted signal that first reflected of off the floor before reaching the microphone. Measurements that were made on higher positions from the floor have these two sets of peaks further apart.
 
-TODO : refer to figure
 
 The high frequency regime of the spectrum in figure \ref{behind-x6-y1} shows an attenuation of 20\,dB per decade. This is consistent with the rule of thumb of equation \ref{diffractionEq}, which predicts a characteristic frequency $f_0$ of 1.8\,kHz.
 
@@ -65,20 +78,6 @@ The comb-like shape of the spectrum also prevents from assigning a representativ
 Diffraction becomes apparent when comparing \ref{bands4} with \ref{bands3} and \ref{bands2}. Lowering the frequencies by an octave raises the intensities found behind the wall (by approximately 6\,dB).
 
 
-\begin{figure}
-\figOctaveTwoVariableSpaceNonFig{-1.0cm}{band1}{Intensity (dB) in the 2.5\,kHz to 5\,kHz octave band.}
-	{bands1}{measured}
-	{bandsSim1}{simulated}
-\figOctaveTwoVariableSpaceNonFig{-1.0cm}{band2}{Intensity (dB) in the 5\,kHz to 10\,kHz octave band.}
-	{bands2}{measured}
-	{bandsSim2}{simulated}
-\figOctaveTwoVariableSpaceNonFig{-1.0cm}{band3}{Intensity (dB) in the 10\,kHz to 20\,kHz octave band.}
-	{bands3}{measured}
-	{bandsSim3}{simulated}
-\figOctaveTwoVariableSpaceNonFig{-1.0cm}{band4}{Intensity (dB) in the 20\,kHz to 40\,kHz octave band.}
-	{bands4}{measured}
-	{bandsSim4}{simulated}
-\end{figure}
 
 
 

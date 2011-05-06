@@ -1,0 +1,192 @@
+\newcommand{\imgdir}{images}
+\graphicspath{{\imgdir//}}
+
+<<<<<<< Updated upstream
+\newcommand{\degr}{\ensuremath{^{\circ}}}
+=======
+\newcommand{\degr}{\ensuremath{^\circ}}
+>>>>>>> Stashed changes
+
+\newcommand{\dif}{\,\mathrm d}
+
+\newcommand{\deriv}[2]{\frac{\mathrm d #1}{\mathrm d #2}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\derivs}[2]{\mathrm d #1 / \mathrm d #2}
+
+\newcommand{\dt}{\dif t}
+\newcommand{\dx}{\dif x}
+\newcommand{\dy}{\dif y}
+
+\newcommand{\Dt}{\Delta t}
+\newcommand{\Dx}{\Delta x}
+\newcommand{\Dy}{\Delta y}
+
+\newcommand{\vecvij}{\vec{v}_{i,j}}
+\newcommand{\vnij}{v_{i,j}^n}
+\newcommand{\wnij}{w_{i,j}^n}
+\newcommand{\pnij}{p_{i,j}^n}
+\newcommand{\vij}{v_{i,j}}
+\newcommand{\wij}{w_{i,j}}
+\newcommand{\pij}{p_{i,j}}
+\newcommand{\vn}{v^n}
+\newcommand{\wn}{w^n}
+\newcommand{\pn}{p^n}
+\newcommand{\half}{\nicefrac{1}{2}}
+
+%Loosen up on figure placement restrictions
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.95}
+\renewcommand{\floatpagefraction}{0.35}
+ 
+
+%\fig[htb]{width=width+unit}{name=label}{caption}
+\newcommand{\fig}[4][htb]{
+    \begin{figure}[#1]
+        \begin{center}
+	    \includegraphics[#2]{\imgdir/#3}\\
+	    %\parbox{#2}{\caption{#4\label{#3}}}
+	    %voor: \includegraphics[width=#2]{#3}\\
+	    \caption{#4\label{#3}}
+        \end{center}
+    \end{figure}}
+
+
+%\figOctave[htb]{name=label}{caption}
+\newcommand{\figOctave}[3][htb]{
+    \begin{figure}[#1]
+	\begin{center}
+		\scalebox{0.9}{
+			\nonstopmode
+			\input{\imgdir/#2.tex}
+			\errorstopmode
+		}
+		\caption{#3\label{#2}}
+        \end{center}
+    \end{figure}}
+
+% \figOctaveTwo[htb]{global label}{global caption}
+% 	{name1=label1}{caption1}
+% 	{name2=label2}{caption2}
+\newcommand{\figOctaveTwo}[7][htb]{
+	\begin{figure}[#1]
+	\begin{center}
+	\hspace{-6cm} %hack to center wider than \textwidth
+	\subfigure[#5]{ %sub-caption
+	\scalebox{0.9}{
+		\nonstopmode
+		\input{\imgdir/#4.tex}
+		\errorstopmode
+		\label{#4}
+		\rule[-1.0cm]{0cm}{0cm} %don't overlap with sub-caption
+	}
+	}
+	%
+	\rule{0.5cm}{0cm} %don't overlap axis labels
+	%
+	\subfigure[#7]{
+	\scalebox{0.9}{
+		\nonstopmode
+		\input{\imgdir/#6.tex}
+		\errorstopmode
+		\label{#6}
+		\rule[-1.0cm]{0cm}{0cm}
+		}
+	}
+	\hspace{-6cm} %center hack
+	\caption{#3\label{#2}}
+	\end{center}
+	\end{figure}
+}
+
+
+\newcommand{\figOctaveTwoVariableSpace}[8][htb]{
+	\begin{figure}[#1]
+	\begin{center}
+	\hspace{-6cm} %hack to center wider than \textwidth
+	\subfigure[#6]{ %sub-caption
+	\scalebox{0.9}{
+		\nonstopmode
+		\input{\imgdir/#5.tex}
+		\errorstopmode
+		\label{#5}
+		\rule[-1.0cm]{0cm}{0cm} %don't overlap with sub-caption
+	}
+	}
+	%
+	\rule{#2}{0cm} %don't overlap axis labels
+	%
+	\subfigure[#8]{
+	\scalebox{0.9}{
+		\nonstopmode
+		\input{\imgdir/#7.tex}
+		\errorstopmode
+		\label{#7}
+		\rule[-1.0cm]{0cm}{0cm}
+		}
+	}
+	\hspace{-6cm} %center hack
+	\caption{#4\label{#3}}
+	\end{center}
+	\end{figure}
+}
+
+
+
+\newcommand{\figOctaveTwoVariableSpaceNonFig}[7]{
+	\begin{center}
+	\hspace{-6cm} %hack to center wider than \textwidth
+	\subfigure[#5]{ %sub-caption
+	\scalebox{0.9}{
+		\nonstopmode
+		\input{\imgdir/#4.tex}
+		\errorstopmode
+		\label{#4}
+		\rule[-1.0cm]{0cm}{0cm} %don't overlap with sub-caption
+	}
+	}
+	%
+	\rule{#1}{0cm} %don't overlap axis labels
+	%
+	\subfigure[#7]{
+	\scalebox{0.9}{
+		\nonstopmode
+		\input{\imgdir/#6.tex}
+		\errorstopmode
+		\label{#6}
+		\rule[-1.0cm]{0cm}{0cm}
+		}
+	}
+	\hspace{-6cm} %center hack
+	\caption{#3\label{#2}}
+	\end{center}
+}
+
+
+\newcommand{\figOctaveTwoNoFigNoCaption}[5]{
+	\begin{center}
+	\hspace{-1cm} %hack to center wider than \textwidth
+	\subfigure[#3]{ %sub-caption
+	\scalebox{0.85}{
+		\nonstopmode
+		\input{\imgdir/#2.tex}
+		\errorstopmode
+		\label{#2}
+		\rule[-1.0cm]{0cm}{0cm} %don't overlap with sub-caption
+	}
+	}
+	%
+	\rule{#1}{0cm} %don't overlap axis labels
+	%
+	\subfigure[#5]{
+	\scalebox{0.85}{
+		\nonstopmode
+		\input{\imgdir/#4.tex}
+		\errorstopmode
+		\label{#4}
+		\rule[-1.0cm]{0cm}{0cm}
+		}
+	}
+	\hspace{-1cm} %center hack
+	\end{center}
+}

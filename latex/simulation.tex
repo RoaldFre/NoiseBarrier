@@ -1,11 +1,12 @@
 \section{Numerical simulation \label{sectSimulation}}
-With the ever increasing strength of modern computers, it has become feasible to make accurate simulations of physical systems. This is often more practical than building an actual physical (scale)model. Both approaches will be compared below.
+With the ever increasing strength of modern computers, it has become feasible to make accurate simulations of physical systems. This is often more practical than building an actual physical (scale)model. Both approaches will be compared in section \ref{sectComparison}.
 
 
 \subsection{Finite difference time domain method}
 In this section, we describe an implementation of a finite difference time domain (FDTD) method. This is a simple and intuitive way of simulating the progression of acoustic waves through a medium (in our case, air) that allows one to easily implement obstacles (eg. a hard floor, a wall). For simplicity, an infinitely long barrier on an infinitely large floor is assumed. The problem thus reduces to two dimensions.
 
 The FDTD method consists of simulating the pressure field, $p$, and velocity field, $\vec{v} = (v, w)$,  on a discrete spacial grid. The basic equations that govern the evolution of these fields are equations \ref{newt} and \ref{dpdt}, which in two dimensions read
+{\small 
 $$
 \pderiv{v(x,y,t)}{t} = -\frac{1}{\rho} \pderiv{p(x,y,t)}{x}
 , \qquad
@@ -13,8 +14,9 @@ $$
 $$
 $$
 \pderiv{p(x,y,t)}{t} = -\rho c^2 \left(\pderiv{v(x,y,t)}{x} + \pderiv{w(x,y,t)}{y}\right)
-$$
+$$}
 where we used $c^2 = p_0 \gamma / \rho$. These equations will be discretized in space and time. We use the shorthand notation $\pnij$ to denote $p(x_i, y_j, t_n)$. The velocities $\vnij$ and $\wnij$ are defined analogously. The above equations can now be discretized as a central difference
+{\small 
 $$
 \frac{\vij^{n+1} - \vij^{n-1}}{2\Dt} = -\frac{1}{\rho} \frac{\pn_{i+1,j} - \pn_{i-1,j}}{2\Dx}
 , \qquad
@@ -26,7 +28,7 @@ $$
 		\frac{\vn_{i+1,j} - \vn_{i-1,j}}{2\Dx}
 		+ \frac{\wn_{i,j+1} - \wn_{i,j-1}}{2\Dy}
 	\right)
-$$
+$$}
 Here, $\Dt$ is the temporal discretization, and $\Dx$ and $\Dy$ are the spatial discretizations.
 
 An improvement on the accuracy can be made by shifting the pressure and velocity grids by half a step in the appropriate dimensions (spacial and temporal). This is called a \emph{staggered grid}\cite{staggered-grid}, and is described by the transformation
@@ -37,7 +39,8 @@ $$
 , \qquad
 \pnij \to \pn_{i+\half, j+\half}
 $$
-This allows one to take the central derivatives over half the interval of before, as if the discretization length has halved
+This allows one to take the central derivatives over half the previous interval, as if the discretization length has halved
+{\small 
 $$
 \frac{v_{i,j+\half}^{n+\half} - v_{i,j+\half}^{n-\half}}{\Dt}
 	= -\frac{1}{\rho} \frac{\pn_{i+\half,j+\half} - \pn_{i-\half,j+\half}}{\Dx}
@@ -54,7 +57,7 @@ $$
 		- \frac{w_{i+\half,j+1}^{n+\half} 
 			- w_{i+\half,j}^{n+\half}}{\Dy}
 	\right)
-$$
+$$}
 These equations can now easily be solved for $p^{n+1}_{i+\half, j+\half}$, $v_{i,j+\half}^{n+\half}$ and $w_{i+\half,j}^{n+\half}$ to derive the update rules for the simulation.
 
 Lastly, for this method to be stable, a constraint is imposed on the temporal and spacial discretization. Stability ensues only if the Courant-Friedrichs-Lewy condition is satisfied\cite{courant-friedrichs-lewy, numerical-stability-2D-FDTD}
@@ -70,9 +73,9 @@ $$
 \subsection{Modelling the physical scale model}
 The scale model setup discussed earlier will be represented in the general framework from the previous section.
 
-The setup of the simulation corresponds to those of the scalemodel discussed in section \ref{sectScalemodel}. 
+The setup of the simulation corresponds to that of the scale model discussed in section \ref{sectScalemodel}. 
 
-\subsubsection*{The grid}
+\subsubsection{The grid}
 The setup of the grids is summarized in table \ref{gridSetup}. A visual representation of the geometry of the grids is given in figure \ref{simulationGrids}.
 
 \begin{table}[htb]
@@ -110,19 +113,17 @@ distance from source to wall&
 
 
 
-\subsubsection*{The excitation}
-The excitation signal consisted of a temporal impulse shaped like a hanning function with a duration of 25\,$\mu$s. This is sufficiently long to avoid temporal discretization artifacts, and sufficiently short to cover all the frequencies we are interested in. This time also approximates the duration of the actual spark used in the scale model measurements.
+\subsubsection{The excitation}
+The excitation signal consists of a temporal impulse shaped like a hanning function with a duration of 25\,$\mu$s. This is sufficiently long to avoid temporal discretization artifacts, and sufficiently short to cover all the frequencies we are interested in. This time also approximates the duration of the actual spark used in the scale model measurements.
 
 To avoid spatial discretization artifacts, the excitation was spread out over a two dimensional gaussian with a width $2\sigma$ of 3\,mm. This proved to be a good trade-off between a perfect point source and excessive discretization artifacts. Note that the spark gap of the spark source used in the experiment had a comparable size of 3\,mm.
 
-\figOctaveTwo[htb]{simuExcitationPlots}{Characteristics of the excitation signal of the simulation}
+\figOctaveTwo[htb]{simuExcitationPlots}{Characteristics of the excitation signal of the simulation.}
 	{simuImpulseResponse}{impulse response}
 	{simuSpectrum}{spectrum}
 
-The excitation signal was applied as a soft 
-source\cite{soft-hard-source} by simply adding it to the 
-pressure field. Because the excitation is merely added to the pressure 
-field, and not forced (as for hard sources), the actual signal that will be 
+The excitation signal is applied as a soft source\cite{soft-hard-source} by simply adding it to the 
+pressure field. Because the excitation is merely added, and not forced (as for hard sources), the actual signal that will be 
 radiated from the source point will not be equal to the excitation signal 
 itself. It will be altered by the response of the system. A virtual free 
 field measurement was performed to characterize the total resulting 
@@ -130,8 +131,8 @@ excitation signal. The results are shown in figure \ref{simuExcitationPlots}. Th
 
 
 
-\subsubsection*{The boundaries}
-The entire space was modelled to have perfectly reflecting edges as boundaries. The wall acting as the noise barrier was also modelled to be perfectly reflecting (ie. having an infinite impedance). This was accomplished by forcing the velocity parallel to the surface to be zero. For example, for the floor this means $w_{i,0}^n = 0$ and for the left wall this means $v_{0,j}^n = 0$ (for all $n$, $i$ and $j$).
+\subsubsection{The boundaries}
+The entire space was modelled to have perfectly reflecting edges as boundaries. The wall acting as the noise barrier was also modelled to be perfectly reflecting (ie. having an infinite impedance). This was accomplished by forcing the velocity normal to the surface to be zero. For example, for the floor this means $w_{i,0}^n = 0$ and for the left wall this means $v_{0,j}^n = 0$.
 
 
 

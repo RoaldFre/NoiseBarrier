@@ -60,9 +60,7 @@ This section contains a description of our method; an assessment of the standard
 The particulars regarding the measurement equipment will be discussed in the following section; as well as the methods of data gathering and processing. Furthermore, a short description of possible excitation signals will be given. Lastly, the developed method will be put to the test by measuring the absorption characteristics of a Helmholtz resonator.
 
 \subsubsection{Recording equipment}
-The signal was sent from an Roland Octa-Capture sound card via a B\&K amplifyer (type 2716) to the Zircon loudspeaker. The signal was captured by a B\&K condensor microphone and preamplifier and sent back to the Octa-Capture sound card.
-
-\begin{wrapfigure}{R}{0.2\textwidth}
+\begin{wrapfigure}{R}[0.08\textwidth]{0.2\textwidth}
 	%\vspace{-20pt}
   \centering
     \includegraphics[width=0.2\textwidth]{thetaphi.pdf}
@@ -70,6 +68,8 @@ The signal was sent from an Roland Octa-Capture sound card via a B\&K amplifyer 
   \label{fig: thetaphi}
   %\vspace{-40pt}
 \end{wrapfigure}
+
+The signal was sent from an Roland Octa-Capture sound card via a B\&K amplifyer (type 2716) to the Zircon loudspeaker. The signal was captured by a B\&K condensor microphone and preamplifier and sent back to the Octa-Capture sound card.
 
 The software necessary to play and record sounds with these instruments was written in Matlab using the Data Acquisition Toolbox. The subsequent processing of these signals also took place in Matlab. The general content of this software will be discussed in section \ref{processing}. But in order to do accurate measurements, the specifics of the speaker have to be examined.
 
@@ -190,7 +190,7 @@ Figure \ref{helmsub} shows the results of a measurement with a MLS of order 16 a
 \figOctaveVspace[htb]{helmimp}{Impulse response of the Helmholtz resonator panel.}{-0.7cm}
 
 
-The frequency dependent absorption coefficient is computed using equation \ref{absorption}. The result of this calculation is displayed in figure \ref{fig: helmholtzalles} as the red line. The other lines represent measurements with other excitation signals: the yellow line is obtained as the average of 16 excitations with an MLS of order 18, the green one with a sweep signal of 60 seconds and the blue line as the average of 64 sweeps of 1 second. It is clear that the results of the various measurements are consistent. Moreover, the results agree more or less with the absorption coefficient determined by L. De Geetere is his PhD thesis \cite[p.84]{Geetere}. 
+The frequency dependent absorption coefficient is computed using equation \ref{absorption}. The result of this calculation is displayed in figure \ref{alles} as the red line. The other lines represent measurements with other excitation signals: the yellow line is obtained as the average of 16 excitations with an MLS of order 18, the green one with a sweep signal of 60 seconds and the blue line as the average of 64 sweeps of 1 second. It is clear that the results of the various measurements are consistent. Moreover, the results agree more or less with the absorption coefficient determined by L. De Geetere is his PhD thesis \cite[p.84]{Geetere}. 
 
 The main deviations are the extra peak at low frequencies (below 250\,Hz) in our spectrum and the height of the peak between 6000\,Hz and 7000\,Hz. The appearance of the extra peak at low frequencies can be attributed to the effects of windowing in the time domain. The determination of the lowest frequencies will be compromised because of the attenuation at the beginning and tail of the signal.
 
@@ -198,32 +198,31 @@ A possible explanation for the peak at 6500\,Hz being too high lies in the direc
 
 
 \begin{figure}[h!]
-  \centering
-    \includegraphics[width=\textwidth]{helmalles}
-  %\vspace{-10pt}
-  \caption{Absorption coefficient of the Helmholtz resonator determined with different excitation signals: 16$\times$ MLS of order 18 (yellow), 64$\times$ MLS of order 16 (red), 1$\times$ sweep of 60\,s (green), 64$\times$ sweep of 1\,s (blue).}
-  \label{fig: helmholtzalles}
-  %\vspace{-30pt}
+  \begin{center}
+  \hspace{-5cm}
+  \subfigure[Our method]{\label{fig: helmalles}\includegraphics[width=0.7\textwidth]{helmalles}}                
+  \subfigure[De Geetere]{\label{fig: helmgeetere}\includegraphics[width=0.25\textwidth]{helmgeetere.png}}
+  \hspace{-5cm}
+  \caption{Absorption coefficient of the Helmholtz resonator. On the left: the results of our method with different excitation signals: 16$\times$ MLS 	of order 18 (yellow), 64$\times$ MLS of order 16 (red), 1$\times$ sweep of 60\,s (green), 64$\times$ sweep of 1\,s (blue). On the Rigth the results 	of De Geetere\cite[p.84]{Geetere}}\label{alles}
+  \end{center}
 \end{figure}
-
 
 \subsection{The Adrienne method}
 The acoustical characterisation of objects is an essential part in the design of noise reducing devices, such as the noise barriers along a motorway. It is important to be able to evaluate the performance of such barriers and more importantly to be able to compare them objectively. In order to do so a series of standardized methods was developed by CEN (European committee for standardization) to determine the performance of such devices.
 
 One of these methods determines the sound reflection of the device and is called the Adrienne method. A short description of the Adrienne method and its shortcomings will be given in this section. For more details, see the technical specification CEN/TS 1793-5:2003 \cite{Adrienne}.
-
+\begin{wrapfigure}{R}[0.08\textwidth]{0.4\textwidth}
+	%\vspace{-40pt}
+  \centering
+    \includegraphics[width=0.38\textwidth]{Adrienne.pdf}
+  \caption{Setup for the reflection index measurements according to the Adrienne method.\label{fig: adrienne}}
+  
+  %\vspace{-40pt}
+\end{wrapfigure}
 
 
 \subsubsection{Experimental setup}
 
-\begin{wrapfigure}{R}[0.08\textwidth]{0.4\textwidth}
-	%\vspace{-40pt}
-  \centering
-    \includegraphics[width=0.4\textwidth]{Adrienne.pdf}
-  \caption{Setup for the reflection index measurements according to the Adrienne method.}
-  \label{fig: adrienne}
-  %\vspace{-40pt}
-\end{wrapfigure}
 The Adrienne method requires the setup shown in figure \ref{fig: adrienne}\footnote{This image was taken from \cite[p.45]{Geetere}.}. The microphone is attached to the speaker, such that the distance between them is 1.25m. The speaker is placed at a distance of 1.50\,m of the wall. It is possible to swivel the speaker and microphone assembly up and down in steps of 10 degrees.
 
 A set of nine measurement is performed with the angle varying between $50\degr$ and $130\degr$. Several sets of measurement have to be executed at different positions and rotating along different axes dependent on the homogeneity of the sample.
@@ -258,6 +257,7 @@ RI_j = \frac{1}{n_j} \sum^{n_j}_{k=1} \frac{\int_{\Delta f_j} \left|\mathcal{F}\
 \end{equation}
 with \\
 
+%\begin{tabular}{lp{0.3\textwidth}}
 \begin{tabular}{ll}
 $h_i(t)$ & the free field impulse response \\
 $h_{r,k}(t) = h_k(t) - h_i(t)$ & the reflected component of the impulse response at the $k$-th angle \\
@@ -272,7 +272,7 @@ The parameter $t$ which is added to both the numerator and denominator is necess
 The reflection index is a measure for the average ratio of reflected energy and incident energy. It is this standardized quantity that is used to compare the reflection capacities of different noise barriers. For more details, see \cite{Adrienne}.
 
 \subsubsection{Shortcomings}
-\begin{wrapfigure}{R}{0.20\textwidth}
+\begin{wrapfigure}{R}[0.08\textwidth]{0.20\textwidth}
 	\vspace{-10pt}
   \centering
     \includegraphics[width=0.20\textwidth]{adriennedir}
@@ -286,13 +286,13 @@ Another disadvantage of this setup is that the speaker itself can be the cause o
 
 This would not only solve the problem of parasitic reflections from the speaker, it would also reduce the influence of the speaker's directivity. The solid angle in which the response of the speaker can be considered as more or less equal remains the same, but the effective surface on the wall becomes larger. The angle between the direct sound path and the reflected sound path becomes smaller as the speaker is further removed of the wall.
 
-\begin{wrapfigure}{R}{0.3\textwidth}
+\begin{wrapfigure}{R}[0.08\textwidth]{0.3\textwidth}
 	%\vspace{-10pt}
   \centering
     \includegraphics[width=0.3\textwidth]{hoger}
   \caption{Paths of the ground reflection and top diffraction.}
   \label{fig: hoger}
-  %\vspace{-40pt}
+  \vspace{-20pt}
 \end{wrapfigure}
 
 The disadvantage of placing the speaker further away, is that the ground reflection comes quicker after the reflected sound. This results in a shorter Adrienne window and consequently a larger lowest frequency limit.
@@ -305,10 +305,10 @@ In the case of a wall of 4 meters high, the speaker is positioned at a height of
 
 
 \subsection{In situ measurement}\label{insitu}
-\begin{wrapfigure}{R}{0.25\textwidth}
-	\vspace{-10pt}
+\begin{wrapfigure}{R}[0.08\textwidth]{0.25\textwidth}
+	%\vspace{-10pt}
   \centering
-    \includegraphics[width=0.25\textwidth]{wallOutside}
+    \includegraphics[width=0.15\textwidth]{wallOutside}
   \caption{Picture of the wall and setup.}
   \label{fig: wall}
   %\vspace{-40pt}
@@ -317,7 +317,7 @@ Originally, a measurement of the reflection coefficient of a noise barrier along
 
 Our experimental setup consisted of the following: the speaker and microphone are positioned at a (maximum) height of 3.15\,m and at a mutual distance of 3\,m. The microphone is placed at 0.25\,m of the wall. The setup and wall are shown in figure \ref{fig: wall}. This arrangement makes sure that the first parasitic reflection arrives 10\,ms after the wall reflection. Since the measurements are done in a noisy environment, the excitation signal is an MLS of order 16 and is averaged 64 times. To make sure that no distortion peaks occurred in the relevant time domain, a measurement was done with a sine sweep signal and subtracted. This revealed that the distortion peaks did not contaminate the important part of the impulse response. 
 
-\begin{wrapfigure}{R}{0.40\textwidth}
+\begin{wrapfigure}{R}[0.08\textwidth]{0.40\textwidth}
 	\vspace{-10pt}
   \centering
     \includegraphics[width=0.40\textwidth]{polar}

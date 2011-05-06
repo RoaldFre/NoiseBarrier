@@ -1,0 +1,43 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[english]{babel}
+\usepackage{a4wide}
+\usepackage[pdftex]{graphicx}
+\usepackage{subfigure}
+\usepackage{wrapfig}
+\usepackage{verbatim}
+\usepackage{epstopdf}
+\usepackage{amsfonts, amsmath, amsthm}
+\usepackage{units}
+%\usepackage[format=hang,labelfont=bf]{caption}
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage{url}
+\setlength\parindent{0pt}
+\setlength\parskip{0.20in plus0.05in minus0.05in}
+
+\input{commands.tex}
+
+\author{Roald Frederickx\\Elisabeth Wursten}
+\title{Acoustical characterisation of a noise barrier in situ and on a 
+scale model}
+\date{\huge Insert date here!}
+
+\begin{document}
+\maketitle
+\input{abstract.tex}
+\input{theory.tex}
+\input{InSitu.tex}
+\input{scalemodel.tex}
+\input{simulation.tex}
+<<<<<<< Updated upstream
+\input{comparison.tex}
+=======
+%\input{comparison.tex}
+>>>>>>> Stashed changes
+
+
+\clearpage
+\bibliographystyle{plain}
+\bibliography{references}
+\nocite{*}
+
+\end{document}

@@ -1,0 +1,199 @@
+% This file was created with JabRef 2.6.
+% Encoding: Cp1252
+
+@ARTICLE{numerical-stability-2D-FDTD,
+  author = {Cangellaris, Andreas C.},
+  title = {Numerical Stability and Numerical Dispersion of a Compact {2-D/FDTD}
+	Method Used for the Dispersion Analysys of Waveguides},
+  journal = {IEEE Microwave and Guided Wave Letters},
+  year = {1993},
+  volume = {3},
+  number = {1},
+  month = {January}
+}
+
+@BOOKLET{Clairbois2,
+  title = {A new in-situ method for the acoustic performance of road traffic
+	noise reducing devices},
+  author = {Clairbois, J. and Beaumont, J. and Garai, M. and Schupp, G.},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\A new in-situ method for the acoustic performance of road traffic noise reducing devices.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@BOOKLET{Clairbois,
+  title = {The New Framework of EN Standards for Traffic Noise Reducing Devices},
+  author = {Clairbois, J. and Garai, M.},
+  address = {A-Tech / Acoustic Technologies S.A., Brussels, BELGIUM},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\THE NEW FRAMEWORK OF EN STANDARDS.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@BOOKLET{Cobo,
+  title = {In situ absorption measurement of antinoise devices using pre-determined
+	pulse waveforms},
+  author = {Cobo, P. and Fernández, A. and Palacios, R. and de la Colina, C.
+	and Siguero M.},
+  address = {Instituto de Acústica, Madrid},
+  year = {2004},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\In situ absorption measurement of antinoise devices using.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@ARTICLE{soft-hard-source,
+  author = {Costen, Fumie and B\'erenger, Jean-Pierre and Brown, Anthony},
+  title = {Comparison of {FDTD} hard source with {FDTD} soft source and accuracy
+	assessment in Debye media},
+  journal = {IEEE Transactions on Antennas and Propagation},
+  year = {2009},
+  volume = {57},
+  pages = {2014--2022},
+  number = {7}
+}
+
+@ARTICLE{courant-friedrichs-lewy,
+  author = {Courant, R and Friedrichs, K and Lewy, H},
+  title = {On the Partial Difference Equations of Mathematical Physics},
+  journal = {IBM Journal},
+  year = {1967},
+  pages = {215--234},
+  month = {March}
+}
+
+@BOOK{Cremer1982,
+  title = {Principles and Applications of Room Acoustics: Volume 1},
+  publisher = {Applied Science Publishers},
+  year = {1982},
+  author = {Cremer, L. and Müller, H.},
+  address = {London},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@BOOK{Cremer2,
+  title = {Principles and Applications of Room Acoustics: Volume 2},
+  publisher = {Applied Science Publishers},
+  year = {1982},
+  author = {Cremer, L. and Müller, H.},
+  address = {London},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@PHDTHESIS{Geetere,
+  author = {De Geetere, L.},
+  title = {Analysis and improvement of the experimental techniques to assess
+	the acoustical reflection properties of boundary surfaces},
+  school = {Katholieke Universiteit Leuven},
+  year = {2004},
+  address = {Leuven},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\2004 PhD De Geetere.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@BOOKLET{Garai,
+  title = {Experimental Verification of the European Methodology for Testing
+	Noise Barriers In Situ: Airborne Sound Insulation},
+  author = {Garai, M. and Guidorzi, P.},
+  address = {University of Bologna, Bologna},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\EXPERIMENTAL VERIFICATION OF THE EUROPEAN.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@BOOK{Glorieux,
+  title = {Golven en Geluid},
+  publisher = {Katholieke Universiteit Leuven},
+  year = {2011},
+  author = {Glorieux, C. and Wouters, J.},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\cursus_GG2011_final.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@BOOK{mls,
+  title = {Shift register sequences},
+  publisher = {Laguna Hills},
+  year = {1982},
+  author = {Golomb, S. W.},
+  owner = {Elise},
+  timestamp = {2011.05.03}
+}
+
+@BOOKLET{Garai2,
+  title = {Signal analysis in the sound absorption measurement procedure: The
+	importance of time subtraction and reference surface corrections},
+  author = {Guidorzi, P. and Garai, M.},
+  address = {University of Bologna, Bologna},
+  year = {2008},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\Signal analysis in the sound absorption measurement.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@ARTICLE{sweep,
+  author = {Müller, S and Massarani, P.},
+  title = {Transfer Function Measurement with Sweeps},
+  journal = {Journal of the Audio Engineering Society},
+  year = {2001},
+  volume = {49(6)},
+  pages = {443--471},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\comparisonMesure.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.05.04}
+}
+
+@MISC{staggered-grid,
+  author = {Nagel, James R.},
+  title = {The finite-difference time-domain ({FDTD}) algorithm},
+  note = {University of {U}tah department of electrical and computer engineering}
+}
+
+@ARTICLE{Stan,
+  author = {Stan, G.-B. and Embrechts, J.-J. and Archambeau D.},
+  title = {Comparison of different impulse response measurement techniques},
+  journal = {Journal of the Audio Engineering Society},
+  year = {2002},
+  volume = {50},
+  pages = {249--262},
+  number = {4},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\ArticleJAES.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.05.02}
+}
+
+@ARTICLE{Watts,
+  author = {Watts, G. and Morgan, P.},
+  title = {Measurement of airborne sound insulation of timber noise barriers:
+	Comparison of in situ method {CEN/TS} 1793-5 with laboratory method
+	{EN} 1793-2},
+  journal = {Applied Acoustics},
+  year = {2007},
+  volume = {68},
+  pages = {421--436},
+  file = {:C\:\\Elise\\Documenten\\Studie\\Bachelorproef\\Geluidsscherm\\Literatuur\\Measurement of airborne sound insulation.pdf:PDF},
+  owner = {Elise},
+  timestamp = {2011.04.23}
+}
+
+@STANDARD{Adrienne,
+  title = {Road traffic noise reducing devices - Test method for determining
+	the acoustic performance - Part 5: Intrinsic characteristics - In
+	situ values of sound reflection and airborne sound insulation},
+  organization = {(CEN)},
+  institution = {(CEN/TS) 1793-5:2003},
+  owner = {Elise},
+  timestamp = {2011.05.03}
+}
+
+@comment{jabref-meta: selector_publisher:}
+
+@comment{jabref-meta: selector_author:}
+
+@comment{jabref-meta: selector_journal:}
+
+@comment{jabref-meta: selector_keywords:}
+
