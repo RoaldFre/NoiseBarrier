@@ -1,56 +1,3 @@
-\begin{comment}
-\documentclass[12pt,a4paper]{article}
-\usepackage{a4wide}
-\usepackage{amsfonts, amsmath, amsthm}
-\usepackage[english]{babel}
-\usepackage{framed}
-\usepackage[pdftex]{graphicx}
-\usepackage{epstopdf}
-\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
-\usepackage{wrapfig}
-\usepackage{tocloft}
-\usepackage{psfrag}
-\usepackage{subfig}
-\usepackage[latin1]{inputenc}
-\usepackage{verbatim}
-\usepackage[usenames,dvipsnames]{pstricks}
-\usepackage{epsfig}
-\usepackage{pst-grad} % For gradients
-\usepackage{pst-plot} % For axes
-
-%\usepackage{bbold}
-\usepackage{bbm}
-\setlength\parindent{0pt}
-\setlength\parskip{0.20in plus0.05in minus0.05in}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\eps}{\varepsilon}
-\fboxrule 1pt
-\fboxsep 7pt
-\pagenumbering{arabic}
-
-\setcounter{tocdepth}{3}
-\setcounter{secnumdepth}{5}
-
-\hyphenation{ver-krijgt ver-ge-lijk-ing differentiaal-vergelijking Universiteit}
-
-
-%2. Theorie
-	
-%	- golfvergelijkingen afleiden
-%	- impedantie
-%	- reflectiecoeff + absorptie
-%	- systeemrespons
-
-\begin{document}
-
-\end{comment}
-
-
-
-
 \section{Theoretical introduction}
 This section contains a short theoretical introduction to acoustics. First of all, the wave equation will be derived for propagation in a fluid. Secondly, a few essential properties regarding sound reflection and absorption will be defined. 
 
@@ -79,19 +26,15 @@ Consider an element of (nonviscous) fluid with mass $dm$ in a volume $A dx$ (see
 F(x+dx) = - A p(x+dx) = -A [p(x) + \frac{\partial p}{\partial x} dx].
 \]
 Here the sign is negative since the surrounding fluid pushes the element to the $-x$-direction.
-The total x-component of the force on mass $dm$ is:
+The total $x$-component of the force on mass $dm$ is:
 \[
-dF_x = F(x) + F(x+dx) = A [p(x) - p(x) - \frac{\partial p}{\partial x} dx] = - A \frac{\partial p}{\partial x} dx.
+dF_x = F(x) + F(x+dx) = A \left[p(x) - p(x) - \frac{\partial p}{\partial x} dx\right] = - A \frac{\partial p}{\partial x} dx.
 \]  
 According to Newton's law, this force creates an acceleration of the mass element $dm$:
 \[
 dF_x = - A \frac{\partial p}{\partial x} dx = \frac{\partial v_x}{\partial t} dm = \rho_0 A \frac{\partial v_x}{\partial t} dx
 \]
-with $\rho_0$ the static value of the density $\rho$. Simplifying the previous equation gives
-\[
-- \frac{\partial p}{\partial x} = \rho_0 \frac{\partial v_x}{\partial t}.
-\]
-This derivation can be repeated for the $y$- and $z$-directions, which ultimately gives the following equation:
+with $\rho_0$ the static value of the density $\rho$. Simplifying the previous equation, and repeating the process for the $y$- and $z$-directions yields
 \begin{equation}
 \vec{\nabla} p = - \rho_0 \frac{\partial \vec{v}}{\partial t}.
 \label{newt}
@@ -106,13 +49,11 @@ Given that mass is conserved in fluid dynamics, we can write an equation of cont
 \]
 Whereas the flux of particles in or out of the volume is characterised as:
 \[
-\Phi_m = - \rho_0 \oint_A \vec{v} \cdot d\vec{A}
+\Phi_m
+= - \rho_0 \oint_A \vec{v} \cdot d\vec{A}
+= - \rho_0 \int_{V} (\vec{\nabla} \cdot \vec{v}) \, dV.
 \]
-where $\vec{v} \cdot d\vec{A}$ selects the normal component of the velocity of the particles with respect to the surface element $dA$.
-The flux of particles can be rewritten according to the divergence theorem:
-\[
-\Phi_m = - \rho_0 \oint_A \vec{v} \cdot d\vec{A} =- \rho_0 \int_{V} (\vec{\nabla} \cdot \vec{v}) \, dV.
-\]
+where in the last equality the divergence theorem was used.
 Since the change of mass is equal to the mass flux, following relation between the density and the velocity of the particles can be obtained:
 \begin{equation}
 \frac{\partial \rho}{\partial t}  = - \rho_0 (\vec{\nabla} \cdot \vec{v})
@@ -192,29 +133,34 @@ where the particle velocity is evaluated in the direction of propagation.
 %\vspace{-15pt}
 When a sound wave travels from one medium to another, it will be reflected and refracted at the boundary surface. Let us consider plane longitudinal waves:
 \begin{align*}
-&p_{in} = p_{in,0}\; \exp\left[ i (\vec{r} \cdot \vec{k}_{in} -  \omega t )\right]\\
-&p_{ref} = p_{ref,0}\; \exp\left[ i (\vec{r} \cdot \vec{k}_{ref} -  \omega t )\right]\\
-&p_{tr} = p_{tr,0}\; \exp\left[ i (\vec{r} \cdot \vec{k}_{tr} -  \omega t )\right]
+&\pin = \pinnul e^{i (\vec{r} \cdot \kin -  \omega t)}\\
+&\pref = \prefnul e^{i (\vec{r} \cdot \kref -  \omega t)}\\
+&\ptr = \ptrnul e^{i (\vec{r} \cdot \ktr -  \omega t)}\\
 \end{align*}
 
-Let $\theta_{in}$, $\theta_{ref}$ and $\theta_{tr}$ be the angles respective to the normal of the surface of the incoming wave (in), reflected  wave (ref) and transmitted  wave (tr) respectively. The norm of the wave vectors are 
+Let $\thetain$, $\thetaref$ and $\thetatr$ be the angles respective to the normal of the surface of the incoming wave (in), reflected  wave (ref) and transmitted  wave (tr) respectively. The norm of the wave vectors are 
 \[
-\left\|\vec{k}_{in}\right\| = \left\|\vec{k}_{ref}\right\| = \frac{\omega}{c_1} \qquad \textrm{ and } \qquad \left\|\vec{k}_{tr}\right\| = \frac{\omega}{c_2}
+\left\|\kin\right\|
+= \left\|\kref\right\|
+= \frac{\omega}{c_1}
+\qquad\textrm{ and } \qquad
+\left\|\ktr\right\|
+= \frac{\omega}{c_2}
 \]
-with $c_1$ and $c_2$ the speeds of sound in medium 1 and 2. The acoustical waves are subject to boundary conditions at the surface. First of all, the law of action and reaction dictates that the pressure should vary continuously at the boundary: $p_{in} + p_{ref} = p_{tr}$.
-Secondly, the normal velocity of the particles remains the same in both media at the boundary, whereas the tangential component may differ: $v_{in,n} + v_{ref,n} = v_{tr,n}$.
+with $c_1$ and $c_2$ the speeds of sound in medium 1 and 2. The acoustical waves are subject to boundary conditions at the surface. First of all, the law of action and reaction dictates that the pressure should vary continuously at the boundary: $\pin + \pref = \ptr$.
+Secondly, the normal velocity of the particles remains the same in both media at the boundary, whereas the tangential component may differ: $\vin^\perp + \vref^\perp = \vtr^\perp$.
 
 These boundary conditions result in Snell's law
 \[
-\left\|\vec{k}_{in}\right\| \sin\theta_{in} = \left\|\vec{k}_{ref}\right\| \sin\theta_{ref} = \left\|\vec{k}_{tr}\right\| \sin\theta_{tr}
+\left\|\kin\right\| \sin\thetain = \left\|\kref\right\| \sin\thetaref = \left\|\ktr\right\| \sin\thetatr
 \]
-and the following solutions in term of the pressure reflection coefficient $R_p = p_{ref,0}/p_{in,0}$ and the pressure transmission coefficient $T_p = p_{tr,0}/p_{in,0}$ 
+and the following solutions in terms of the pressure reflection coefficient $R_p = p_{ref,0}/p_{in,0}$ and the pressure transmission coefficient $T_p = p_{tr,0}/p_{in,0}$ 
 \[
 R_p = \frac{Z_2 \cos \theta_{in} - Z_1 \cos \theta_{tr}}{Z_2 \cos \theta_{in} + Z_1 \cos \theta_{tr}} \qquad \textrm{ and } \qquad
 T_p = \frac{2 Z_2 \cos \theta_{in} }{Z_2 \cos \theta_{in} + Z_1 \cos \theta_{tr}}.
 \]
 with $Z_1 = \rho_1 c_1$ the characteristic impedance of fluid 1 and $Z_2 = \rho_2 c_2$ the impedance of medium 2.  
-The reflection coefficient ranges from -1 to 1, while the transmission coefficient has a value between 0 and 2. A value greater than 1 for the transmission coefficient may seem in disagreement with conservation of energy, but that is not the case. We speak of pressure coefficients, instead of intensity coefficients. 
+The reflection coefficient ranges from $-1$ to 1, while the transmission coefficient has a value between 0 and 2. A value greater than 1 for the transmission coefficient may seem in disagreement with conservation of energy, but that is not the case. We speak of pressure coefficients, instead of intensity coefficients. 
 
 The average acoustic intensity $\vec{I}$ of a sound wave is defined as 
 \[
