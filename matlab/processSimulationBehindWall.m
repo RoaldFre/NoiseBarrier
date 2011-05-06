@@ -76,12 +76,10 @@ return
 for x = 0 : sideSteps - 1
 	for y = 0 : upSteps - 1
 		i = 1 + upSteps*x + y;
-		subplot(2,1,1);
-		loglog(measurementFreqs, spectra(:,i));
 		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(i)])
-		axis([1000, 50000, 0.001, 1]);
-		subplot(2,1,2);
-		plot(deconvolved(:,i));
+		hold on;
+		plot(measurements(:,i) - 1.5, 'r');
+		clf; hold off;
 
 	       % subplot(4,1,3);
 	       % loglog(measurementFreqs, spectraFloor(:,i));

@@ -22,7 +22,6 @@ for x = 0 : sideSteps - 1
 		semilogx(simFreqs, 20*log10(simSpectra(:,iMeasurement)), 'k');
 		title(['x = ',num2str(x),'   y = ',num2str(y),'   i = ',num2str(iMeasurement)])
 		axis([2000, 50000, -60, 20]);
-		axis([20, 50000, -60, 20]);
 		
 		subplot(2,1,2);
 		hold on;
