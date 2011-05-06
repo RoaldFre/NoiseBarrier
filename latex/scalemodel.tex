@@ -1,5 +1,5 @@
 \section{Scale model of a noise barrier \label{sectScalemodel}}
-A scale model of a simple noise barrier is investigated to characterize several aspects such as the reflection and diffraction of incident sound.
+A scale model of a simple noise barrier is investigated. Several aspects, such as the reflection and diffraction of incident sound are examined.
 
 \subsubsection*{The noise barrier}
 The model under consideration is composed of a wall of five wooden blocks, each with dimensions $212\,\mathrm{mm} \times 212\,\mathrm{mm} \times 60\,\mathrm{mm}$. These are positioned side by side to form a barrier that is $1.06\,\mathrm{m}$ long.
@@ -11,18 +11,18 @@ Working with a 1:10 scale model also means that the wavelengths to be considered
 
 A suitable means of excitation was found in a small spark source. This produces a signal with sufficiently high frequencies and it is an excellent approximation for an ideal point source. The characteristics of the spark source are plotted in figure \ref{sparkSourcePlots}.
 
-\figOctaveTwo[htb]{sparkSourcePlots}{Characteristics of the spark source}
+\figOctaveTwo[htb]{sparkSourcePlots}{Characteristics of the spark source.}
 	{sparkImpulseResponse}{impulse response}
 	{sparkSpectrum}{spectrum}
 
-The spark source has a height of 15\,cm and it was placed at a distance of 1.2\,m in front of the barrier for the measurements behind the wall. For the measurements in front of the barrier, the source was placed at a distance of 2\,m.
+The spark source has a height of 15\,cm and was placed at a distance of 1.2\,m in front of the barrier for the measurements behind the wall. For the measurements in front of the barrier, the source was placed at a distance of 2\,m.
 
 
 
 \subsubsection*{Capturing the sound field}
 A programmable $x$-$y$-positioning system was used in order to scan a grid of measurement points in front of and behind the wall. The sound field at each measurement point was recorded with a high frequency microphone connected to an oscilloscope sampling at 5\.MHz. The triggering was based on the sudden spike caused by the electromagnetic pick up of the spark on the microphone wires, this accurately defined the moment when the spark was emitted.
 
-The scanning grid consists of 12 horizontal and 8 vertical measurement positions. The step size in each dimension is 3\,cm and the lowest point is at 3\,cm from the floor. For the measurements behind the wall, the points nearest to the wall are at a distance of 10\,cm from the wall. In the measurements in front of the wall, the distance between the scanned grid and the wall measured 4\,cm.
+The scanning grid consists of 12 horizontal and 8 vertical measurement positions. The step size in each dimension is 3\,cm and the lowest point is at 3\,cm from the floor. For the measurements behind the wall, the points nearest to the wall are at a distance of 10\,cm from the wall. For the measurements in front of the wall, the distance between the scanned grid and the wall measured 4\,cm.
 
 A graphical representation of the entire setup is depicted in figure \ref{simulationGrids} on page \pageref{simulationGrids}.
 
@@ -31,12 +31,12 @@ Because of the very low acoustic energy associated with a single spark, addition
 
 In order to get a sufficiently clean signal at each point of the grid, each measurement was averaged over a thousand excitations. Even then, significant noise remained, especially in the measurements right behind the wall.
 
-Figure \ref{rawSparkMeasurements} shows two averaged signals as they were received by the microphone during a measurement right behind the wall, at a distance of 10\,cm behind the wall, at both the lowest (and hence the most attenuated) and the highest (least attenuated) measurement point.
+Figure \ref{rawSparkMeasurements} shows two averaged signals as they were received by the microphone during a measurement at a distance of 10\,cm behind the wall, at both the lowest (and hence the most attenuated) and the highest (least attenuated) measurement point.
 
-Note that the $s/n$ ratio in the time domain plot (fig \ref{measurementsRightBehindWall}) of the red graph is abysmal. This noise, however, seems to have a fixed pattern. A glance at the spectrum in figure \ref{spectraMeasurementsRightBehindWall} shows that this noise occurs at specific frequencies that are harmonics of 52\,kHz. Due to the very high amplification of the weak signal and the low $s/n$ ratio of a single measurement, any present noise that was in sync with the triggering became very significant in the averaged signal. The origin of this noise is possibly to be found in electromagnetic pick up from the spark generator, which charges a capacitor by pulsing it with high voltage spikes at a fixed frequency.
+Note that the $s/n$ ratio in the time domain plot (fig \ref{measurementsRightBehindWall}) of the red graph is abysmal. This noise, however, seems to have a fixed pattern. A glance at the spectrum in figure \ref{spectraMeasurementsRightBehindWall} shows that this noise occurs at specific frequencies that are harmonics of 52\,kHz. Due to the very high amplification of the weak signal and the low $s/n$ ratio of a single measurement, any present noise that was in sync with the triggering became very significant in the averaged signal. The origin of this noise is possibly to be found in electromagnetic pick up from the spark generator, which charges a capacitor by pulsing it with high voltage spikes at a fixed frequency. Another possibility is that the noise originates from a part of the measurement chain, e.g. the preamplifier or the scope itself.
 
 
-\figOctaveTwo[htb]{rawSparkMeasurements}{Raw resulting signal of an averaged 1000 measurements of the scale model. The measurement was obtained closest behind the wall (10\,cm distance) at the lowest (red, 3\,cm high) and highest point (blue, 24\,cm high, 3\,cm above the wall). Notice the persistent parasitic noise at the harmonics of 52\,kHz.}
+\figOctaveTwo[htb]{rawSparkMeasurements}{Raw resulting signal of 1000 averaged  measurements of the scale model. The measurement was obtained closest behind the wall (10\,cm distance) at the lowest (red, 3\,cm high) and highest point (blue, 24\,cm high, 3\,cm above the wall). Notice the persistent parasitic noise at the harmonics of 52\,kHz.}
 	{measurementsRightBehindWall}{time domain}
 	{spectraMeasurementsRightBehindWall}{frequency domain}
 
@@ -50,9 +50,9 @@ At the high frequencies involved in a scale model measurement, the air starts ac
 
 The formula we used to correct the attenuation is as per ISO 9613-1:1993, which is based on similar research. The resulting absorption for our measurement conditions is graphed in figure \ref{airAttenuation}.
 
-\figOctave[htb]{airAttenuation}{Atmospherical attenuation for a temperature of 18$\degr$C, a relative humidity of 60\% and at a pressure of 1\,atm}
+\figOctave[htb]{airAttenuation}{Atmospherical attenuation for a temperature of 18$\degr$C, a relative humidity of 60\% and at a pressure of 1\,atm.}
 
-The correction was implemented by using a sliding windowing to isolate a time slice. That slice then gets filtered appropriately to correct the attenuation based on the mean time of that slice (and thus distance traveled). The window used was a hanning window of 400 time samples, which equals 0.08\,ms. The benefit of using a hanning window is the fact that overlapping subsequent windows by half a windowlength preserves the energy of the signal.
+The correction was implemented by using a sliding window to isolate a time slice. That slice then gets filtered appropriately to correct for the attenuation based on the mean time of that slice (and thus distance traveled). The window used was a hanning window of 400 time samples, which equals 0.08\,ms. The benefit of using a hanning window is the fact that overlapping subsequent windows by half a window length preserves the energy of the signal.
 
 
 

@@ -1,5 +1,5 @@
 \section{Theoretical introduction}
-This section contains a short theoretical introduction to acoustics. First of all, the wave equation will be derived for propagation in a fluid. Secondly, a few essential properties regarding sound reflection and absorption will be defined. 
+This section contains a short theoretical introduction to acoustics. First of all, the wave equation is derived for propagation in a fluid. Secondly, a few essential properties regarding sound reflection, absorption and diffraction are defined. 
 
 
 
@@ -8,24 +8,24 @@ The derivation of the wave equation for propagation in a nonviscous fluid is bas
 
 
 
-\subsubsection*{Newton's law}
+\subsubsection{Newton's law}
 %\vspace{-15pt}
 
-\begin{wrapfigure}{r}{0.3\textwidth}
-	\vspace{-60pt}
+\begin{wrapfigure}{r}[0.08\textwidth]{0.3\textwidth}
+	%\vspace{-60pt}
   \begin{center}
     \includegraphics[width=0.3\textwidth]{newton.pdf}
   \end{center}
-   \vspace{-20pt}
+   %\vspace{-20pt}
   \caption{}\label{fig: newton}
-  \vspace{-20pt}
+  %\vspace{-20pt}
 \end{wrapfigure}
 
 Consider an element of (nonviscous) fluid with mass $dm$ in a volume $A dx$ (see figure \ref{fig: newton}). The force acting in the $x$-direction on surface A at $x$ due to the pressure of the surrounding fluid  is $F(x) = A p(x) $, while the force at $x +dx$ is 
 \[
 F(x+dx) = - A p(x+dx) = -A [p(x) + \frac{\partial p}{\partial x} dx].
 \]
-Here the sign is negative since the surrounding fluid pushes the element to the $-x$-direction.
+Here the sign is negative since the surrounding fluid pushes the element in the $-x$-direction.
 The total $x$-component of the force on mass $dm$ is:
 \[
 dF_x = F(x) + F(x+dx) = A \left[p(x) - p(x) - \frac{\partial p}{\partial x} dx\right] = - A \frac{\partial p}{\partial x} dx.
@@ -34,51 +34,39 @@ According to Newton's law, this force creates an acceleration of the mass elemen
 \[
 dF_x = - A \frac{\partial p}{\partial x} dx = \frac{\partial v_x}{\partial t} dm = \rho_0 A \frac{\partial v_x}{\partial t} dx
 \]
-with $\rho_0$ the static value of the density $\rho$. Simplifying the previous equation, and repeating the process for the $y$- and $z$-directions yields
+with $\rho_0$ the static value of the density $\rho$. Simplifying the previous equation and repeating the process for the $y$- and $z$-directions yield
 \begin{equation}
 \vec{\nabla} p = - \rho_0 \frac{\partial \vec{v}}{\partial t}.
 \label{newt}
 \end{equation}
 
 
-\subsubsection*{Equation of continuity}
+\subsubsection{Equation of continuity}
 %\vspace{-15pt}
 Given that mass is conserved in fluid dynamics, we can write an equation of continuity. Consider a volume element $V$ containing fluid. Any change of mass in $V$ is the result of a flow of particles in or out of this volume element. A change of mass can be written as:
 \[
 \frac{\partial m}{\partial t} = \frac{\partial }{\partial t} \int_{V} \rho \,dV =\int_{V} \frac{\partial \rho}{\partial t} dV
 \]
-Whereas the flux of particles in or out of the volume is characterised as:
+whereas the flux of particles in or out of the volume is characterised as:
 \[
 \Phi_m
 = - \rho_0 \oint_A \vec{v} \cdot d\vec{A}
 = - \rho_0 \int_{V} (\vec{\nabla} \cdot \vec{v}) \, dV.
 \]
-where in the last equality the divergence theorem was used.
-Since the change of mass is equal to the mass flux, following relation between the density and the velocity of the particles can be obtained:
+The divergence theorem was used to obtain the last equality.
+Since the change of mass is equal to the mass flux, the following relation between the density and the velocity of the particles can be derived:
 \begin{equation}
 \frac{\partial \rho}{\partial t}  = - \rho_0 (\vec{\nabla} \cdot \vec{v})
 \label{cont}
 \end{equation}
 
 
-\subsubsection*{Adiabatic gas law}
+\subsubsection{Adiabatic gas law}
 %\vspace{-15pt}
-It is assumed that the motion of the fluid is an adiabatic process. In combination with the first law of thermodynamics this gives
-\[
-\delta Q = n C_V dT + p dV = 0.
-\]
-If we suppose the fluid to be an ideal gas, following equation holds:
-\[
-p dV + V dp = n R dT.
-\]
-Combining the previous equations gives
-\[
-(R+ C_V ) p dV + C_V V dp = 0  \qquad \textrm{ or } \qquad \gamma \frac{dV}{V} + \frac{dp}{p} = 0 \qquad \textrm{ with } \qquad \gamma \equiv \frac{R+C_V}{C_V} = \frac{C_p}{C_V}.
-\]
-Or in terms of the density:
-\[
-\gamma \frac{d(m/\rho)}{m/ \rho} + \frac{dp}{p} = -\gamma \frac{m}{\rho^2} \frac{d\rho}{m/ \rho} + \frac{dp}{p} =- \gamma \frac{d\rho}{\rho} + \frac{dp}{p} =0
-\]
+It is assumed that the motion of the fluid is an adiabatic process. In combination with the first law of thermodynamics this gives $\delta Q = n C_V dT + p dV = 0$.
+If we suppose the fluid to be an ideal gas, following equation holds: $p dV + V dp = n R dT$.
+Combining the previous equations gives $\gamma \frac{dV}{V} + \frac{dp}{p} = 0$ with $\gamma \equiv \frac{R+C_V}{C_V} = \frac{C_p}{C_V}$.
+Or in terms of the density: $\gamma \frac{d(m/\rho)}{m/ \rho} + \frac{dp}{p} = -\gamma \frac{m}{\rho^2} \frac{d\rho}{m/ \rho} + \frac{dp}{p} =- \gamma \frac{d\rho}{\rho} + \frac{dp}{p} =0$.
 In the assumption that the pressure and density variations are small, the equation becomes:
 \begin{equation}
 \frac{dp}{p_0} =\gamma \frac{d\rho}{\rho_0}
@@ -90,18 +78,15 @@ with $\rho_0$ the static density and $p_0$ the mean pressure of the surroundings
 
 
 
-\subsubsection*{Combination of previous equations}
+\subsubsection{Combination of previous equations}
 %\vspace{-15pt}
 Combining equations (\ref{cont}) and (\ref{adia}) gives:
 \begin{equation}
 \frac{\partial p}{\partial t} = - p_0 \gamma \left(\nabla \cdot \vec{v}\right).
 \label{dpdt}
 \end{equation}
-Taking the time derivative of the previous equation and substituting equation (\ref{newt}) gives
-\[
-\frac{\partial^2 p}{\partial t^2} =  c^2 \Delta p
-\]
-with $c\equiv \sqrt{\frac{p_0 \gamma}{\rho_0}}$ the speed of sound in the fluid.
+Taking the time derivative of the previous equation and substituting equation (\ref{newt}) gives\\
+$\frac{\partial^2 p}{\partial t^2} =  c^2 \Delta p$ with $c\equiv \sqrt{\frac{p_0 \gamma}{\rho_0}}$ the speed of sound in the fluid.
 
 
 
@@ -112,33 +97,14 @@ with $c\equiv \sqrt{\frac{p_0 \gamma}{\rho_0}}$ the speed of sound in the fluid.
 %2.2 Reflection and Absorbtion
 %Definition of Reflection coeff and absorbtioncoeff
 %Boundary conditions (p_in + p_refl = p_trans and v_n,in + v_n,refl = v_n,trans)
-\subsection{Reflection and absorption}
-In acoustics, several important parameters can be determined in order to characterise the acoustical properties of an object. The  definitions of these parameters will be stated in the following paragraphs.
+\subsection{Some essential acoustic properties}
+In acoustics, several important parameters can be determined in order to characterize the acoustical properties of an object. The  definitions of these parameters are stated in the following paragraphs.
 
 
-\subsubsection*{Characteristic impedance}
-%\vspace{-15pt}
-An important quantity is the characteristic impedance $Z$ of a material. It is defined as 
-\[
-Z = \rho c
-\]
-with $\rho$ the density of the medium and $c$ the longitudinal wave speed. In case of plane waves travelling through a homogeneous fluid (like air), the characteristic impedance equals the ratio of the complex pressure amplitude and the particle velocity:
-\[
-Z = \frac{p}{v} = \rho c
-\]
-where the particle velocity is evaluated in the direction of propagation.
-
-
-\subsubsection*{The reflection coefficient}
+\subsubsection{The reflection coefficient}
 %\vspace{-15pt}
 When a sound wave travels from one medium to another, it will be reflected and refracted at the boundary surface. Let us consider plane longitudinal waves:
-\begin{align*}
-&\pin = \pinnul e^{i (\vec{r} \cdot \kin -  \omega t)}\\
-&\pref = \prefnul e^{i (\vec{r} \cdot \kref -  \omega t)}\\
-&\ptr = \ptrnul e^{i (\vec{r} \cdot \ktr -  \omega t)}\\
-\end{align*}
-
-Let $\thetain$, $\thetaref$ and $\thetatr$ be the angles respective to the normal of the surface of the incoming wave (in), reflected  wave (ref) and transmitted  wave (tr) respectively. The norm of the wave vectors are 
+$\pin = \pinnul exp(i (\vec{r} \cdot \kin -  \omega t))$, $\pref = \prefnul exp(i (\vec{r} \cdot \kref -  \omega t))$ and $\ptr = \ptrnul exp(i (\vec{r} \cdot \ktr -  \omega t))$. Let $\thetain$, $\thetaref$ and $\thetatr$ be the angles respective to the normal of the surface of the incoming wave (in), reflected  wave (ref) and transmitted  wave (tr) respectively. The norm of the wave vectors are 
 \[
 \left\|\kin\right\|
 = \left\|\kref\right\|
@@ -154,10 +120,10 @@ These boundary conditions result in Snell's law
 \[
 \left\|\kin\right\| \sin\thetain = \left\|\kref\right\| \sin\thetaref = \left\|\ktr\right\| \sin\thetatr
 \]
-and the following solutions in terms of the pressure reflection coefficient $R_p = p_{ref,0}/p_{in,0}$ and the pressure transmission coefficient $T_p = p_{tr,0}/p_{in,0}$ 
+and the following solutions in terms of the pressure reflection coefficient $R_p = \prefnul/\pinnul$ and the pressure transmission coefficient $T_p = \ptrnul/\pinnul$ 
 \[
-R_p = \frac{Z_2 \cos \theta_{in} - Z_1 \cos \theta_{tr}}{Z_2 \cos \theta_{in} + Z_1 \cos \theta_{tr}} \qquad \textrm{ and } \qquad
-T_p = \frac{2 Z_2 \cos \theta_{in} }{Z_2 \cos \theta_{in} + Z_1 \cos \theta_{tr}}.
+R_p = \frac{Z_2 \cos \thetain - Z_1 \cos \thetatr}{Z_2 \cos \thetain + Z_1 \cos \thetatr} \qquad \textrm{ and } \qquad
+T_p = \frac{2 Z_2 \cos \thetain }{Z_2 \cos \thetain + Z_1 \cos \thetatr}.
 \]
 with $Z_1 = \rho_1 c_1$ the characteristic impedance of fluid 1 and $Z_2 = \rho_2 c_2$ the impedance of medium 2.  
 The reflection coefficient ranges from $-1$ to 1, while the transmission coefficient has a value between 0 and 2. A value greater than 1 for the transmission coefficient may seem in disagreement with conservation of energy, but that is not the case. We speak of pressure coefficients, instead of intensity coefficients. 
@@ -179,7 +145,7 @@ When $Z_1 \ll Z_2$, $T_p \approx 2$, but $T_I$ becomes 0. Hence there is no disc
 
 
 
-\subsubsection*{The absorption coefficient}
+\subsubsection{The absorption coefficient}
 %\vspace{-15pt}
 The sound absorption coefficient is defined as the fraction of acoustic energy that is absorbed by the surface on reflection \cite[p.12]{Geetere}.  When dealing with incident plane waves, the absorption coefficient can be written as a function of the (pressure) reflection coefficient:
 \begin{equation}
@@ -190,7 +156,17 @@ The sound absorption coefficient is defined as the fraction of acoustic energy t
 
 
 
+\subsubsection{Diffraction}
 
+A simple rule of thumb is that diffraction effects occur when the dimensions of the obstacle are comparable to the wavelength. A more elaborate rule is given by Rindel\cite{rindel-diffraction} and has been applied by others\cite{davy-diffraction, stage-acoustics}. In the case of an infinite band of height $h$, it states that the diffraction in the far field can be characterized by a frequency $f_0$
+\begin{equation}
+\label{diffractionEq}
+f_0 = \frac{c}{
+	\left(\frac{1}{s} + \frac{1}{r}\right) h^2 \cos^2 \theta}
+\end{equation}
+with $s$ and $r$ the distance from the reflector to the source, respectively to the receiver, and $\theta$ the angle of incidence. For frequencies higher than $f_0$, there is no diffraction. For frequencies lower than $f_0$, the intensity is attenuated by 6dB per octave. 
+
+We will use this formula as a rule of thumb in the measurements of the scale model, even though it only applies in the far field and does not take the floor nor the width of the wall into account. More elaborate solutions that would incorporate these factors and also be valid in the near field are not analytically tractable. Hence the system will be simulated numerically in order to compare measurement with theory.
 
 
 
